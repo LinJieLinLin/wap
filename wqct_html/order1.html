@@ -1,0 +1,260 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+    <title>屋企餐厅</title>
+    <link href="../styles/public.css" rel="stylesheet" />
+    <script src="../scripts/jquery.min.js"></script>
+    <script src="../scripts/public.js"></script>
+    <script src="../scripts/datepicker/picker.js"></script>
+    <script src="../scripts/datepicker/picker.date.js"></script>
+    <script src="../scripts/datepicker/legacy.js"></script>
+    <script src="../scripts/datepicker/zh_CN.js"></script>
+    <link href="../scripts/datepicker/themes/default.css" rel="stylesheet" />
+    <link href="../scripts/datepicker/themes/default.date.css" rel="stylesheet" />
+    <link href="order1.css" rel="stylesheet" />
+
+    <script type="text/javascript">
+        var order = "";
+        $(function () {
+            $(".content").width(win_w - 40);
+            $(".line").width((win_w - 70) / 2);
+            $(".line0").width($(".line").width() - 7);
+            $(".sp").width(win_w - 20);
+            $(".index_link").click(function () {
+                location.href = "index1.html?"+urlParam;
+            });
+            $(".car_link").click(function () {
+                location.href = "car1.html?" + urlParam;
+            });
+
+            $('.datepicker').pickadate({
+                min: "1900-01-01",
+                max: date
+            });
+
+            $("#begin_date").add("#end_date").change(function () {
+                var btime = $("#begin_date").val();
+                var etime = $("#end_date").val();
+                OrderQuery(btime, etime);
+            });
+            $("#begin_date").val(date);
+            $("#end_date").val(date);
+            $("#begin_date").change();
+        });
+        
+        //预约查询
+        function OrderQuery(btime, etime) {
+            order = "";
+            var JsonData = {
+                m: 'foodorderquery',
+                BeginDate: btime,
+                EndDate: etime
+            };
+            ajax(JsonData, function (result) {
+                if (result!=null) {
+                    //createOrder(result);
+                }
+                JsonData.m = "hotfoodorderquery";
+                ajax(JsonData, function (res) {
+                    if (result != null) {
+                        //合并订单
+                        var newresult = $.merge(result, res);
+                        //按订单时间排序
+                        var newresult2 = newresult.sort(
+                            function (a, b)
+                            {
+                                var d1 = new Date(a.OrderTime);
+                                var d2 = new Date(b.OrderTime);
+                                return (Date.parse(d2) - Date.parse(d1));
+                            });
+
+                        createOrder(newresult2);
+                        $(".orders").html(order);
+                    }
+                },
+                function () {
+                    Alert("连接远程服务器超时");
+                });
+
+            }, function () {
+                Alert("连接远程服务器超时");
+            });
+        }
+
+        function createOrder(result) {
+            $.each(result, function (i, o) {
+                order += '<div class="order">';
+                order += '    <div class="order_title">';
+                order += '        <div class="order_img">';
+                order += '            <img src="../images/order_tag.png" />';
+                order += '        </div>';
+                order += '        <div class="order_no">订单号：'+o.OrderId+'</div>';
+                order += '    </div>';
+                order += '    <table class="order_list" cellspacing="0" cellpadding="0">';
+                order += '        <tr>';
+                order += '            <td>';
+                order += '                <div class="order_state">';
+                order += '                    <div class="order_time">' + o.OrderTime + '</div>';
+                order += '                    <div class="order_money">共计:'+'，'+o.OrderState+'</div>';
+                order += '                </div>';
+                
+                order += createItems(o.OrderItems);
+                
+
+                order += '            </td>';
+                order += '        </tr>';
+                order += '    </table>';
+                order += '</div>';
+            });
+            
+            
+        }
+
+        function createItems(OrderItems) {
+            var items = "";
+            $.each(OrderItems, function (i, o) {
+                items += '                <div class="item">';
+                items += '                    <div class="item_name">'+o.Name+'</div>';
+                items += '                    <div class="item_value">' + o.Price.toFixed(2) + '</div>';
+                items += '                </div>';
+            });
+            return items;
+        }
+
+    </script>
+</head>
+<body>
+    <div class="content">
+        <div class="dates">
+            <div class="begin_date">
+                <input type="text" class="datepicker" id="begin_date" value="2015-07-11" /><span><img src="../images/down.png" /></span>
+            </div>
+            <div class="date_img">
+                <img src="../images/car_icon.png" />
+            </div>
+            <div class="end_date">
+                <input type="text" class="datepicker" id="end_date" value="2015-07-11" /><span><img src="../images/down.png" /></span>
+            </div>
+        </div>
+
+        <div class="lines">
+            <div class="line">
+                <div class="dot1"></div>
+                <div class="line0"></div>
+                <div class="dot2"></div>
+            </div>
+            <div class="line" style="float:right;">
+                <div class="dot1"></div>
+                <div class="line0"></div>
+                <div class="dot2"></div>
+            </div>
+
+        </div>
+
+
+
+        <div style="clear: both"></div>
+        <div class="orders">
+        <div class="order">
+            <div class="order_title">
+                <div class="order_img">
+                    <img src="../images/order_tag.png" />
+                </div>
+                <div class="order_no">订单号：1506302257300001</div>
+            </div>
+            <table class="order_list" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td>
+                        <div class="order_state">
+                            <div class="order_time">2015-06-30 22:57:30</div>
+                            <div class="order_money">共计:69.00，已确认</div>
+                        </div>
+                        <div class="item">
+                            <div class="item_name">生日蛋糕(1磅)</div>
+                            <div class="item_value">68.00</div>
+                        </div>
+                        <div class="item">
+                            <div class="item_name">大花卷(1份）</div>
+                            <div class="item_value">3.00</div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="order">
+            <div class="order_title">
+                <div class="order_img">
+                    <img src="../images/order_tag.png" />
+                </div>
+                <div class="order_no">订单号：1506302257300001</div>
+            </div>
+            <table class="order_list" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td>
+                        <div class="order_state">
+                            <div class="order_time">2015-06-30 22:57:30</div>
+                            <div class="order_money">共计:69.00，已确认</div>
+                        </div>
+                        <div class="item">
+                            <div class="item_name">生日蛋糕(1磅)</div>
+                            <div class="item_value">68.00</div>
+                        </div>
+                        <div class="item">
+                            <div class="item_name">大花卷(1份）</div>
+                            <div class="item_value">3.00</div>
+                        </div>
+
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="order">
+            <div class="order_title">
+                <div class="order_img">
+                    <img src="../images/order_tag.png" />
+                </div>
+                <div class="order_no">订单号：1506302257300001</div>
+            </div>
+            <table class="order_list" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td>
+                        <div class="order_state">
+                            <div class="order_time">2015-06-30 22:57:30</div>
+                            <div class="order_money">共计:69.00，已确认</div>
+                        </div>
+                        <div class="item">
+                            <div class="item_name">生日蛋糕(1磅)</div>
+                            <div class="item_value">68.00</div>
+                        </div>
+                        <div class="item">
+                            <div class="item_name">大花卷(1份）</div>
+                            <div class="item_value">3.00</div>
+                        </div>
+
+                    </td>
+                </tr>
+            </table>
+        </div>
+        </div>
+    </div>
+    <div style="clear:both"></div>
+        <div class="sp">
+            
+        </div>
+    <div class="bottom_btn">
+        <div class="index_link">
+        <div class="img_index">
+            <img src="../images/wqct.png" /></div>
+        <div class="btn_index">屋企餐厅</div>
+            </div>
+        <div class="car_link">
+        <div class="btn_car">购物车</div>
+        <div class="img_car">
+            <img src="../images/car01.png" />
+        </div>
+            </div>
+    </div>
+</body>
+</html>

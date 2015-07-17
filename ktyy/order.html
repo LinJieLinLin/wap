@@ -1,0 +1,98 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+    <title>康体预约</title>
+    <link href="../styles/public.css" rel="stylesheet" />
+    <link href="order.css" rel="stylesheet" />    
+    <script src="../scripts/jquery.min.js"></script>
+    <script src="../scripts/public.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $(".content").width(win_w - 40);
+            $(".line").width((win_w - 70) / 2);
+            $(".line0").width($(".line").width() - 7);
+            $(".sp").width(win_w - 20);
+            $(".back_img").click(function () {
+                window.history.back();
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="back">
+        <div class="back_img">
+            <img src="../images/back03.png" />
+        </div>
+        <div class="back_text">返回</div>
+    </div>
+    <div class="content">
+        <div class="dates">
+            <div class="begin_date">2015-07-06<span><img src="../images/down.png" /></span></div>
+            <div class="date_img">
+                <img src="../images/kt_icon.png" />
+            </div>
+            <div class="end_date">2015-07-06<span><img src="../images/down.png" /></span></div>
+        </div>
+
+        <div class="lines">
+            <div class="line">
+                <div class="dot1"></div>
+                <div class="line0"></div>
+                <div class="dot2"></div>
+            </div>
+            <div class="line" style="float: right;">
+                <div class="dot1"></div>
+                <div class="line0"></div>
+                <div class="dot2"></div>
+            </div>
+        </div>
+        <div style="clear: both"></div>
+        <div class="order">
+            <div class="order_title">
+                <div class="order_date">场地:网球场</div>
+                <div class="order_clear">取消</div>
+            </div>
+            <table class="order_list" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td>
+                        <div class="item">
+                            <div class="item_name">场点:网球场1</div>
+                        </div>
+                        <div class="item">
+                            <div class="item_name">预订日期:B3112</div>
+                        </div>
+                        <div class="item">
+                            <div class="item_name">预订时间:2015－07－06 11:05:22</div>
+                        </div>                       
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="order">
+            <div class="order_title">
+                <div class="order_date">场地:网球场</div>
+                <div class="order_clear">取消</div>
+            </div>
+            <table class="order_list" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td>
+                        <div class="item">
+                            <div class="item_name">场点:网球场2</div>
+                        </div>
+                        <div class="item">
+                            <div class="item_name">预订日期:B3112</div>
+                        </div>
+                        <div class="item">
+                            <div class="item_name">预订时间:2015－07－06 11:05:22</div>
+                        </div>                       
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div style="clear: both"></div>
+    <div class="sp"></div>
+</body>
+</html>

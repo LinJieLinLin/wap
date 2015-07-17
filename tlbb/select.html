@@ -1,0 +1,218 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+    <title>天龙八部</title>
+    <link href="../styles/public.css" rel="stylesheet" />
+    <link href="select.css" rel="stylesheet" />
+    <script src="../scripts/jquery.min.js"></script>
+    <script src="../scripts/public.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $(".back_img").click(function () {
+                location.href = 'index.html';
+            });
+            var pic_w = $(".user_info_pic").width();
+            var des_w = $(".user_info_des").width();
+            var w = (win_w - pic_w - des_w) / 3;
+            $(".user_info_pic").css("padding-left", w);
+            $(".user_info_pic").css("padding-right", w);
+            $(".user_info_des").css("padding-right", w);
+            $(".user_title_pl").width(w);
+            $(".user_title_pr").width(w);
+
+            $(".time").width(((win_w - 50) / 3) - 22);
+
+            //var time_w = $(".time").width() + 2 + (2 * 10);;//本身宽度+边框+左右外边距
+            //var times_pl = ((win_w- (time_w * 3)) / 2);//窗口宽度-3个时间宽度
+            $(".times_text").css("padding-left", (25 + 11) + 'px');//预订时间位置
+
+            $(".show_hide").click(function () {
+                var spid = $(this).attr("spid");
+                //$(".select").hide();
+                //$(".show_hide").attr("src","../images/down01.png");
+                var $select = $(".select" + spid);
+                if ($select.is(":hidden")) {
+                    $select.show();
+                    $(this).attr("src", "../images/up01.png");
+                } else {
+                    $select.hide();
+                    $(this).attr("src", "../images/down01.png");
+                }
+            });
+
+            $(".time").click(function () {
+                if ($(this).hasClass("time_2")) {
+                    return;
+                }
+                //if ($(this).hasClass("time_0")) {
+                //    $(this).removeClass("time_0");
+                //    $(this).addClass("time_1");
+                //} else {
+                //    $(this).removeClass("time_1");
+                //    $(this).addClass("time_0");
+                //}
+                var content=$("#post_check").html();
+                show_dialog("", content, function () {
+                    hide_dialog();
+                }, '确认', function () {
+                    location.href = 'order.html';
+                    hide_dialog();
+                }, '返回', function () {
+                    hide_dialog();
+                });
+
+            });
+        });
+        $(window).load(function () {
+            var pic_h = $(".user_info_pic").height();
+            $(".user_info_des1").height(pic_h - 50);
+        });
+    </script>
+</head>
+<body>
+    <div class="back">
+        <div class="back_img">
+            <img src="../images/back03.png" />
+        </div>
+        <div class="back_text">返回</div>
+    </div>
+    <div class="content">
+        <div class="user_list">
+            <div class="user">
+                <div class="user_title">
+                    <div class="user_title_pl">&nbsp;</div>
+                    <div class="user_title_left">陈钟鸿</div>
+                    <div class="user_title_pr">&nbsp;</div>
+                    <div class="user_title_right">医师（男,35岁）</div>
+
+                </div>
+                <div style="clear: both;"></div>
+                <div class="user_info">
+                    <div class="user_info_pic">
+                        <img src="../images/user1.png" />
+                    </div>
+                    <div class="user_info_des">
+                        <div class="user_info_des1">
+                            毕业于华中科技大学同济医学院 临床专业<br />
+                            曾就职于广州中医药大学附三院骨科、痛症科6年。广东省体委水上运动两帆基地特邀队医。
+                        </div>
+                        <div class="user_info_des2">
+                            【医师级别收费】<br />
+                            治疗需加收20元服务费，套餐二、特色一、三除外。
+                        </div>
+                        <div class="show_time">
+                            <img class="show_hide" spid="1" src="../images/down01.png" />
+                        </div>
+                    </div>
+
+                </div>
+                <div style="clear: both;"></div>
+                <div class="select select1" style="display:none;">
+                    <div class="date_select">
+                        <div class="prev_date">
+                            <div style="width: 25px; float: left;">&nbsp;</div>
+                            <img src="../images/prev.png" />
+                        </div>
+                        <div class="date_text">预约日期:2015-07-06</div>
+                        <div class="next_date">
+                            <div style="width: 25px; float: right;">&nbsp;</div>
+                            <img src="../images/next.png" />
+                        </div>
+                    </div>
+                    <div class="time_select">
+                        <div class="times_text">预约时间</div>
+                        <div class="times">
+                            <div class="time time_2">10:00</div>
+                            <div class="time time_2">11:00</div>
+                            <div class="time time_2">12:00</div>
+                            <div class="time time_0">13:00</div>
+                            <div class="time time_0">14:00</div>
+                            <div class="time time_0">15:00</div>
+                            <div class="time time_0">16:00</div>
+                            <div class="time time_0">17:00</div>
+                            <div class="time time_0">18:00</div>
+                            <div class="time time_0">19:00</div>
+                            <div class="time time_0">20:00</div>
+                            <div style="clear: both;"></div>
+                        </div>
+                        <div style="clear: both;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="user">
+                <div class="user_title">
+                    <div class="user_title_pl">&nbsp;</div>
+                    <div class="user_title_left">林青云</div>
+                    <div class="user_title_pr">&nbsp;</div>
+                    <div class="user_title_right">技师(女,30岁)</div>
+
+                </div>
+                <div style="clear: both;"></div>
+                <div class="user_info">
+                    <div class="user_info_pic">
+                        <img src="../images/user02.png" />
+                    </div>
+                    <div class="user_info_des">
+                        <div class="user_info_des1">
+                            毕业于湛江中医学校 针推专业 在广州中医药大学第三附属骨伤科医院实习中医各科目，专业正骨推拿和针灸，曾于广州荔湾区中医院国医馆工作，职业针推，在香港学习养生保健。
+                        </div>
+                        <div class="user_info_des2">
+                            
+                        </div>
+                        <div class="show_time">
+                            <img class="show_hide" spid="2" src="../images/down01.png" />
+                        </div>
+                    </div>
+
+                </div>
+                <div style="clear: both;"></div>
+                <div class="select select2" style="display:none;">
+                    <div class="date_select">
+                        <div class="prev_date">
+                            <div style="width: 25px; float: left;">&nbsp;</div>
+                            <img src="../images/prev.png" />
+                        </div>
+                        <div class="date_text">预约日期:2015-07-06</div>
+                        <div class="next_date">
+                            <div style="width: 25px; float: right;">&nbsp;</div>
+                            <img src="../images/next.png" />
+                        </div>
+                    </div>
+                    <div class="time_select">
+                        <div class="times_text">预约时间</div>
+                        <div class="times">
+                            <div class="time time_2">10:00</div>
+                            <div class="time time_2">11:00</div>
+                            <div class="time time_2">12:00</div>
+                            <div class="time time_1">13:00</div>
+                            <div class="time time_0">14:00</div>
+                            <div class="time time_0">15:00</div>
+                            <div class="time time_0">16:00</div>
+                            <div class="time time_0">17:00</div>
+                            <div class="time time_0">18:00</div>
+                            <div class="time time_0">19:00</div>
+                            <div class="time time_0">20:00</div>
+                            <div style="clear: both;"></div>
+                        </div>
+                        <div style="clear: both;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="display:none;">
+        <div id="post_check">
+            <div style="font-size:11px;">
+                以下为您的预约信息，请确认<br />
+                预约套餐:<span class="spName">【套餐1】保健按摩</span><br />
+                预约服务员:<span class="spPreson">陈钟鸿</span><br />
+                预约日期:<span class="spOrderDate">2015-07-06</span><br />
+                预约时间:<span class="spOrderTime">13:00</span><br />
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,429 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+    <title>车水马龙</title>
+    <link href="../styles/public.css" rel="stylesheet" />
+    <link href="index.css" rel="stylesheet" />
+    <script src="../scripts/jquery.min.js"></script>
+    <script src="../scripts/public.js"></script>
+    <script type="text/javascript">
+        var OrderNo = "";
+        var canpost = 1;
+        $(function () {
+            $(".content").width(win_w - 20);
+            $(".back_link").click(function () {
+                location.href = '../home/index.html?' + urlParam;
+            });
+            $(".order_link").click(function () {
+                location.href = 'order.html?' + urlParam;
+            });
+
+            $(".service_item").click(function () {
+                if ($(this).children("img").attr("src").indexOf("circle0") > -1) {
+                    $(this).children("img").attr("src", "../images/circle1.png");
+                } else {
+                    $(this).children("img").attr("src", "../images/circle0.png");
+                }
+            });
+            $(".btn_post").click(function () {
+                WashCarOrderPostCheck();
+            });
+            OrderNo = getTimeStr() + Math.floor(Math.random() * 9999 + 1000);
+            WashCarInfoQuery();
+        });
+
+        function WashCarInfoQuery() {
+            var JsonData = { m: 'washcarinfoquery' };
+            ajax(JsonData, function (result) {
+                if (result.NowStock != undefined) {
+                    $("#NowStock").html(result.NowStock + '个');
+                }
+                if (result.WashMoney != undefined) {
+                    $("#WashMoney").html(result.WashMoney + '元');
+                }
+                $("#Date").html(result.Date);
+                if (result.CarNumbers.length > 0) {
+                    $.each(result.CarNumbers, function (i, o) {
+                        $("#CarNumbers").append("<option value='" + o + "'>" + o + "</option>");
+                    });
+                }
+                $("#CarNumbers").change(function () {
+                    var v = $(this).val();
+                    $("#tbCarNumber").val(v);
+                    $("#tbCarNumbers").text(v);
+                });
+                $("#CarNumbers").change();
+                $(".btn_post").css("background-color", "#eeeeee");
+                $("#lMsg").css("display", "block");
+                if (result.length == 0) {
+                    Alert("您未登记车辆信息");
+                    $("#lMsg").html("您未登记车辆信息");
+                } else if (result.CarNumbers.length == 0) {
+                    Alert("您未登记车辆信息");
+                    $("#lMsg").html("您未登记车辆信息");
+                } else if (result.TimeState == 0) {
+                    Alert("超过订单提交时间");
+                    $("#lMsg").html("超过订单提交时间");
+                } else if (result.NowStock == 0) {
+                    Alert("今天洗车名额已满");
+                    $("#lMsg").html("今天洗车名额已满");
+                }
+                else if (result.CanOrderCount <= 0) {
+                    Alert("今天洗车次数已达上限" + result.MaxOrderCount + "次");
+                    $("#lMsg").html("今天洗车次数已达上限" + result.MaxOrderCount + "次");
+                } else {
+                    $(".btn_post").addClass("kz-btn");
+                    $("#lMsg").css("display", "none");
+                    $(".btn_post").css("background-color", "#ff6633");
+                }
+            }, function () {
+                //$("#divList").html(diverror());
+            });
+        }
+        function CarChange() {
+            //$("#tbCarNumber")
+            if ($("#tbCarNumber").is(":hidden"))//输入框是隐藏的
+            {
+                //alert("当前选择");
+                $("#tbCarNumber").show();
+                $("#divCarNumber").hide();
+            } else {
+                //alert("当前输入");
+                $("#tbCarNumber").hide();
+                $("#divCarNumber").show();
+                var v = $("#CarNumbers").val();
+                $("#tbCarNumber").val(v);
+            }
+        }
+        function tbCarNumberFocus() {
+            var top = ($("#tbCarNumber").offset().top) - 55;
+            //alert(top);
+            $("html,body").animate({ scrollTop: top }, 500);
+        }
+        function tbStopSiteKeyUp(obj) {
+            var re = /^[1-3]+$/;
+            if (!(re.test(obj.value))) {
+                obj.value = '';
+            }
+        }
+        function tbStopSite2KeyUp(obj) {
+            var re = /^[0-9]+$/;
+            if (!(re.test(obj.value))) {
+                obj.value = '';
+            }
+        }
+        function tbStopSiteFocus() {
+            var top = ($("#tbStopSite").offset().top) - 55;
+            //alert(top);
+            $("html,body").animate({ scrollTop: top }, 500);
+        }
+        function tbStopSite2Focus() {
+            var top = ($("#tbStopSite2").offset().top) - 55;
+            //alert(top);
+            $("html,body").animate({ scrollTop: top }, 500);
+        }
+        function taStopSiteFocus() {
+            var top = ($("#taStopSite").offset().top) - 55;
+            //alert(top);
+            $("html,body").animate({ scrollTop: top }, 500);
+        }
+        function tbKeyNumberFocus() {
+            var top = ($("#tbKeyNumber").offset().top) - 55;
+            //alert(top);
+            $("html,body").animate({ scrollTop: top }, 500);
+        }
+        function tbKeyNumberKeyUp(obj) {
+            if (obj.value != '') {
+                var re = /^[1-9]+[0-9]*]*$/;
+                if (!re.test(obj.value)) {
+                    obj.value = '';
+                }
+                else {
+                    if (!((0 < parseInt(obj.value)) && (parseInt(obj.value) < 41))) {
+                        obj.value = '';
+                    }
+                }
+            }
+        }
+        function SiteChange() {
+            if ($("#devSite1").is(":hidden"))//输入框是隐藏的
+            {
+                //alert("当前选择");
+                $("#devSite1").show();
+                $("#devSite2").hide();
+                $("#a_SiteChange").html('其他位置');
+            } else {
+                $("#devSite2").show();
+                $("#devSite1").hide();
+                $("#a_SiteChange").html('返回');
+            }
+        }
+
+        function divBySetTop() {
+            var $m = $("#divBy .modal-dialog");
+            var h = $m.height();
+            h = h == 0 ? 200 : h;
+            var wh = $(window).height();
+            $m.css("margin-top", (wh - h) / 2 + "px");
+        }
+        function goOrderPage() {
+            location.href = 'order.html?' + urlParam;
+        }
+        function WashCarOrderPostCheck() {
+            var CarNumber = $("#tbCarNumber").val();
+            var KeyNumber = $("#tbKeyNumber").val();
+            var StopSite = 'B' + $("#tbStopSite").val() + $("#tbStopSite2").val();
+            var licenseRegular = /^[\u4e00-\u9fa5]{1}[A-Z]{1}[A-Z_0-9]{5}$/;
+            if (!licenseRegular.test(CarNumber)) {
+                Alert("车牌号格式不正确");
+                canpost = 1;
+                return;
+            }
+            if (CarNumber == undefined || CarNumber == "") {
+                Alert("请输入正确的车牌号！");
+                canpost = 1;
+                return;
+            }
+            if ($(".btn_post").hasClass("kz-btn")) {
+                if (($("#devSite2").is(":hidden")) & (StopSite == undefined || !(StopSite.length == 5))) {
+                    Alert("请输入正确的车辆位置信息！");
+                    canpost = 1;
+                    return;
+                } else {
+                    if ((StopSite == undefined || StopSite == "")) {
+                        Alert("请输入正确的车辆位置信息！");
+                        canpost = 1;
+                        return;
+                    }
+                }
+                if ($("#devSite1").is(":hidden")) {
+                    StopSite = $("#taStopSite").val();
+                    if (StopSite == undefined || StopSite == "") {
+                        Alert("请输入停车位置");
+                        canpost = 1;
+                        return;
+                    }
+                }
+                if (KeyNumber == undefined || KeyNumber == '') {
+                    Alert("请输入钥匙柜号");
+                    canpost = 1;
+                    return;
+                }
+
+                var JsonData = {
+                    m: 'washcarorderpostcheck',
+                    OrderNo: OrderNo,
+                    CarNumber: CarNumber,
+                    KeyNumber: KeyNumber,
+                    StopSite: StopSite,
+                    AddFlag: '000',
+                };
+
+                ajax(JsonData,
+                   function (result) {
+                       console.log(JSON.stringify(result));
+                       if (result.Id ==1) {
+                           $("#bytotalmoney").text("￥" + $("#WashMoney").text());
+                           var content = $("#dl_post").html();
+                           show_dialog("询问", content, null, '确认', WashCarOrderPost, '返回', function () {
+                               hide_dialog();
+                           });
+                       } else {
+                           Alert(result.Msg);
+                       }
+                   },
+                   function (result) {
+                       Alert("网络超时，请稍后尝试");                      
+                   }
+               );
+            }
+        }
+        function WashCarOrderPost() {
+            if ($(".btn_post").hasClass("kz-btn") && canpost == 1) {
+                //string UserID, string OrderNo, string CarNumber, string KeyNumber, string StopSite, int PlID
+                var CarNumber = $("#tbCarNumber").val();
+                var KeyNumber = $("#tbKeyNumber").val();
+                var StopSite = 'B' + $("#tbStopSite").val() + $("#tbStopSite2").val();
+                if ($("#devSite1").is(":hidden")) {//车辆位置是输入的中文的
+                    StopSite = $("#taStopSite").val();
+                }
+                var AddFlag = '';
+                $(".service_item img").each(function (i, n) {
+                    if ($(n).attr("src").indexOf("circle1.png") > -1) {
+                        AddFlag += "1";
+                    } else {
+                        AddFlag += "0";
+                    }
+                });
+                //javascript正则表达式验证车牌
+                var JsonData = {
+                    m: 'washcarorderpost',
+                    OrderNo: OrderNo,
+                    CarNumber: CarNumber,
+                    KeyNumber: KeyNumber,
+                    StopSite: StopSite,
+                    AddFlag: AddFlag,
+                };
+                //提交前禁止提交
+                canpost = 0;
+                ajax(JsonData,
+                    function (result) {
+                        Alert(result.Msg);
+                        if (result.Id == 1) {
+                            setTimeout('goOrderPage()', 1500);
+                        }
+                        canpost = 1;
+                    },
+                    function (result) {
+                        Alert("网络超时，请稍后尝试");
+                        canpost = 1;
+                    }
+                );
+            }
+            hide_dialog();
+        }
+    </script>
+</head>
+<body style="background-color: #eeeeee;">
+    <div class="back" style="display: none;">
+        <div class="back_img">
+            <img src="../images/back02.png" />
+        </div>
+        <div class="back_text">屋企餐厅</div>
+    </div>
+    <div class="content">
+        <table class="content_table" cellspacing="0" cellpadding="0" style="width: 100%">
+            <tr>
+                <td colspan="2" class="td0"></td>
+            </tr>
+            <tr>
+                <td colspan="2" class="h20"></td>
+            </tr>
+            <tr>
+                <td class="td1">剩余名额</td>
+                <td class="td2">
+                    <div id="NowStock"></div>
+                </td>
+            </tr>
+            <tr>
+                <td class="td1">洗车价钱</td>
+                <td class="td2">
+                    <div id="WashMoney">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="td1">车牌号码</td>
+                <td class="td2">
+                    <div class="car_number">
+                        <div id="divCarNumber" style="position: relative; height: 24px; padding: 0px 3px;">
+                            
+                            <a id="tbCarNumbers" style="position: absolute; left: 0px; top: 0px; z-index: 1; padding-left:5px;margin-top: 5px;"></a>
+                            <select id="CarNumbers" style="padding-left:5px; margin-top: 5px;text-align: center; width: 88px; position: absolute; left: 0px; top: 0px; font-size: 13px; opacity:0; z-index: 2; "
+                                for="#tbCarNumbers">
+                            </select>
+                            <div id="select_icon" style="position: absolute; left: 0px; top: 0px; z-index: 2; margin-left:80px; margin-top:5px;"><img src="../images/select_icon.png" /></div>
+                        </div>
+                        <input id="tbCarNumber" onfocus="tbCarNumberFocus()" type="text" style="width: 92px; padding-left:5px; height: 24px; font-size: 13px; display: none;" placeholder="输入车牌号码" />
+                        <div style="width: 92px;" class="input_text_bottom"></div>
+                    </div>
+                    <div class="change_car" onclick="CarChange()">
+                        变更车辆
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="td1">车辆位置</td>
+                <td class="td2">
+                    <div id="devSite1">
+                        <div style="float: left;">B</div>
+                        <div class="car_site1">
+                            <input type="text" onfocus="tbStopSiteFocus()" onkeyup="tbStopSiteKeyUp(this)" maxlength="1" id="tbStopSite" style="width: 18px; padding: 0px 3px;" placeholder="" />
+                            <div style="width: 18px;" class="input_text_bottom"></div>
+                        </div>
+                        <div style="float: left;">-</div>
+                        <div class="car_site2">
+                            <input type="text" id="tbStopSite2" onfocus="tbStopSite2Focus()" onkeyup="tbStopSite2KeyUp(this)" style="width: 70px; padding: 0px 3px;" maxlength="3" placeholder="3位数字" />
+                            <div style="width: 70px;" class="input_text_bottom"></div>
+                        </div>
+                    </div>
+                    <div id="devSite2" style="display: none; float:left;">
+                        <textarea class="form-control input-lg" onfocus="taStopSiteFocus()" maxlength="50" id="taStopSite"
+                            style=" border:1px solid #999999; background-color: #fff; vertical-align: top; padding-left: 4px; padding-right: 4px; width:170px;" cols="2"></textarea>
+                    </div>
+
+                    <div style="float: left;margin-top: 8px;margin-left: 4px;">
+                        <a id="a_SiteChange" style="border: 1px solid #ff6633;padding: 5px 10px;color: #ff6633;" href="#" onclick="SiteChange()">其他位置</a>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="td1">钥匙柜号</td>
+                <td class="td2">
+                    <div class="key_number">
+                        <input type="text" onfocus="tbKeyNumberFocus()" maxlength="2" onkeyup="tbKeyNumberKeyUp(this)" style="width: 170px; padding: 0px 3px;" id="tbKeyNumber" placeholder="请输入钥匙所在柜号" />
+                        <div style="width: 170px;" class="input_text_bottom"></div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="td1">其他服务</td>
+                <td class="td2">
+                    <div class="service_list">
+                        <div class="service_item">
+                            <img class="service_img" src="../images/circle0.png" />
+                            <div class="service_name">轮胎上蜡</div>
+                        </div>
+                        <div class="service_item">
+                            <img class="service_img" src="../images/circle0.png" />
+                            <div class="service_name">上雨刮水</div>
+                        </div>
+                        <div class="service_item">
+                            <img class="service_img" src="../images/circle0.png" />
+                            <div class="service_name">轮胎加气</div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" class="td3">
+                    <label id="lMsg" style="color: Red">
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" class="td4">
+                    <span class="btn_post">提&nbsp;&nbsp;交</span>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" class="h20"></td>
+            </tr>
+            <tr>
+                <td colspan="2" class="sp"></td>
+            </tr>
+        </table>
+    </div>
+    <div class="bottom_btn">
+        <div class="back_link">
+            <div class="img_back">
+                <img src="../images/back04.png" />
+            </div>
+            <div class="btn_back">返回</div>
+        </div>
+        <div class="order_link">
+            <div class="btn_order">我的订单</div>
+        </div>
+    </div>
+    <div style="display: none;">
+        <div id="dl_post">
+            <div style="font-size: 12px;">
+                <div>确认要提交吗？</div>
+                <div>一共收您<span style="color: red; font-size: 20px;" id="bytotalmoney"></span></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

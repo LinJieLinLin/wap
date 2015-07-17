@@ -1,0 +1,355 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+    <title>屋企餐厅</title>
+    <link href="../styles/public.css" rel="stylesheet" />
+    <script src="../scripts/jquery.min.js"></script>
+    <script src="../scripts/public.js"></script>
+    <script src="../scripts/shoppingcar.js"></script>
+    <link href="detail1.css" rel="stylesheet" />
+    <script>
+        var inCar = 0;
+        var fid = 0;
+        var ftid = 0;
+        var _obj = null;
+        var can_add = 1;
+        var fno = 11;
+        $(function () {
+            fid = $.getUrlParam('fid');
+            ftid = $.getUrlParam('ftid');
+            loadData();
+            pageInit();
+        });
+
+        function loadData() {
+            var JsonData = {};
+            if (fid == 65536) {
+                JsonData = { m: 'foodquerybyfno', FNo: fno };
+            } else {
+                if (ftid != 65536) {
+                    JsonData = { m: 'foodquerybyfid', FtId: ftid, fid: fid };
+                } else {
+                    JsonData = { m: 'hotfoodquerybyfid', FtId: ftid, fid: fid };
+                }
+            }
+            ajax(JsonData, function (result) {
+                if (result.FoodList == undefined) {
+                    _obj = result;
+
+                    $(".item_pic").attr("src", _obj.FPicture);
+                    $(".item_text").text(_obj.FName);
+                    $(".item_p").text(_obj.FPrice + '元/' + _obj.FUnit);
+                    $(".price1").text(_obj.FPrice.toFixed(2));
+                    $(".stock").text(_obj.FRemainCount);
+                    $(".from").text(_obj.FSourceFrom);
+                    $(".rule_detail").html(_obj.FDescription);
+                    $("#count").attr("maxcount", _obj.FOrderMaxCount);
+                    if (_obj.FCanOrderCount == 0) {
+                        Alert("您已预订该商品达到上限！");
+                        $(".btn_add_car").css("background-color", "#cccccc");
+                        $(".btn_add_car").css("font-color", "#757575");
+                        can_add = 0;
+                    }
+
+                    $(".item_from").hide();
+                    $(".item_maxcount").hide();
+                    if (_obj.FRemainCount < 1) {
+                        $(".btn_add_car").css("background-color", "#cccccc");
+                        $(".btn_add_car").css("font-color", "#757575");
+                        can_add = 0;
+                    }
+                } else {
+                    if (result.FoodList.length > 0) {
+                        _obj = result.FoodList[0];
+                        $(".item_pic").attr("src", _obj.FPicture);
+                        $(".item_text").text(_obj.FName);
+                        $(".item_p").text(_obj.FPrice + '元/' + _obj.FUnit);
+                        $(".price1").text(_obj.FPrice.toFixed(2));
+                        $(".stock").text(_obj.FRemainCount);
+                        $(".from").text(_obj.FSourceFrom);
+                        $(".rule_detail").html(_obj.FDescription);
+                        $("#count").attr("maxcount", _obj.FOrderMaxCount);
+                        $("#count").attr("ordercount", _obj.Fcount);
+
+                        $(".item_breed").hide();
+                        $(".item_norms").hide();
+
+                        if (_obj.FCanOrderCount == 0) {
+                            Alert("您已预订该产品达到上限！");
+
+                            $(".btn_add_car").css("background-color", "#cccccc");
+                            $(".btn_add_car").css("font-color", "#757575");
+                            $(".subtract").css("background-image", "url(../images/subtract0.png)");
+                            $(".count").css("border", "1px solid #cccccc");
+                            $(".add").css("background-image", "url(../images/add0.png)");
+                            can_add = 0;
+                        }
+
+                        if (_obj.FRemainCount < 1) {
+
+                            $(".btn_add_car").css("background-color", "#cccccc");
+                            $(".btn_add_car").css("font-color", "#757575");
+                            $(".subtract").css("background-image", "url(../images/subtract0.png)");
+                            $(".count").css("border", "1px solid #cccccc");
+                            $(".add").css("background-image", "url(../images/add0.png)");
+                            can_add = 0;
+                        }
+                    }
+                }
+
+
+
+            }, function (result) {
+
+            });
+        }
+
+        function addToCar() {
+            if (can_add == 0) {
+                return;
+            }
+            var select_date = utils.getParam("select_date");
+            var ordercount=$("#count").attr("ordercount");
+            product = {
+                id: _obj.FId,
+                tid:ftid,
+                name: $(".item_text").val(),
+                num: $("#count").val(),
+                price: $(".price1").text(),
+                odate: select_date,
+                ordercount:ordercount
+            };
+
+            if (cart.exists(_obj.FId, select_date)) {
+                Alert("该产品已在购物车，可进入购物车修改");
+            } else if (cart2.exists(_obj.FId, select_date)) {
+                Alert("该产品已在购物车，可进入购物车修改");
+            }
+            else {
+                console.log("添加产品：" + JSON.stringify(product));
+                if (ftid != 65536) {
+                    if (cart2.get() == null) {
+                        cart.add(product);
+                    } else {
+                        Alert("熟食不能与其他类别同时放入购物车！");
+                        return;
+                    }
+                } else {
+                    if (cart.get() == null) {
+                        cart2.add(product);
+                    } else {
+                        Alert("熟食不能与其他类别同时放入购物车！");
+                        return;
+                    }
+                }
+                //console.log("car1-ids=" + cart.getvalues('id'));
+                //console.log("car1-nums=" + cart.getvalues('num'));
+                //console.log("car1-odates=" + cart.getvalues('odate'));
+
+                //console.log("car2-ids=" + cart2.getvalues('id'));
+                //console.log("car2-nums=" + cart2.getvalues('num'));
+                //console.log("car2-odates=" + cart2.getvalues('odate'));
+
+
+                Alert("加入购物车成功！");
+                cart.ref();
+                cart2.ref();
+
+                $(".car_count").text(parseInt(osum.totalNumber) + parseInt(osum2.totalNumber));
+            }
+        }
+
+        function pageInit() {
+            $(".breed").click(function () {
+                $(".breed").each(function (i, n) {
+                    $(n).removeClass("breed1");
+                    $(n).addClass("breed0");
+                });
+                $(this).addClass("breed1");
+
+                fno = $(".breed1").attr("no") + $(".norms1").attr("no");
+                loadData();
+            });
+            $(".norms").click(function () {
+                $(".norms").each(function (i, n) {
+                    $(n).removeClass("norms1");
+                    $(n).addClass("norms0");
+                });
+                $(this).addClass("norms1");
+                fno = $(".breed1").attr("no") + $(".norms1").attr("no");
+                loadData();
+            });
+            $(".back").click(function () {
+                window.history.back();
+            });
+            $(".rule_detail").width(win_w - 50);
+
+            $(".order_link").click(function () {
+                location.href = "order1.html?" + urlParam;
+            });
+            $(".car_link").click(function () {
+                location.href = "car1.html?" + urlParam;
+            });
+            //var left = $(".car_count").next().offset().left + $(".car_count").next().width();
+            //$(".car_count").css("left", left + 'px');
+            var img_car_img_w = $(".img_car_img").offset().left + 13;
+            $(".car_count").css("left", img_car_img_w + 'px');
+
+            $(".btn_add_car").click(addToCar);
+
+            $(".subtract").click(function () {
+                var c = $("#count").val();
+                if (parseInt(c) > 1) {
+                    var c = parseInt(c) - 1;
+                }
+                $("#count").val(c);
+            });
+
+            $(".add").click(function () {
+                if (can_add == 0) {
+                    return;
+                }
+                var c = $("#count").val();
+                var c = parseInt(c) + 1;
+                var maxcount = $("#count").attr("maxcount");                
+                if (parseInt(c) > parseInt(maxcount)) {                
+                    Alert("超出产品最大限购数");
+                    return;
+                }
+
+                if (ftid != 65536) {
+                    var ftcount = cart.gettypecount(ftid);//当前购物车数
+                    
+                    var sumcount = parseInt(ftcount) + parseInt(c);
+
+                    var foodtypequery = utils.getParam("foodtypequery");
+                    var foodtypequery_obj = JSON.parse(foodtypequery);
+                    var foodtype = $.grep(foodtypequery_obj, function (o) {
+                        return o.FtID == ftid;
+                    });
+                    if (foodtype.length > 0) {
+                        var ftmaxcount = (foodtype[0].FtCanOrderMaxCount);
+                        if (ftmaxcount < sumcount) {
+                            Alert("超出产品类别最大限购数");
+                            return;
+                        }
+                    }
+
+                }
+
+                $("#count").val(c);
+            });
+
+            var item_pic_h = ($(".item_pic").width() * 26) / 32;
+            $(".item_pic").height(item_pic_h);
+            cart.ref();
+            cart2.ref();
+            $(".car_count").text(parseInt(osum.totalNumber) + parseInt(osum2.totalNumber));
+        }
+    </script>
+</head>
+<body>
+    <div class="back">
+        <img src="../images/back.png" />
+    </div>
+    <div class="pic">
+        <img class="item_pic" src="../images/dg01.jpg" />
+    </div>
+    <div class="content">
+        <div class="item_name">
+            <div class="item_text">忌廉水果蛋糕</div>
+            <div class="item_p">
+                68元/磅
+            </div>
+        </div>
+        <div class="item_price">
+            <div class="field_text">价格：</div>
+            <div class="price">￥</div>
+            <div class="price1">68.00</div>
+        </div>
+        <div class="item_stock">
+            <div class="field_text">库存：</div>
+            <div class="stock">10</div>
+        </div>
+        <div class="item_from">
+            <div class="field_text">来源：</div>
+            <div class="from">屋企餐厅</div>
+        </div>
+        <div class="item_maxcount">
+            <div class="field_text">限购：</div>
+            <div class="maxcount">10</div>
+        </div>
+        <div class="item_breed">
+            <div class="field_text">品种：</div>
+            <div class="breed breed1" no="1">
+                忌廉水果蛋糕
+            </div>
+            <div class="breed breed0" no="2">
+                黑森林栗子蛋糕
+            </div>
+        </div>
+        <div class="item_norms">
+            <div class="field_text">份量：</div>
+            <div class="norms norms1" no="1">
+                1磅                 
+            </div>
+            <div class="norms norms0" no="2">
+                1.5磅                    
+            </div>
+            <div class="norms norms0" no="3">
+                2磅               
+            </div>
+        </div>
+        <div class="item_count">
+            <div class="field_text" style="padding-top: 9px;">数量：</div>
+            <div class="set_count">
+                <div class="subtract"></div>
+                <div class="count">
+                    <input id="count" type="text" value="1" style="width: 50px; text-align: center" /></div>
+                <div class="add"></div>
+            </div>
+        </div>
+
+        <div style="clear: both"></div>
+    </div>
+    <div class="sp">
+        <table cellspacing="0" cellpadding="0">
+            <tr>
+                <td>&nbsp;</td>
+            </tr>
+        </table>
+    </div>
+    <div class="item_rule">
+        <div class="rule_img">
+            <img src="../images/rule.png" />
+        </div>
+        <div class="rule_text">产品说明</div>
+        <div class="rule_detail">
+            制作时间：周一至周五6:45—13:00<br />
+            制作数量：周一至周五每天接受预订20个蛋糕<br />
+            预订时间：提前1天<br />
+            领取时间：与现时原有网购系统的时间一致<br />
+        </div>
+    </div>
+    <div style="clear: both"></div>
+    <div class="bottom_div">&nbsp;</div>
+    <div class="bottom_btn">
+        <div class="order_link btn_order">
+            <div class="btn_order_img">
+                <img src="../images/order01.png" />
+            </div>
+            <div class="btn_order_text">我的订单</div>
+        </div>
+        <div class="car_link btn_car">
+            <div class="btn_car_img">
+                <div class="car_count">0</div>
+                <img class="img_car_img" src="../images/car01.png" />
+            </div>
+            <div class="btn_car_text">购物车</div>
+        </div>
+        <div class="btn_add_car">放入购物车</div>
+    </div>
+</body>
+</html>

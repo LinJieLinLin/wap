@@ -1,0 +1,181 @@
+﻿.back
+{
+    height:39px;
+    border-bottom:1px solid #ff6633;
+    background-color: #ffffff;
+}
+.back_img
+{
+    float:left;
+    padding-left:15px;
+    font-weight:900;
+    margin-top:6px;
+    color: #ff6633;
+    padding-right:5px;
+}
+.back_text
+{
+    float:left;
+    font-size:15px;
+    font-weight:bold;
+    margin-top:7px;
+    color: #ff6633;
+}
+.content {
+    margin-top:10px;
+}
+.user_list {
+
+}
+.user {
+    background-color:#ffffff;
+    margin-bottom:10px;
+}
+.user_title {
+
+}
+.user_title_pl {
+    float:left;
+}
+.user_title_left {
+    float:left;
+    padding:8px 0px;
+    font-size:12px;
+    
+}
+.user_title_right {
+    float:right;
+    padding:8px 0px;
+}
+.user_title_pr {
+    float:right;
+}
+.user_info {
+
+}
+.user_info_pic {
+    width:34%;
+    float:left;
+}
+.user_info_pic img {
+    width:100%;
+}
+.user_info_des {
+    width:52%;
+    float:right;
+    font-size:11px;
+}
+.user_info_des1 {
+}
+.user_info_des2 {
+    color: #ff6633; 
+    font-size: 10px; 
+    width: 80%; 
+    float: left;
+    height:42px;
+}
+.show_time {
+    /*position:absolute;
+    z-index:30;*/
+    float:right;
+    width:19%;
+    text-align:right;
+    padding-top:20px;
+}
+
+.date_select
+{
+	margin-top:10px;
+	background-color:#ff6633;
+	font-size:13px;
+	font-weight:bold;
+	width:100%;
+	height:33px;
+}
+.prev_date
+{
+	width:15%;
+	float:left;
+	padding:8px 0px 7px 0px;
+}
+
+.date_text
+{
+	width:70%;
+	float:left;
+	text-align:center;
+	padding:9px 0px;
+	color:#ffffff;
+}
+
+.next_date
+{
+	width:15%;
+	float:left;
+	text-align:right;
+	padding:8px 0px 7px 0px;
+}
+
+
+.time_select
+{
+	margin-top:10px;
+	background-color:#ffffff;
+	border-bottom:1px solid #cccccc;
+	border-top:1px solid #cccccc;
+}
+.times_text
+{
+	font-size:10px;
+	margin-top:12px;
+    color:#ff6633;
+}
+
+.times
+{
+	font-size:15px;
+    float:left;
+    padding:0px 25px;
+}
+.time
+{
+	text-align:center;
+	border-radius:5px;
+	float:left;
+	background-color:#ffffff;
+	height:19px;
+	width:25%;
+	padding:11px 0px 10px 0px;
+	margin:10px;
+}
+/**可选择*/
+.time_0
+{
+	border:1px solid #ff6633;
+	color:#ff6633;
+}
+/**选中*/
+.time_1
+{
+	border:1px solid #ff6633;
+	color:#ffffff;
+	background-color:#ff6633;
+}
+/**灰色不可选择*/
+.time_2
+{
+	border:1px solid #cccccc;
+	color:#cccccc;
+}
+.spName {
+    color:#ff6633;
+}
+.spPreson {
+    color:#ff6633;
+}
+.spOrderDate {
+    color:#ff6633;
+}
+.spOrderTime {
+    color:#ff6633;
+}

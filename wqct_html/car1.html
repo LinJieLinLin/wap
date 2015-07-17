@@ -1,0 +1,288 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+    <title>屋企餐厅</title>
+    <link href="../styles/public.css" rel="stylesheet" />
+    <script src="../scripts/jquery.min.js"></script>
+    <script src="../scripts/public.js"></script>
+    <script src="../scripts/shoppingcar.js"></script>
+    <link href="car1.css" rel="stylesheet" />
+    <script type="text/javascript">
+        $(function () {
+            //location.href = 'car2.html';
+            //pageInit();
+            loadData();
+            
+        });
+
+        function loadData() {
+            var ids1 = cart.getvalues('id');
+            var counts1 = cart.getvalues('num');
+            var dates1 = cart.getvalues('odate');
+            var ids2 = cart2.getvalues('id');
+            var counts2 = cart2.getvalues('num');
+            var dates2 = cart2.getvalues('odate');
+            var car_list = "";
+            $(".car_list").html("");
+
+
+            var JsonData = { m: 'foodquerybyfids', FIds: ids1, FCounts: counts1, Dates: dates1 };
+            //console.log(JSON.stringify(JsonData));
+            ajax(JsonData, function (result) {
+                console.log("result.length=" + result.length);
+                var temp_date = '';
+                $.each(result, function (i, o) {
+                    if (temp_date != o.OrderDate) {
+                        temp_date = o.OrderDate;
+                        //添加一行日期
+                        car_list += '<div class="order_date">'+o.OrderDate+'&nbsp;'+o.WeekDay+'</div>';
+                    }
+                    car_list += '<div class="car_item">';
+                    car_list += '    <div class="item_img">';
+                    car_list += '        <img class="img" src="' + o.FPicture + '" /></div>';
+                    car_list += '    <div class="item_sp">&nbsp;</div>';
+                    car_list += '    <div class="item_content">';
+                    car_list += '        <div class="item_name">' + o.FName + '</div>';
+                    car_list += '        <div class="item_from">来源：' + o.FSourceFrom + '</div>';
+                    car_list += '        <div class="item_stock">库存：' + o.FRemainCount + '</div>';
+                    car_list += '        <div class="item_price">';
+                    car_list += '            <div class="item_price_tag">￥</div>';
+                    car_list += '            <div class="item_price_value">' + o.FPrice.toFixed(2) + '</div>';
+                    car_list += '        </div>';
+                    car_list += '        <div class="item_set_count">';
+                    car_list += '            <div class="subtract" t="1" fid="' + o.FId + '" odate="' + o.OrderDate + '" ></div>';
+                    car_list += '            <div class="count"  ><input class="fcount" id="fcount' + o.FId + o.OrderDate + '"type="text" value="' + o.Fcount + '" /></div>';
+                    car_list += '            <div class="add" t="1" fid="' + o.FId + '" odate="' + o.OrderDate + '" ></div>';
+                    car_list += '        </div>';
+                    car_list += '    </div>';
+                    car_list += '     <div style="clear:both"></div>';
+                    car_list += '</div>';
+                    car_list += '<div class="line"></div>';
+                });
+                if (ids2 != null && ids2 != "" && ids2.length > 2) {
+                    JsonData = { m: 'hotfoodquerybyfids', FIds: ids2, FCounts: counts2, Dates: dates2 };
+                    console.log(JSON.stringify(JsonData));
+                    ajax(JsonData, function (result2) {
+                        //console.log(JSON.stringify(result2));
+
+                        $.each(result2, function (i, o) {
+                            car_list += '<div class="car_item">';
+                            car_list += '    <div class="item_img">';
+                            car_list += '        <img class="img" src="' + o.FPicture + '" /></div>';
+                            car_list += '    <div class="item_sp">&nbsp;</div>';
+                            car_list += '    <div class="item_content">';
+                            car_list += '        <div class="item_name">' + o.FName + '</div>';
+                            car_list += '        <div class="item_from">来源：屋企餐厅</div>';
+                            car_list += '        <div class="item_stock">库存：' + o.FRemainCount + '</div>';
+                            car_list += '        <div class="item_price">';
+                            car_list += '            <div class="item_price_tag">￥</div>';
+                            car_list += '            <div class="item_price_value">' + o.FPrice.toFixed(2) + '</div>';
+                            car_list += '        </div>';
+                            car_list += '        <div class="item_set_count">';
+                            car_list += '            <div class="subtract" t="2" fid="' + o.FId + '" odate="' + o.OrderDate + '" ></div>';
+                            car_list += '            <div class="count"><input  class="fcount" id="fcount' + o.FId + o.OrderDate + '" type="text" value="' + o.Fcount + '" /></div>';
+                            car_list += '            <div class="add" t="2" fid="' + o.FId + '" odate="' + o.OrderDate + '" ></div>';
+                            car_list += '        </div>';
+                            car_list += '    </div>';
+                            car_list += '     <div style="clear:both"></div>';
+                            car_list += '</div>';
+                            car_list += '<div class="line"></div>';
+                        });
+                        $(".car_list").html(car_list);
+                        pageInit();
+                        refCount();
+                    }, function (result2) {
+
+                    });
+                } else {
+                    $(".car_list").html(car_list);
+                    pageInit();
+                    refCount();
+                }
+
+            }, function (result) {
+
+            });
+        }
+
+        function pageInit() {
+            $(".car_list").width(win_w);
+            $(".back_img").click(function () {
+                window.history.back();
+            });
+            $(".btn_go").click(function () {
+                var sumCount = (parseInt(osum.totalNumber) + parseInt(osum2.totalAmount));
+                if (sumCount > 0) {
+                    location.href = 'post1.html?' + urlParam;
+                }
+            });
+
+            //var screenImage = $(".img");
+            //var theImage = new Image();
+            //theImage.src = screenImage.attr("src");
+            //var imageWidth = theImage.width;
+            //var imageHeight = theImage.height;
+
+            $(".img").each(function (i, n) {
+                $(this).height($(this).width());
+            });
+
+            $(".btn_clear").click(carClear);
+
+            $(".subtract").click(function () {
+                var t = $(this).attr('t');
+                var fid = $(this).attr('fid');
+                var odate = $(this).attr('odate');
+                var fcount = $("#fcount" + fid+odate).val();
+                if (parseInt(fcount) > 1) {
+                    var newcount=parseInt(fcount) - 1;
+                    $("#fcount"+ fid+odate).val(newcount);
+                    if (t == '1') {
+                        cart.set(fid, odate, newcount);
+                    }
+                    if (t == "2") {
+                        cart2.set(fid, odate, newcount);
+                    }
+                } else {
+                    show_dialog("提示", "是否移出购物车?", null, '确认', function () {
+                        if (t == '1') {
+                            cart.del(fid, odate);
+                        }
+                        if (t == "2") {
+                            cart2.del(fid, odate);
+                        }
+
+                        hide_dialog();
+                    }, '返回', function () {
+                        hide_dialog();
+                    });
+                }
+                refCount();
+            });
+            $(".add").click(function () {
+                var t = $(this).attr('t');
+                var fid = $(this).attr('fid');
+                var odate = $(this).attr('odate');
+
+                var fcount = $("#fcount" + fid + odate).val();
+
+                var newcount = parseInt(fcount) + 1;
+                $("#fcount" + fid + odate).val(newcount);
+                if (t == '1') {
+                    cart.set(fid, odate, newcount);
+                }
+                if (t == "2") {
+                    cart2.set(fid, odate, newcount);
+                }
+                refCount();
+            });
+        }
+
+        function carClear() {
+            show_dialog("提示", "确认要清空吗？", function () { hide_dialog() }, "确认", function () {
+                $(".car_list").hide();
+                cart.clear();
+                cart2.clear();
+                refCount();
+                hide_dialog();
+            }, "取消", function () {
+                hide_dialog();
+            }
+            );
+        }
+    
+        function refCount() {
+            cart.ref();
+            cart2.ref();
+            var sumMoney = parseFloat(osum.totalAmount) + parseFloat(osum2.totalAmount);
+            var sumCount=(parseInt(osum.totalNumber) + parseInt(osum2.totalAmount));
+            $(".car_info1_money").text(sumMoney.toFixed(2));
+            $(".car_info2").text('已选:' + sumCount);
+
+            if (sumCount == 0) {
+                var h = $("#cart_null").height();
+                $("#cart_null").css('top', ((win_h - h) / 2) + 'px');
+                $("#cart_null").show();
+            }
+        }
+        </script>
+</head>
+<body>
+    <div class="back">
+        <div class="back_img">
+            <img src="../images/back03.png" /></div>
+        <div class="back_text">返回</div>        
+    </div>
+    
+    <div class="car_list">
+        <div class="order_date">2015-07-15 星期三</div>
+        <div class="car_item">
+            <div class="item_img">
+                <img class="img" src="../images/dhj02.png" /></div>
+            <div class="item_sp">&nbsp;</div>
+            <div class="item_content">
+                <div class="item_name">北方大包</div>
+                <div class="item_from">来源：屋企农场</div>
+                <div class="item_stock">库存：10</div>
+                <div class="item_price">
+                    <div class="item_price_tag">￥</div>
+                    <div class="item_price_value">20.00</div>
+                </div>
+                <div class="item_set_count">
+                    <div class="subtract" t="0" fid="0" odate="" ></div>
+                    <div class="count"><input  class="fcount" id="fcount1"type="text" value="0" /></div>
+                    <div class="add" t="0" fid="0" odate="" ></div>
+                </div>
+            </div>
+             <div style="clear:both"></div>
+        </div>
+        <div class="line"></div>
+        <div class="car_item">
+            <div class="item_img">
+                <img class="img" src="../images/dhj02.png" /></div>
+            <div class="item_sp">&nbsp;</div>
+            <div class="item_content">
+                <div class="item_name">北方大包</div>
+                <div class="item_from">来源：屋企农场</div>
+                <div class="item_stock">库存：10</div>
+                <div class="item_price">
+                    <div class="item_price_tag">￥</div>
+                    <div class="item_price_value">20.00</div>
+                </div>
+                <div class="item_set_count">
+                    <div class="subtract"></div>
+                    <div class="count"><input class="fcount"  id="fcount2"type="text" value="0" /></div>
+                    <div class="add"></div>
+                </div>
+            </div>
+             <div style="clear:both"></div>
+        </div>
+        <div class="line"></div>
+    </div>
+
+    <div class="bottom_btn">
+
+        <div class="btn_clear">
+            <div class="btn_clear_img">
+                <img src="../images/delete.png" /></div>
+            <div class="btn_clear_text">清空</div>
+        </div>
+        <div class="car_info">
+            <div class="car_info1">共计:<span class="car_info1_money">69.00</span><span class="car_info1_unit">元</span></div>
+            <div class="car_info2">已选:4</div>
+        </div>
+        <div class="btn_go">去结算</div>
+    </div>
+
+    <div id="cart_null" style="display:none; position:absolute; z-index:2; text-align:center; width:100%;">
+        <div>
+            <img src="../images/cart_null.png" /></div>
+        <div style="font-size:12px; color:#666666; text-align:center;">
+            空空如也~<br />
+            快去购物吧！
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,111 @@
+﻿.index_head
+{
+    margin: 0px;
+    padding: 0px;
+    height: 43px;
+    vertical-align: middle;
+    background-color: #ffffff;
+}
+
+.logo
+{
+    margin-top: 10px;
+    margin-left: 10px;
+    float: left;
+}
+
+.user_info
+{
+    margin-top: 17px;
+    margin-right: 10px;
+    float: right;
+    color: #666666;
+	font-size:12px;
+}
+
+.slides
+{
+    margin: 0px;
+}
+
+.ad img
+{
+            
+}
+.slides_index
+{
+    text-align:center;
+    position:absolute;
+    z-index:30;
+    margin-top: -20px;
+    width: 100%;
+}
+
+.apps
+{
+    height: 142px;
+    background-color: #ffffff;
+}
+
+.app
+{
+    width: 25%;
+    float: left;
+    text-align: center;
+}
+
+.app_img
+{
+    margin-top: 15px;
+}
+
+.app_text
+{
+    color: #333333;
+}
+.show_pic
+{
+	background-color:#ffffff;
+	padding-top:12px;
+}
+
+.left_pic
+{
+    width: 60%;
+    float: left;
+}
+
+.big_pic
+{
+	padding-right: 4px;
+}
+
+    .big_pic img
+    {
+        width: 100%;
+    }
+
+.right_pic
+{
+    width: 40%;
+    float: right;
+}
+.small_pic
+{
+    vertical-align: top;
+}
+
+.small_pic img
+{
+    width: 100%;
+	padding-right: 4px;
+}
+
+.bottom_pic
+{
+}
+
+.bottom_pic img
+{
+    width: 100%;
+}

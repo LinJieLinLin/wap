@@ -1,0 +1,393 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+    <title>屋企餐厅</title>
+    <link href="../styles/public.css" rel="stylesheet" />
+    <script src="../scripts/jquery.min.js"></script>
+    <script src="../scripts/public.js"></script>
+    <script src="../scripts/datepicker/picker.js"></script>
+    <script src="../scripts/datepicker/picker.date.js"></script>
+    <script src="../scripts/datepicker/legacy.js"></script>
+    <script src="../scripts/datepicker/zh_CN.js"></script>
+    <link href="../scripts/datepicker/themes/default.css" rel="stylesheet" />
+    <link href="../scripts/datepicker/themes/default.date.css" rel="stylesheet" />
+    <script src="../scripts/shoppingcar.js"></script>
+    <link href="index1.css" rel="stylesheet" />
+    <script type="text/javascript">
+        var ftid = 1;
+    </script>
+    <script type="text/javascript">
+        $(function () {
+            //console.log("page-function");
+            var select_date = utils.getParam("select_date");
+            var i = dateCompare(date, select_date);
+            if (i < 0) {
+                $("#date").val(select_date);
+            } else {
+                $("#date").val(date);
+            }
+            utils.setParam("select_date", $("#date").val());
+            $("#date").change(function () {
+                utils.setParam("select_date", $("#date").val());
+                loadType();
+            });
+
+            ajax({ m: 'userquerybyportal2',PortalType:'wx'}, function (result) {
+                utils.setParam("userinfo", JSON.stringify(result));
+            }, function (result) {
+
+            });
+
+            ajax({ m: 'foodorderrulequery' }, function (result) {
+                utils.setParam("foodorderrulequery", JSON.stringify(result));
+                var dates = JSON.parse(result.CanOrderDates);//获取可预订的日期
+                $('.datepicker').pickadate({
+                    disable: dates
+                });
+
+                loadType();
+            }, function (result) {
+
+            });
+        });
+
+        function pageInit() {
+            //类别处理
+            var type_count = $(".type").length;
+            var type_w = (win_w - (type_count)) / type_count;
+            $(".type").width(type_w);
+            $(".type").click(function () {
+                $(".type").each(function (i, n) {
+                    $(n).removeClass('type_now');
+                });
+                $(this).addClass('type_now');
+                if (ftid != $(this).attr("ftid")) {
+                    ftid = $(this).attr("ftid");
+                }
+                typeChange();
+            });
+            //上两个图标的宽度与图片一致
+            var w1 = $(".item_name").parent().width();
+            $(".item_name").width(w1);
+
+            itemLocationInit();
+            $(".back").click(function () {
+                location.href = "../home/index.html";
+            });
+            $(".item").click(function () {
+                var fid = $(this).attr("fid");
+                urlParam = replaceParam(urlParam, 'fid', +fid);
+                urlParam = replaceParam(urlParam, 'ftid', ftid);
+                location.href = "detail1.html?" + urlParam;
+            });
+
+            $(".small").click(function () {
+                var fid = $(this).attr("fid");
+                urlParam = replaceParam(urlParam, 'fid', +fid);
+                urlParam = replaceParam(urlParam, 'ftid', ftid);
+                location.href = "detail1.html?" + urlParam + "&fid=" + fid + '&ftid=' + ftid;
+            });
+
+            $(".order_link").click(function () {
+                location.href = "order1.html?" + urlParam;
+            });
+            $(".car_link").click(function () {
+                location.href = "car1.html?" + urlParam;
+            });
+            $(".line0").width($(".line").width() - 6);
+
+            var img_car_img_w = $(".img_car_img").offset().left+13;
+            $(".car_count").css("left", img_car_img_w + 'px');
+
+            cart.ref();
+            cart2.ref();
+            $(".car_count").text(parseInt(osum.totalNumber) + parseInt(osum2.totalNumber));
+        }
+    </script>
+
+    <script type="text/javascript">
+        function loadType() {
+            date = $("#date").val();
+            var JsonData = { m: 'foodtypequery', FtId: -1 };
+            ajax(JsonData,
+            function (result) {
+                //console.log(JSON.stringify(result));
+                utils.setParam("foodtypequery", JSON.stringify(result));
+                var types = '';
+                $.each(result, function (i, o) {
+                    if (i == 0) {
+                        ftid = o.FtID;
+                        types += '<div class="type type_now" ftid="' + o.FtID + '"><div class="type_text">' + o.FtName + '</div> </div><div class="type_line"><div></div></div>'
+                    }
+                    else {
+                        if (i == (result.length - 1)) {
+                            types += '<div class="type" ftid="' + o.FtID + '"><div class="type_text">' + o.FtName + '</div></div>'
+                        } else {
+                            types += '<div class="type" ftid="' + o.FtID + '"><div class="type_text">' + o.FtName + '</div></div><div class="type_line"><div></div></div>'
+                        }
+                    }
+                });
+                if (types.length > 0) {
+                    $(".types").html(types);
+                }
+                loadItem();
+            }, function () {
+
+            });
+        }
+        function loadItem() {
+            date = $("#date").val();
+            if (ftid != 65536) {
+                var JsonData = { m: 'foodquerybyftid', FtId: ftid, OrderBy: '', Sort: '' };
+            } else {
+                var JsonData = { m: 'hotfoodquerybyftid', FtId: -1, OrderBy: '', Sort: '' };
+            }
+            ajax(JsonData,
+            function (result) {
+                var small_pic1 = '';
+                var small_pic2 = '';
+                var items = '';
+
+                if (result != null && result.FoodList !=null&& result.FoodList.length > 0) {
+                    $.each(result.FoodList, function (i, o) {
+                        if (i == 0) {
+                            small_pic1 = '<img class="small_img"  src="' + o.FPicture + '" onerror="this.src=\'../images/no_pic.png\'"  />'
+                        +'<div class="item_name">'
+                            +'<div class="item_name_text">'+o.FName+'</div>'
+                            +'<div class="item_name_img"><img src="../images/go.png"/></div>'
+                            +'<div class="item_name_price">点击预订</div>'
+                        + '</div>';
+                            $(".small_pic1").attr('fid', o.FId);
+                        }else if (i == 1) {
+                            small_pic2 = '<img class="small_img" src="' + o.FPicture + '" onerror="this.src=\'../images/no_pic.png\'"  />'
+                        + '<div class="item_name">'
+                            + '<div class="item_name_text">' + o.FName + '</div>'
+                            + '<div class="item_name_img"><img src="../images/go.png" /></div>'
+                            + '<div class="item_name_price">点击预订</div>'
+                        + '</div>';
+                            $(".small_pic2").attr('fid', o.FId);
+                        } else {
+                            var isHot = 0;
+                            var isNew = 0;
+
+                            var item_tag_img = '';
+                            if (isHot == 1) {
+                                item_tag_img='<img src="../images/hot.png" />'
+                            }
+                            if (isNew == 1) {
+                                item_tag_img = '<img src="../images/new.png" />'
+                            }
+                            items += '<div class="item" fid="'+o.FId+'"><div class="item_tag ">' + item_tag_img + '</div>'
+                            + '<div class="item_img"><img src="' + o.FPicture + '" onerror="this.src=\'../images/no_pic.png\'"  /></div>'
+                            + '<div class="item_text">'
+                                + '<div class="item_name_text">' + o.FName + '</div>'
+                                + '<div class="item_name_price">' + o.FPrice.toFixed(2) + '/' + o.FUnit + '</div>'
+                            + '</div>'
+                            + '</div>';
+                        }
+                    });
+                }
+                items += '<div style="clear: both"></div><div class="bootom">&nbsp;</div>';
+
+                $(".small_pic1").html(small_pic1);
+                $(".small_pic2").html(small_pic2);
+                $(".items").html(items);
+
+                pageInit();
+            }, function () {
+
+            });
+
+        }
+        function typeChange() {
+            $(".date").show();
+            if (ftid == 1) {
+                $(".big_pic").find('img').attr('src', '../images/md.png');
+            }
+            if (ftid == 3) {
+                $(".big_pic").find('img').attr('src', '../images/sc.png');
+            }
+            if (ftid == 4) {
+                $(".big_pic").find('img').attr('src', '../images/rl.png');
+            }
+            if (ftid == 65536) {
+                $(".big_pic").find('img').attr('src', '../images/ss.png');
+                $("#date").val(today);
+                $(".date").hide();
+
+                ajax({ m: 'hotfoodorderrulequery' }, function (result) {
+                    utils.setParam("hotfoodorderrulequery", JSON.stringify(result));
+                }, function (result) {
+
+                });
+            }
+
+            loadItem();
+        }
+        //产品图片位置初始化
+        function itemLocationInit() {
+            $(".small_img").each(function (i, n) {
+                //var h = ($(this).width() * 18) / 33;
+                //$(this).height(h);
+                var h = $(".big_pic img").height();
+                var h = (h / 2)-12;
+                $(this).height(h);
+                $(this).width(h);
+
+            });
+            $(".item").each(function (i, n) {
+                //0开始
+                $(n).removeClass("m_rl_10");
+                $(n).removeClass("m_l_10");
+                $(n).removeClass("m_r_10");
+                if (ftid == 1) {//每行三个，1，4，7，10
+                    //alert((i % 3)+1); 
+                    if ((i % 3) == 1)//每行的第二个
+                    {
+                        $(n).addClass("m_rl_10");
+                    }
+                } else {
+                    if (i % 2 == 0) {//第一个
+                        $(n).addClass("m_r_10");
+                    } else {//第二个
+                        $(n).addClass("m_l_10");
+                    }
+                }
+            });
+
+            var content_w = win_w - 20;//内容宽度
+            if (ftid == 1) {
+                var item_w = (content_w - 20) / 3;
+            } else {
+                var item_w = (content_w - 20) / 2;
+            }
+
+            $(".item").width(item_w);
+            $(".item_img img").each(function (i, n) {
+                //var h = ($(this).width() * 115) / 95;
+                //$(this).height(h);
+                var w = $(".item_img").width();
+                $(this).height(w);
+                $(this).width(w);
+            });
+
+            //下面图标的宽度与图片一致
+            var w2 = $(".item_text").parent().width();
+            $(".item_text").width(w2);
+
+            //产品标签添位置处理
+            $(".item_tag").each(function (i, n) {
+                var img = $(n).next();
+                var img_left = $(img).offset().left;
+                var img_w = $(img).width();
+                var tag_left = img_left + img_w - 21;
+                $(n).css("left", tag_left + 'px');
+            });
+            $(".big_pic").click(function () {
+                show_rule();
+            });
+        }
+    </script>
+
+    <script type="text/javascript">
+        function show_rule() {
+            var title = '预定规则';
+            var content = '<div style="line-height:20px;">'
+            + '<div style="color: #ff6633; font-size: 16px;">预订时间：</div>'
+            + '<div style="font-size: 12px;">'
+                + '面点、蔬菜、肉类（可预订一周内订单）<br />'
+                + '工作日16:30之前<br />'
+            + '</div>'
+            + '<div style="color: #ff6633; font-size: 16px;">领取时间：</div>'
+            + '<table style="border: 0px; width: 100%; font-size: 12px" cellspacing="0" cellpadding="0">'
+                + '<tr>'
+                    + '<td style="text-align: left;">周一至周四</td>'
+                    + '<td style="text-align: right;">17:30-19:30</td>'
+                + '</tr>'
+                + '<tr>'
+                    + '<td style="text-align: left;">周五</td>'
+                    + '<td style="text-align: right;">17:00-19:30</td>'
+                + '</tr>'
+            + '</table>'
+            + '<div style="color: #ff6633; font-size: 16px;">领取方式：</div>'
+            + '<div style="font-size: 12px;">'
+                + '请在领取时间内凭短信、工卡到<span style="color: #ff6633; font-size: 14px;">南郡楼3楼风味餐厅</span>登记领取，逾期不取则视为自动放弃。'
+            + '</div>'
+        + '</div>';
+
+            show_dialog(title, content, function () {
+                hide_dialog();
+            }
+            );
+        }
+    </script>
+</head>
+<body style="background-color: #f7f8ef;">
+    <div class="back">
+        <div class="back_img">
+            <img src="../images/back02.png" />
+        </div>
+        <div class="back_text">屋企餐厅</div>
+    </div>
+    <div class="types">
+        
+    </div>
+    <div class="content">
+        <div class="date">
+            <center>
+            <table class="date_table" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td ><div class="date_img"><img src="../images/date.png" /></div></td>
+                    <td ><div class="date_text"><input type="text" class="datepicker" id="date" value="2015-07-13" style="background-color:#f7f8ef; color:#ff6633;" />
+                       </div></td>
+                </tr>
+            </table>
+            </center>
+        </div>
+        <div class="line">
+            <div class="dot1"></div>
+            <div class="line0"></div>
+            <div class="dot2"></div>
+        </div>
+        <div class="show_pic">
+            <table style="width: 100%;" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td class="big_pic" rowspan="2" style="width: 45%; padding-right: 5px;">
+                        <img src="../images/md.png" />
+                    </td>
+                    <td class="small small_pic1" fid="0">
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td class="small small_pic2" fid="0">
+                       
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="items">
+            
+            <div style="clear: both"></div>
+            <div class="bootom">&nbsp;</div>
+        </div>
+    </div>
+    <div class="bottom_btn">
+        <div class="order_link">
+            <div class="img_order">
+                <img src="../images/order01.png" />
+            </div>
+            <div class="btn_order">我的订单</div>
+        </div>
+        <div class="car_link">
+            <div class="btn_car">购物车</div>
+            <div class="img_car">
+                <div class="car_count">0</div>
+                <img class="img_car_img" src="../images/car01.png" />
+            </div>
+        </div>
+    </div>
+</body>
+</html>

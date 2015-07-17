@@ -1,0 +1,10 @@
+E:\WebApplication\wap\wap\bin\wap.dll
+E:\WebApplication\wap\wap\bin\wap.pdb
+E:\WebApplication\wap\wap\obj\Debug\wap.dll
+E:\WebApplication\wap\wap\obj\Debug\wap.pdb
+E:\WebApplication\wap\wap\obj\Debug\wap.csprojResolveAssemblyReference.cache
+E:\WebApplication\wap\bin\wap.dll
+E:\WebApplication\wap\bin\wap.pdb
+E:\WebApplication\wap\obj\Debug\wap.csprojResolveAssemblyReference.cache
+E:\WebApplication\wap\obj\Debug\wap.dll
+E:\WebApplication\wap\obj\Debug\wap.pdb

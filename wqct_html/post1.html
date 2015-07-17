@@ -1,0 +1,290 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+    <title>屋企餐厅</title>
+    <link href="../styles/public.css" rel="stylesheet" />
+    <script src="../scripts/jquery.min.js"></script>
+    <script src="../scripts/public.js"></script>
+    <script src="../scripts/shoppingcar.js"></script>
+    <link href="post1.css" rel="stylesheet" />
+    <script type="text/javascript">
+        var OrderNo = "";
+        var res1 = {};
+        var res2 = {};
+        $(function () {
+            var ids1 = cart.getvalues('id');
+            var counts1 = cart.getvalues('num');
+            var dates1 = cart.getvalues('odate');
+            var ids2 = cart2.getvalues('id');
+            var counts2 = cart2.getvalues('num');
+            var dates2 = cart2.getvalues('odate');
+            var car_list = "";
+
+            if (ids2 != null) {
+                if ((ids1 == null || ids1.length < 3) && ids2.length > 2) {//熟食
+                    $(".car_gettime").show();
+                    var rule = utils.getParam("hotfoodorderrulequery");
+                    var rule_obj = JSON.parse(rule);
+                    $.each(rule_obj.GetTimes, function (index, time) {
+                        var options = "<option value='" + time + "'>" + time + "</option>"
+                        $("#gettime").append(options);
+                    });
+                }
+            } else {
+                $(".car_gettime").hide();
+            }
+
+            var userinfo = utils.getParam("userinfo");
+            var userinfo_obj = JSON.parse(userinfo);
+
+            $(".user_text").text(userinfo_obj.UserName);
+            $(".phone_text").text(userinfo_obj.PhoneNo);
+
+            $(".list").html("");
+            var list = '';
+            var JsonData = { m: 'foodquerybyfids', FIds: ids1, FCounts: counts1, Dates: dates1 };
+            console.log(JSON.stringify(JsonData));
+            ajax(JsonData, function (result) {
+                console.log("result.length=" + result.length);
+                res1 = result;
+                $.each(result, function (i, o) {
+                    list += '<table cellspacing="0" cellpadding="0" class="car_list"><tr>';
+                    list += '    <td class="car_item1">';
+                    list += '        <div class="item_img">';
+                    list += '            <img style="width:67px; height:67px;" src="' + o.FPicture + '" />';
+                    list += '        </div>';
+                    list += '        <div class="item_content">';
+                    list += '            <div class="item_c_name">' + o.FName + '</div>';
+                    list += '            <div class="item_c_from">来源：' + o.FSourceFrom + '</div>';
+                    list += '            <div class="item_c_price">￥' + o.FPrice.toFixed(2) + '</div>';
+                    list += '        </div>';
+                    list += '    </td>';
+                    list += '    <td class="car_item2">';
+                    list += '        <span style="vertical-align: middle">x1</span>';
+                    list += '    </td>';
+                    list += '</tr></table>';
+                });
+                if (ids2 != null && ids2 != "" && ids2.length > 2) {
+                    JsonData = { m: 'hotfoodquerybyfids', FIds: ids2, FCounts: counts2, Dates: dates2 };
+                    console.log(JSON.stringify(JsonData));
+                    ajax(JsonData, function (result2) {
+                        res2 = result2;
+                        $.each(result2, function (i, o) {
+                            list += '<table cellspacing="0" cellpadding="0"  class="car_list"><tr>';
+                            list += '    <td class="car_item1">';
+                            list += '        <div class="item_img">';
+                            list += '            <img  style="width:67px; height:67px;" src="' + o.FPicture + '" />';
+                            list += '        </div>';
+                            list += '        <div class="item_content">';
+                            list += '            <div class="item_c_name">' + o.FName + '</div>';
+                            list += '            <div class="item_c_from">来源：屋企餐厅</div>';
+                            list += '            <div class="item_c_price">￥' + o.FPrice.toFixed(2) + '</div>';
+                            list += '        </div>';
+                            list += '    </td>';
+                            list += '    <td class="car_item2">';
+                            list += '        <span style="vertical-align: middle">x1</span>';
+                            list += '    </td>';
+                            list += '</tr></table>';
+                        });
+                        $(".list").html(list);
+                    }, function (result2) {
+
+                    });
+                } else {
+                    $(".list").html(list);
+                }
+                pageInit();
+                refCount();
+            }, function (result) {
+
+            });
+
+            OrderNo = getTimeStr() + Math.floor(Math.random() * 9999 + 1000);
+        });
+        function pageInit() {
+            $(".back_img").click(function () {
+                window.history.back();
+            });
+            $(".car_item2").height($(".car_item1").height());
+            $(".car_item2").css("line-height", $(".car_item1").height() + 'px');
+            $(".btn_post").click(postCheck);
+        }
+        function postCheck() {
+            var sumMoney = parseFloat(osum.totalAmount) + parseFloat(osum2.totalAmount);
+            var title = '订单确认';
+            var content = '以下为您购买的商品信息，请确认<br />'
+                + '<table style="width:100%; line-height:20px; text-align:left;">';
+            content += '<tr style="border-bottom:1px solid #666666;"><th style="width:60%;">商品名称</th><th style="width:20%;">单价</th><th style="width:20%;">数量</th></tr>';
+
+            $.each(res1, function (i, o) {
+                content += '<tr><td>' + o.FName + '</td><td>' + o.FPrice.toFixed(2) + '</td><td>' + o.Fcount + '</td></tr>';
+            });
+            $.each(res2, function (i, o) {
+                content += '<tr><td>' + o.FName + '</td><td>' + o.FPrice + '</td><td>' + o.Fcount + '</td></tr>';
+            });
+
+            content += '</table>';
+            content += '<div style="width:100%; font-size:12px; color:#ff6633;">共计' + sumMoney.toFixed(2) + '元</div>';
+
+            var btn1 = '确认';
+            var btn2 = '返回';
+
+            if (!$(".car_gettime").is(":hidden")) {
+                var gettime = $("#gettime").val();
+                if (gettime == "请选择") {
+                    Alert("请选择领取时间");
+                    return;
+                }
+            }
+
+            show_dialog(title, content, function () {
+                //Alert("关闭");
+                hide_dialog();
+            },
+                btn1, function () {
+                    var ids1 = cart.getvalues('id');
+                    var counts1 = cart.getvalues('num');
+                    var dates1 = cart.getvalues('odate');
+                    var ids2 = cart2.getvalues('id');
+                    var counts2 = cart2.getvalues('num');
+                    var dates2 = cart2.getvalues('odate');
+                    var JsonData = {};
+                    if (ids2 == null || ids2.length < 3) {
+                        JsonData = {
+                            m: "foodorderpost",
+                            PosID: OrderNo,
+                            FIds: ids1,
+                            FCounts: counts1,
+                            Dates: dates1
+                        };
+                    }
+
+                    if (ids1 == null || ids1.length < 3) {
+                        JsonData = {
+                            m: "hotfoodorderpost",
+                            PosID: OrderNo,
+                            FIds: ids2,
+                            FCounts: counts2,
+                            Dates: dates2,
+                            GetTime: gettime
+                        };
+                    }
+
+                    ajax(JsonData, function (result) {
+                        if (result.Id == 1) {
+                            cart.clear();
+                            cart2.clear();
+                            refCount();
+                            Alert("购买成功");
+                            location.href = 'order1.html?' + urlParam;
+                        } else {
+                            Alert(result.Msg);
+
+                        }
+                    }, function (result) {
+
+                    });
+
+                },
+                btn2,
+                function () {
+                    //Alert('返回');
+                    hide_dialog();
+                }
+            );
+        }
+
+        function refCount() {
+            cart.ref();
+            cart2.ref();
+            var sumMoney = parseFloat(osum.totalAmount) + parseFloat(osum2.totalAmount);
+            $(".car_sum_money").html("<span>" + sumMoney.toFixed(2) + "</span>");
+            $(".sum_price").html(sumMoney.toFixed(2));
+        }
+    </script>
+</head>
+<body>
+    <div class="back">
+        <div class="back_img">
+            <img src="../images/back03.png" />
+        </div>
+        <div class="back_text">返回</div>
+    </div>
+    <div class="user_info">
+        <div class="user_name">
+            <div class="user_text">姓名</div>
+            <div class="user_img">
+                <img src="../images/user.png" />
+            </div>
+        </div>
+        <div class="user_sp"></div>
+        <div class="user_phone">
+            <div class="phone_img">
+                <img src="../images/phone.png" />
+            </div>
+            <div class="phone_text">13902220076</div>
+        </div>
+    </div>
+
+    <div class="car_title">
+        <div class="car_title1">商品清单</div>
+        <div class="car_title2">共2件</div>
+    </div>
+    <div class="list">
+        <table cellspacing="0" cellpadding="0" class="car_list">
+            <tr>
+                <td class="car_item1">
+                    <div class="item_img">
+                        <img src="../images/dhj02.png" />
+                    </div>
+                    <div class="item_content">
+                        <div class="item_c_name">生日蛋糕</div>
+                        <div class="item_c_from">来源：屋企餐厅</div>
+                        <div class="item_c_price">￥68.00</div>
+                    </div>
+                </td>
+                <td class="car_item2">
+                    <span style="vertical-align: middle">x1</span>
+                </td>
+            </tr>
+        </table>
+
+        <table cellspacing="0" cellpadding="0" class="car_list">
+            <tr>
+                <td class="car_item1">
+                    <div class="item_img">
+                        <img src="../images/dhj02.png" />
+                    </div>
+                    <div class="item_content">
+                        <div class="item_c_name">生日蛋糕</div>
+                        <div class="item_c_from">来源：屋企餐厅</div>
+                        <div class="item_c_price">￥68.00</div>
+                    </div>
+                </td>
+                <td class="car_item2">
+                    <span style="vertical-align: middle">x1</span>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="car_sum">
+        <div class="car_sum_text"><span>商品金额</span></div>
+        <div class="car_sum_money"><span>￥69.00</span></div>
+    </div>
+    <div class="car_gettime">
+        <div class="car_gettime_text"><span>领取时间</span></div>
+        <div class="car_gettime_value"><select id="gettime">
+            <option selected="selected">请选择</option>
+                                       </select>
+        </div>
+    </div>
+    <div style="clear: both"></div>
+    <div style="height: 80px;">&nbsp;</div>
+    <div class="bottom_btn">
+        <div class="sum_money">实付款：<span class="sum_price">69.00</span><span class="sum_unit">元</span></div>
+        <div class="btn_post">提交订单</div>
+    </div>
+</body>
+</html>

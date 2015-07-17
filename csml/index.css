@@ -1,0 +1,198 @@
+﻿.back
+{
+    width:100%;
+    height:30px;
+    border-bottom:1px solid #ff6633;
+    background-color: #ffffff;
+}
+.back_img
+{
+    float:left;
+    font-size:14px;
+    padding-left:15px;
+    font-weight:900;
+    color: #ff6633;
+	padding:7px 0px 4px 15px;
+}
+.back_text
+{
+    float:left;
+    font-size:14px;
+    font-weight:bold;
+    color: #ff6633;
+	padding:7px 0px 7px 7px;
+}
+.content
+{
+	margin:25px 10px 0px 10px;
+	background-color:#ffffff;
+
+}
+.content_table
+{
+	width:100%;
+}
+.content_table tr
+{
+	
+}
+.td0
+{
+	line-height:15px;
+	background-color:#ff6633;
+	height:15px;
+}
+.td1
+{
+	font-size:15px;
+	color:#ff6633;
+	font-weight:bold;
+	text-align:right;
+	width:35%;
+	padding:8px 35px 8px 0px;
+}
+.td2
+{
+	font-size:13px;
+	color:#333333;
+	text-align:left;
+	width:65%;
+	padding:8px 0px 8px 0px;
+}
+.td3
+{
+	font-size:10px;
+	color:#ff0000;
+	width:100%;
+	text-align:center;
+	line-height:24px;
+}
+.td4
+{
+	font-size:15px;
+	color:#ff0000;
+	width:100%;
+	text-align:center;
+	line-height:40px;
+	height:40px;
+}
+.input_text_bottom
+{
+	border:1px solid #999999; 
+	border-top:none; 
+	height:3px; 
+	line-height:3px;
+    margin:0px 3px;
+}
+.car_number
+{
+	float:left;
+}
+.change_car
+{
+	float:left;
+	border:1px solid #ff6633;
+	padding:5px 10px;
+	color:#ff6633;
+}
+.car_site1
+{
+	float:left;
+}
+.car_site2
+{
+	float:left;
+}
+.key_number
+{
+}
+.service_list
+{
+
+}
+.service_item
+{
+	float:left;
+	padding-right:10px;
+}
+.service_img
+{
+	width:15px;
+	height:15px;
+	float:left;
+	padding:8px 0px 7px 0px;
+}
+.service_name
+{
+	float:left;
+	padding-left:5px;
+	padding:8px 0px 7px 4px;
+}
+.btn_post
+{
+	width:125px;
+	background-color:#ff6633;
+	color:#ffffff;
+	text-align:center;
+	height:14px;
+	padding:10px 43px 9px 43px;
+	border-radius:4px;
+}
+.h20
+{
+	line-height:20px;
+	height:20px;
+}
+.sp
+{
+	margin-top:20px;
+	background-image: url('../images/sp.png');
+	background-repeat: repeat-x;
+	height: 22px;
+	width: 100%;
+	background-color:#eeeeee;
+}
+
+.bottom_btn
+{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    height: 50px;
+    width: 100%;
+    background-color:#ffffff;
+    z-index:40;
+    border-top:1px solid #666666;
+}
+.img_back
+{
+    width: 25%;
+    float: left;
+    text-align:right;
+	padding:20px 0px;
+}
+.img_back img
+{
+    margin-right:10px;
+}
+.btn_back
+{
+    width: 24%;
+    text-align: left;
+    float: left;
+    color:#666666;
+    border-right:1px solid #cccccc;
+    font-size:14px;
+	padding:17px 0px;
+}
+
+.btn_order
+{
+    width: 50%;
+    float: right;
+    color:#666666;
+    font-size:14px;
+	padding:17px 0px;
+	text-align:center;
+
+}

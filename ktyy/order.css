@@ -1,0 +1,165 @@
+﻿.back
+{
+    height:39px;
+    border-bottom:1px solid #ff6633;
+    background-color: #ffffff;
+}
+.back_img
+{
+    float:left;
+    padding-left:15px;
+    font-weight:900;
+    margin-top:6px;
+    color: #ff6633;
+    padding-right:5px;
+}
+.back_text
+{
+    float:left;
+    font-size:15px;
+    font-weight:bold;
+    margin-top:7px;
+    color: #ff6633;
+}
+.content
+{
+    margin: 10px 10px 0px 10px;
+    width: 100%;
+    background-color: #ffffff;
+	padding:0px 10px;
+}
+.dates
+{
+	height:36px;
+	width:100%;
+}
+
+.begin_date
+{
+    float: left;
+    width: 45%;
+	font-size:14px;
+	color:#ff6633;
+	text-align:center;
+	padding:12px 0px 0px 0px;
+}
+	.begin_date span
+	{
+		padding-left:5px;
+	}
+
+.date_img
+{
+    width: 10%;
+	float:left;
+	text-align:center;
+	padding:10px 0px 4px 0px;
+}
+
+.end_date
+{
+    float: right;
+    width: 45%;
+	font-size:14px;
+	color:#ff6633;
+	text-align:center;
+	padding:12px 0px 0px 0px;
+}
+.end_date span
+{
+	padding-left:5px;
+}
+.lines
+{
+	height:3px;
+	width:100%;
+}
+.line
+{
+	width:40%;
+	height:3px;
+	margin-bottom:9px;	
+	float:left;
+}
+
+.dot1
+{
+	float:left;
+	height:3px;
+	width:3px;
+	background-image:url('../images/dot.png');
+}
+.line0
+{
+	height:1px;
+	width:100%;
+	float:left;
+	border-bottom:1px solid #dfdfdf;
+	margin-bottom:1px
+}
+.dot2
+{
+	float:right;
+	height:3px;
+	width:3px;
+	background-image:url('../images/dot.png');
+}
+.order
+{
+	padding:7px 0px 11px 0px;
+	background-color:#ffffff;
+}
+.order_list
+{
+	background-color:#fff0e0;
+	width:100%;
+}
+.order_list td
+{
+	padding:0px 10px;
+}
+.order_item
+{
+}
+.order_title
+{
+    width:100%;
+	background-color:#ff6633;
+	height:38px;
+	
+}
+.order_date
+{
+    float:left;
+	font-size:12px;
+	color:#ffffff;
+	padding:10px 0px 9px 4px;
+}
+.order_clear
+{
+	float:right;
+	font-size:11px;
+	padding:11px 5px 10px 0px;
+	color:#ffffff;
+}
+.item
+{
+	float:left;
+	padding:8px 0px 4px 0px;
+	width:100%;
+	background-color:#fff0e0;
+}
+.item_name
+{
+	float:left;
+	font-size:11px;
+}
+
+.sp
+{
+    background-image: url('../images/sp.png');
+    background-repeat: repeat-x;
+    height: 22px;
+    width: 100%;
+	margin:0px 10px 80px 10px;
+}

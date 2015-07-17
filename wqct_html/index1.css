@@ -1,0 +1,345 @@
+﻿.back
+{
+    width:100%;
+    height:30px;
+    border-bottom:1px solid #ff6633;
+    background-color: #ffffff;
+}
+.back_img
+{
+    float:left;
+    font-size:14px;
+    padding-left:15px;
+    font-weight:900;
+    color: #ff6633;
+	padding:7px 0px 4px 15px;
+}
+.back_text
+{
+    float:left;
+    font-size:14px;
+    font-weight:bold;
+    color: #ff6633;
+	padding:7px 0px 7px 7px;
+}
+.types
+{
+    width: 100%;
+    height: 40px;
+    background-color: #ffffff;
+}
+
+.type
+{
+    width: 24%;
+    float: left;
+    padding: 13px 0px;
+    border-bottom: 1px solid #cccccc;
+    color: #333333;
+}
+
+.type_now
+{
+    border-bottom: 1px solid #ff6633;
+    color: #ff6633;
+}
+
+.type_text
+{
+    float: left;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    font-size: 12px;
+    font-weight:bold;
+}
+.type_line
+{
+    float: left;
+    width: 1px;
+    height: 40px;
+	border-bottom:1px solid #cccccc;
+}
+.type_line div
+{
+	height:26px;
+	width:1px;
+	background-color:#cccccc;
+	margin:6px 0px;
+}
+.type_line_now
+{
+	border-bottom:1px solid #ff6633;
+}
+
+.content
+{
+    margin-left: 5px;
+    margin-right: 5px;
+	background-color:#f7f8ef;
+}
+
+.date
+{
+    height: 20px;
+    width: 100%;
+    text-align: center;
+    padding: 12px 0px 5px 0px;
+}
+
+.date_table
+{
+
+}
+
+.date_img
+{
+    text-align: right;
+}
+
+.date_text
+{
+    color: #ff6633;
+    font-size: 13px;
+    font-weight: bold;
+    text-align: left;
+    padding-left: 5px;
+}
+
+.line
+{
+	height:3px;
+	margin-bottom:9px;	
+}
+
+.dot1
+{
+	float:left;
+	height:3px;
+	width:3px;
+	background-image:url('../images/dot.png');
+}
+.line0
+{
+	height:1px;
+	width:100%;
+	float:left;
+	border-bottom:1px solid #dfdfdf;
+	margin-bottom:1px
+}
+.dot2
+{
+	float:right;
+	height:3px;
+	width:3px;
+	background-image:url('../images/dot.png');
+}
+.show_pic
+{
+        margin-bottom: 10px;
+}
+
+.item_name
+{
+    padding-top: 1px;
+    padding-bottom: 1px;
+    position: absolute;
+    z-index: 30;
+    color: #ffffff;
+    margin-top: -25px;
+    background: #000;
+    filter: alpha(Opacity=40);
+    -moz-opacity: 0.4;
+    opacity: 0.4;
+    font-size:11px;
+}
+
+.item_name_text
+{
+    float: left;
+    padding-left: 3px;
+    padding-top:3px;
+}
+
+.item_name_price
+{
+    float: right;
+    padding-top:3px;
+    padding-right: 3px;
+}
+
+.item_name_img
+{
+    float: right;
+    padding-right: 10px;
+	padding-top:2px;
+    text-align:center;
+}
+
+.left_pic
+{
+    width: 60%;
+    float: left;
+    padding-right: 2px;
+}
+
+.big_pic
+{
+    margin-bottom: 5px;
+    margin-right: 5px;
+}
+
+.big_pic img
+{
+    width: 100%;
+}
+
+.right_pic
+{
+    width: 40%;
+    float: right;
+}
+
+.small
+{
+}
+.small_pic1
+{
+    vertical-align: top;
+    text-align: center;
+    background-color: #ffffff;
+}
+
+.small_pic1 img
+{
+    width: 100%;
+}
+
+.small_pic2
+{
+    vertical-align: bottom;
+    text-align: center;
+    background-color: #ffffff;
+}
+
+.small_pic2 img
+{
+    width: 100%;
+}
+
+.items
+{
+    height:200px;
+}
+
+.item
+{
+    float: left;
+    width: 33.3%;
+    margin-bottom:12px;
+}
+
+.item_tag
+{
+    position: absolute;
+    z-index: 30;
+}
+
+.item_img
+{
+    width:100%;
+}
+.item_img img
+{
+    width:100%;
+}
+
+.item_text
+{
+    padding-top: 4px;
+    padding-bottom: 4px;
+    position: absolute;
+    z-index: 30;
+    color: #ffffff;
+    margin-top: -28px;
+    background: #000;
+    filter: alpha(Opacity=40);
+    -moz-opacity: 0.4;
+    opacity: 0.4;
+}
+.bootom
+{
+    height:62px;
+    line-height:62px;
+    min-height:62px;
+    width:100%;            
+}
+.bottom_btn
+{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    height: 50px;
+    width: 100%;
+    background-color:#ffffff;
+    z-index:40;
+    border-top:1px solid #666666;
+}
+.img_order
+{
+    width: 25%;
+    float: left;
+    padding:15px 0px;
+    text-align:right;
+
+}
+.img_order img
+{
+    margin-right:10px;
+}
+.btn_order
+{
+    width: 24%;
+    text-align: left;
+    float: left;
+    color:#666666;
+    padding-top:17px;
+    padding-bottom:17px;
+    border-right:1px solid #cccccc;
+    font-size:14px;
+}
+.img_car
+{
+    width: 24%;
+    float: right;
+    padding:15px 0px;
+    text-align:right;
+}
+.img_car img
+{
+    margin-right:10px;
+}
+.btn_car
+{
+    width: 25%;
+    text-align: left;
+    float: right;
+    color:#666666;
+    padding-top:17px;
+    padding-bottom:17px;
+    font-size:14px;
+}
+.car_count
+{
+	position:absolute;
+	z-index:100;
+	font-size:5px;
+	color:#ffffff;
+	background-color:#ff6633;
+	text-align:center;	
+	border-radius:100%;
+	width:12px;
+	height:12px;
+	vertical-align:middle;
+	line-height:12px;
+}

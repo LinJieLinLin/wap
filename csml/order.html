@@ -1,0 +1,218 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+    <title>车水马龙</title>
+    <link href="../styles/public.css" rel="stylesheet" />
+    <link href="index.css" rel="stylesheet" />
+    <link href="order.css" rel="stylesheet" />
+    <script src="../scripts/jquery.min.js"></script>
+    <script src="../scripts/public.js"></script>
+    <script src="../scripts/datepicker/picker.js"></script>
+    <script src="../scripts/datepicker/picker.date.js"></script>
+    <script src="../scripts/datepicker/legacy.js"></script>
+    <script src="../scripts/datepicker/zh_CN.js"></script>
+    <link href="../scripts/datepicker/themes/default.css" rel="stylesheet" />
+    <link href="../scripts/datepicker/themes/default.date.css" rel="stylesheet" />
+    <script type="text/javascript">
+        $(function () {
+            $(".content").width(win_w - 40);
+            $(".line").width((win_w - 70) / 2);
+            $(".line0").width($(".line").width() - 7);
+            $(".sp").width(win_w - 20);
+            $(".back_img").click(function () {
+                location.href = "index.html?" + urlParam;
+            });
+
+            $('.datepicker').pickadate({
+                min: "1900-01-01",
+                max: date
+            });
+
+            $("#begin_date").add("#end_date").change(function () {
+                var btime = $("#begin_date").val();
+                var etime = $("#end_date").val();
+                OrderQuery(btime, etime);
+            });
+            $("#begin_date").val(date);
+            $("#end_date").val(date);
+            $("#begin_date").change();
+        });
+
+    </script>
+    <script type="text/javascript">
+        //预约查询
+        function OrderQuery(btime, etime) {
+            var JsonData = {
+                m: 'washcarorderquery',
+                BDate: btime,
+                EDate: etime
+            };
+            ajax(JsonData, function (result) {
+                if (result.Id == 0 || result.length == 0) {
+
+                } else {
+                    CreateOrderElement(result);
+                }
+            }, function () {
+
+            });
+        }
+        //生成预约标签元素li
+        function CreateOrderElement(data) {
+            $(".order_list *").remove();
+            var ele = "";
+            if (data.length > 0) {
+                $.each(data, function (index, e) {
+                    var state = '';
+                    if (e.WashCarState == 1) {//待清洗
+                        state = '<div class="order_clear" soid="' + e.ID + '">取消</div>';
+                    } else if (e.WashCarState == 2) {//清洗完成
+                        state = '<div class="order_clear"></div>';
+                    }
+                    else if (e.WashCarState == 3) {//清洗中
+                        state = '<div class="order_clear"></div>';
+                    }
+                    if (e.OrderState == 2) {
+                        state = '<div class="order_clear">已取消</div>';
+                    }
+
+                    ele += '<div class="order">';
+                    ele += '<div class="order_title">';
+                    ele += '<div class="order_date">' + e.CreateDate + '</div>';
+                    ele += state;
+                    ele += '</div>';
+                    ele += '<table class="order_detail" cellspacing="0" cellpadding="0">';
+                    ele += '<tr>';
+                    ele += '<td>';
+                    ele += '<div class="item">';
+                    ele += '<div class="item_name">车牌号:' + e.CarNumber + '</div>';
+                    ele += '</div>';
+                    ele += '<div class="item">';
+                    ele += '<div class="item_name">车辆位置:' + e.StopSite + '</div>';
+                    ele += '</div>';
+                    ele += '<div class="item">';
+                    ele += '<div class="item_name">钥匙柜号:' + e.KeyNumber + '</div>';
+                    ele += '</div>';
+                    ele += '<div class="item">';
+                    ele += '<div class="item_name">其他服务:' + e.ServiceEx + '</div>';
+                    ele += '</div>';
+                    ele += '<div class="item">';
+                    ele += '<div class="item_name">下单时间:' + e.CreateTime + '</div>';
+                    ele += '</div>';
+                    if (e.OrderState != 2) {
+                        ele += '<div class="item">';
+                        ele += '<div class="item_name">清洗状态:' + e.WashCarStateName + '</div>';
+                        ele += '</div>';
+                    }
+                    ele += '</td>';
+                    ele += '</tr>';
+                    ele += '</table>';
+                    ele += '</div>';
+
+                });
+            }
+            $(".order_list").append(ele);
+            $(".order_clear").click(function () {
+                var soid = $(this).attr("soid");
+                if (soid > 0) {
+                    show_dialog('询问', '确认要取消订单？', null, '确认',
+                        function () {
+                            
+                            var JsonData = {
+                                m: 'washcarorderclear',
+                                ID: soid
+                            };
+                            ajax(JsonData, function (result) {
+                                if (result.Id == 1) {
+                                    Alert("取消成功");
+                                    var btime = $("#begin_date").val();
+                                    var etime = $("#end_date").val();
+                                    OrderQuery(btime, etime);
+                                } else {
+                                    Alert(result.Msg);
+                                }
+                            }, function () {
+                            });
+                            hide_dialog();
+                        },
+                        '返回', function () {
+                            hide_dialog();
+                        });
+                }
+
+            });
+        }
+    </script>
+</head>
+<body>
+    <div class="back">
+        <div class="back_img">
+            <img src="../images/back03.png" />
+        </div>
+        <div class="back_text">返回</div>
+    </div>
+    <div class="content">
+        <div class="dates">
+            <div class="begin_date">
+                <input type="text" class="datepicker" id="begin_date" value="2015-07-11" /><span><img src="../images/down.png" /></span>
+            </div>
+            <div class="date_img">
+                <img src="../images/car_icon.png" />
+            </div>
+            <div class="end_date">
+                <input type="text" class="datepicker" id="end_date" value="2015-07-11" /><span><img src="../images/down.png" /></span>
+            </div>
+        </div>
+
+        <div class="lines">
+            <div class="line">
+                <div class="dot1"></div>
+                <div class="line0"></div>
+                <div class="dot2"></div>
+            </div>
+            <div class="line" style="float: right;">
+                <div class="dot1"></div>
+                <div class="line0"></div>
+                <div class="dot2"></div>
+            </div>
+        </div>
+        <div style="clear: both"></div>
+        <div class="order_list">
+            <div class="order hidden"  >
+                <div class="order_title">
+                    <div class="order_date">2015－07－05</div>
+                    <div class="order_clear">取消</div>
+                </div>
+                <table class="order_detail" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td>
+                            <div class="item">
+                                <div class="item_name">车牌号:粤AG1U76</div>
+                            </div>
+                            <div class="item">
+                                <div class="item_name">车辆位置:B3112</div>
+                            </div>
+                            <div class="item">
+                                <div class="item_name">钥匙柜号:25</div>
+                            </div>
+                            <div class="item">
+                                <div class="item_name">其他服务:上轮胎蜡</div>
+                            </div>
+                            <div class="item">
+                                <div class="item_name">下单时间:2015－07－05 11:05:22</div>
+                            </div>
+                            <div class="item">
+                                <div class="item_name">清洗状态:待清洗</div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div style="clear: both"></div>
+    <div class="sp"></div>
+</body>
+</html>

@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href="../styles/public.css" rel="stylesheet" />
+    <script src="../scripts/jquery.min.js"></script>
+    <script src="../scripts/public.js"></script>
+    <title></title>
+    <script type="text/javascript">
+        $(function () {
+            show_rule();
+        });
+
+        function show_rule() {
+            var title = '订单确认';
+            var content = '<div style="line-height:20px;">'
+            + '<div style="color: #ff6633; font-size: 16px;">预订时间：</div>'
+            + '<div style="font-size: 12px;">'
+                + '面点、蔬菜、肉类（可预订一周内订单）<br />'
+                + '工作日16:30之前<br />'
+            + '</div>'
+            + '<div style="color: #ff6633; font-size: 16px;">领取时间：</div>'
+           + '<table style="border: 0px; width: 100%; font-size: 12px" cellspacing="0" cellpadding="0">'
+               + '<tr>'
+                    + '<td style="text-align: left;">周一至周四</td>'
+                    + '<td style="text-align: right;">17:30-19:30</td>'
+                + '</tr>'
+                + '<tr>'
+                    + '<td style="text-align: left;">周五</td>'
+                    + '<td style="text-align: right;">17:00-19:30</td>'
+                + '</tr>'
+            + '</table>'
+            + '<div style="color: #ff6633; font-size: 16px;">领取方式：</div>'
+            + '<div style="font-size: 12px;">'
+                + '请在领取时间内凭短信、工卡到<span style="color: #ff6633; font-size: 14px;">南郡楼3楼风味餐厅</span>登记领取，逾期不取则视为自动放弃。'
+            + '</div>'
+        + '</div>';
+            
+            show_dialog(title, content, function () {
+                hide_dialog();
+            }
+            );
+        }
+
+    </script>
+</head>
+<body>
+    <div class="c">
+        <div style="line-height:20px;">
+            <div style="color: #ff6633; font-size: 16px;">预订时间：</div>
+            <div style="font-size: 12px;">
+                面点、蔬菜、肉类（可预订一周内订单）<br />
+                工作日16:30之前<br />
+            </div>
+            <div style="color: #ff6633; font-size: 16px;">领取时间：</div>
+            <table style="border: 0px; width: 100%; font-size: 12px" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td style="text-align: left;">周一至周四</td>
+                    <td style="text-align: right;">17:30-19:30</td>
+                </tr>
+                <tr>
+                    <td style="text-align: left;">周五</td>
+                    <td style="text-align: right;">17:00-19:30</td>
+                </tr>
+            </table>
+            <div style="color: #ff6633; font-size: 16px;">领取方式：</div>
+            <div style="font-size: 12px;">
+                请在领取时间内凭短信、工卡到<span style="color: #ff6633; font-size: 14px;">南郡楼3楼风味餐厅</span>登记领取，逾期不取则视为自动放弃。
+            </div>
+        </div>
+    </div>
+</body>
+</html>

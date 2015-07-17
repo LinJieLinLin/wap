@@ -1,0 +1,272 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+    <title>天龙八部</title>
+    <link href="../styles/public.css" rel="stylesheet" />
+    <link href="index.css" rel="stylesheet" />
+    <script src="../scripts/jquery.min.js"></script>
+    <script src="../scripts/public.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $(".back_img").click(function () {
+                location.href = "../home/index.html";
+            });
+            $(".order_link").click(function () {
+                location.href = "order.html";
+            });
+            $(".note").click(function () {
+                var content = $("#note").html();
+                show_dialog("预约需知", content, function () {
+                    hide_dialog();
+                });
+            });
+            $(".note_img").click(function () {
+                var content = $("#note").html();
+                show_dialog("预约需知", content, function () {
+                    hide_dialog();
+                });
+            });
+            $(".item").click(function () {
+                location.href = "select.html";
+            });
+
+            $(".small").click(function () {
+                location.href = "select.html";
+            });
+            $(".item").each(function (i, n) {
+                //0开始
+                $(n).removeClass("m_l_10");
+                $(n).removeClass("m_r_10");
+                {
+                    if (i % 2 == 0) {//第一个
+                        $(n).addClass("m_r_10");
+                    } else {//第二个
+                        $(n).addClass("m_l_10");
+                    }
+                }
+            });
+            //上两个图标的宽度与图片一致
+            var w1 = $(".item_name").parent().width();
+            $(".item_name").width(w1);
+            var content_w = win_w - 20;//内容宽度
+            var item_w = (content_w - 20) / 2;
+            $(".item").width(item_w);
+            //下面图标的宽度与图片一致
+            var w2 = $(".item_text").parent().width();
+            $(".item_text").width(w2);
+
+            //产品标签添位置处理
+            $(".item_tag").each(function (i, n) {
+                var img = $(n).next();
+                var img_left = $(img).offset().left;
+                var img_w = $(img).width();
+                var tag_left = img_left + img_w - 21;
+                $(n).css("left", tag_left + 'px');
+            });
+            $(".big_pic").click(function () {
+                var content = $("#rule").html();
+                show_dialog("套餐介绍", content, function () {
+                    hide_dialog();
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="back">
+        <div class="back_img">
+            <img src="../images/back02.png" />
+        </div>
+        <div class="back_text">天龙八部</div>
+        <div class="note">预约须知</div>
+        <div class="note_img">
+            <img src="../images/note.png" />
+        </div>
+    </div>
+    <div class="content">
+
+        <div class="show_pic">
+            <table style="width: 100%;" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td class="big_pic" rowspan="2" style="width: 45%; padding-right: 5px;">
+                        <img src="../images/tlbb.png" />
+                    </td>
+                    <td class="small small_pic1" link="select.html">
+                        <img src="../images/s1.png" />
+                        <div class="item_name">
+                            <div class="item_name_text">【春季养生套餐1】</div>
+                            <div class="item_name_img">
+                                <img src="../images/go.png" />
+                            </div>
+                            <div class="item_name_price">预约</div>
+
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="small small_pic2" link="select.html">
+                        <img src="../images/s2.png" />
+                        <div class="item_name">
+                            <div class="item_name_text">【春季养生套餐2】</div>
+                            <div class="item_name_img">
+                                <img src="../images/go.png" />
+                            </div>
+                            <div class="item_name_price">预约</div>
+
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="items">
+            <div class="item" link="select.html">
+                <div class="item_tag">
+                    <img src="../images/hot.png" />
+                </div>
+                <div class="item_img">
+                    <img src="../images/s3.png" />
+                </div>
+                <div class="item_text">
+                    <div class="item_name_text">【套餐1】保健按摩</div>
+                    <div class="item_name_price">
+                        <img src="../images/go.png" /></div>
+                </div>
+            </div>
+
+            <div class="item" link="select.html">
+                <div class="item_tag">
+                    <img src="../images/hot.png" />
+                </div>
+                <div class="item_img">
+                    <img src="../images/s4.png" />
+                </div>
+                <div class="item_text">
+                    <div class="item_name_text">【套餐2】局部治疗推拿</div>
+                    <div class="item_name_price">
+                        <img src="../images/go.png" /></div>
+                </div>
+            </div>
+            <div class="item" link="select.html">
+                <div class="item_tag">
+                    <img src="../images/hot.png" />
+                </div>
+                <div class="item_img">
+                    <img src="../images/s5.png" />
+                </div>
+                <div class="item_text">
+                    <div class="item_name_text">【套餐3】女士特享套餐</div>
+                    <div class="item_name_price">
+                        <img src="../images/go.png" /></div>
+                </div>
+            </div>
+
+            <div class="item" link="select.html">
+                <div class="item_tag">
+                    <img src="../images/hot.png" />
+                </div>
+                <div class="item_img">
+                    <img src="../images/s6.png" />
+                </div>
+                <div class="item_text">
+                    <div class="item_name_text">【套餐4】局部精油按摩</div>
+                    <div class="item_name_price">
+                        <img src="../images/go.png" /></div>
+                </div>
+            </div>
+            <div style="clear: both"></div>
+            <div class="bootom">&nbsp;</div>
+        </div>
+    </div>
+    <div class="bottom_btn">
+        <div class="order_link">
+            <div class="img_order" link="order.html">
+                <img src="../images/order01.png" />
+            </div>
+            <div class="btn_order" link="order.html">我的订单</div>
+        </div>
+    </div>
+
+    <div style="display: none;">
+        <div id="note">
+            <div style="line-height: 26px;">
+                <div style="font-size: 15px; font-weight: bold; color: #ff6633;">预约规则：</div>
+                <div>预约成功后，需按预约时间准时到店，<span style="color: #ff6633;">逾期10分钟后</span>将取消当次服务</div>
+                <div style="font-size: 15px; font-weight: bold; color: #ff6633;">医师级别收费：</div>
+                <div>治疗需加收20元服务费，请根据需求选择。（套餐二、特色一、特色三除外）</div>
+            </div>
+        </div>
+        <div id="rule">
+            <div style="line-height: 24px;">
+                <div style="font-size: 12px; font-weight: bold; color: #ff6633;">
+                    【春季养生套餐1】精油局部推拿+隔姜灸
+                </div>
+                <div>
+                    肩颈腰椎疼痛等关节疾病、感冒等呼吸道疾病，五天一个疗程（原价：90元/45分钟，员工价：60元/45分钟）
+                </div>
+                <div style="font-size: 12px; font-weight: bold; color: #ff6633;">
+                    【春季养生套餐2】精油腹部按摩+隔盐灸
+                </div>
+                <div>
+                    腹痛、腹泻等胃肠道疾病，五天一个疗程（原价：90元/40分钟，员工价：60元/40分钟）
+                </div>
+                <div style="font-size: 12px; font-weight: bold; color: #ff6633;">
+                    【套餐1】保健按摩
+                </div>
+                <div>
+                    日常放松型的调理，循经按柔、舒经活络、行气活血，缓解肌肉紧张，消除疲劳。（原价：100元/45分钟，员工价：50元/45分钟）
+                </div>
+                <div style="font-size: 12px; font-weight: bold; color: #ff6633;">
+                    【套餐2】局部治疗推拿
+                </div>
+                <div>
+                    缓解肌肉紧张，纠正小关节紊乱、治疗疼痛。（手法按摩+电脑中频脉冲/拔火罐或热敷）（原价：120元/45分钟，员工价：60元/45分钟）
+                </div>
+                <div style="font-size: 12px; font-weight: bold; color: #ff6633;">
+                    【套餐3】女士特享专享
+                </div>
+                <div>
+                    经期综合症、体质虚寒人群，提高机体免疫力以达素体康健之目的（手法按摩+10ml精油+刮痧或手法按摩+10ml精油+艾灸全程80分钟及一次性浴袍）（原价：280元/65分钟，员工价：110元/65分钟）。
+                </div>
+                <div style="font-size: 12px; font-weight: bold; color: #ff6633;">
+                    【套餐4】局部精油按摩
+                </div>
+                <div>
+                    舒缓压力，促进全身血液循环，消除疲劳等。（手法按摩、10ml精油、热敷或火罐）（原价：150元/45分钟，员工价：70元/45分钟）
+                </div>
+                <div style="font-size: 12px; font-weight: bold; color: #ff6633;">
+                    【特色疗法1】
+                </div>
+                <div>
+                    感冒调理感受风寒、周身骨痛，免疫力下降，容易疲劳的办公室人群和亚健康态（按摩+刮痧或走罐+热敷）（原价：180元/70分钟，员工价：80元/70分钟）
+                </div>
+                <div style="font-size: 12px; font-weight: bold; color: #ff6633;">
+                    【特色疗法2】
+                </div>
+                <div>
+                    舒缓压力调理净化心灵、安抚忧虑情绪；舒缓压力、有助优质睡眠。（原价：150元/45分钟，员工价：60元/45分钟）
+                </div>
+                <div style="font-size: 12px; font-weight: bold; color: #ff6633;">
+                    【特色疗法3】
+                </div>
+                <div>
+                    明火灸各种陈旧性损伤、风湿骨痛、常见的周围神经炎、鼻炎、女性痛经、盆腔积液、体虚感冒等效果显著。（蒜蓉、生姜+消肿止痛活血开窍的中药燃灸）（原价：150元/50分钟，员工价：80元/50分钟）
+                </div>
+                <div style="font-size: 12px; font-weight: bold; color: #ff6633;">
+                    【特色疗法4】
+                </div>
+                <div>
+                    艾灸疗法日常保健/虚寒/气血不和等。（原价：160元/60分钟，员工价：60元/60分钟）
+                </div>
+                <div style="font-size: 12px; font-weight: bold; color: #ff6633;">
+                    【特色疗法5】
+                </div>
+                <div>
+                    砭石刮痧疗法恢复和提高经络的整体调控功能、活血化瘀、改善微循环、排毒解毒、促进新陈代谢增强机体免疫功能（砭石刮痧+火罐）。（原价：120元/30分钟，员工价：50元/30分钟）
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

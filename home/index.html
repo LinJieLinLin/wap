@@ -1,0 +1,154 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+    <title>员工服务</title>
+    <link href="../styles/public.css" rel="stylesheet" />
+    <script src="../scripts/jquery.min.js"></script>
+    <script src="../scripts/slides.min.jquery.js"></script>
+    <script src="../scripts/jQuery.autoIMG.min.js"></script>
+    <script src="../scripts/public.js"></script>
+    <link href="index.css" rel="stylesheet" />
+    <script type="text/javascript">
+        $(function () {
+            $("#slides").find("img").each(function (i, n) {
+                $(n).attr("width", win_w );
+                $(n).autoIMG();
+            });
+            //console.log("win_w=" + win_w);
+            $(".show_pic").width(win_w);
+            $("#slides").slides({
+                preload: true,
+                generatePagination: false,
+                play: 4000,
+                animationComplete: function (current) {
+                    $(".slides_index").find("img").each(function (i, n) {
+                        $(n).attr("src", "../images/dot0_h5.png");
+                        if (current == (i + 1)) {
+                            $(n).attr("src", "../images/dot1_h5.png");
+                        }
+                    });
+                },
+            });
+            var img_h = (win_w * 286) / 640;
+            $(".slides_container").height(img_h);
+
+            $(".app").click(function () {
+                var link = $(this).attr("link");
+                if (link != undefined && link.length > 0) {
+
+                    location.href = linkAddParam(link);
+                }
+            });
+        });
+        $(window).load(function () {
+
+        });
+    </script>
+</head>
+<body>
+    <div class="index_head">
+        <div class="logo">
+            <img src="../images/logo.png" style="width: 87px; height: 27px;" />
+        </div>
+        <div class="user_info">
+            13902220076
+        </div>
+    </div>
+    <div id="slides" class="slides">
+        <div class="slides_container">
+            <div class="ad">
+                <img alt="" src="../images/ad1.jpg" />
+            </div>
+            <div class="ad">
+                <img alt="" src="../images/ad2.png" />
+            </div>
+            <div class="ad">
+                <img alt="" src="../images/ad3.png" />
+            </div>
+        </div>
+    </div>
+    <div class="slides_index">
+        <span>
+            <img src="../images/dot1_h5.png" /></span>
+        <span>
+            <img src="../images/dot0_h5.png" /></span>
+        <span>
+            <img src="../images/dot0_h5.png" /></span>
+    </div>
+    <div class="apps">
+        <div class="app">
+            <div class="app_img">
+                <img src="../images/app01.png" link="" />
+            </div>
+            <div class="app_text">洗新艳旧</div>
+
+        </div>
+        <div class="app" link="../ktyy/index.html?plid=99&companyid=72D67DB594164E00954CE7D2C74124A9">
+            <div class="app_img">
+                <img src="../images/app02.png" />
+            </div>
+            <div class="app_text">康体预约</div>
+
+        </div>
+        <div class="app" link="../tlbb/index.html?plid=100&companyid=72D67DB594164E00954CE7D2C74124A9">
+            <div class="app_img">
+                <img src="../images/app03.png" />
+            </div>
+            <div class="app_text">天龙八部</div>
+
+        </div>
+        <div class="app">
+            <div class="app_img">
+                <img src="../images/app07.png" />
+            </div>
+            <div class="app_text">名医预约</div>
+
+        </div>
+        <div class="app" link="../wqct/index1.html?plid=97&companyid=72D67DB594164E00954CE7D2C74124A9">
+            <div class="app_img">
+                <img src="../images/app04.png" />
+            </div>
+            <div class="app_text">屋企餐厅</div>
+
+        </div>
+        <div class="app"  link="../csml/index.html?plid=158&companyid=72D67DB594164E00954CE7D2C74124A9">
+            <div class="app_img">
+                <img src="../images/app05.png" />
+            </div>
+            <div class="app_text">车水马龙</div>
+
+        </div>
+        <div class="app">
+            <div class="app_img">
+                <img src="../images/app06.png" />
+            </div>
+            <div class="app_text">本周菜谱</div>
+
+        </div>
+        <div class="app">
+            <div class="app_img">
+                <img src="../images/app08.png" />
+            </div>
+            <div class="app_text">我的账户</div>
+
+        </div>
+    </div>
+    <div class="show_pic">
+        <table style="width: 100%;" cellspacing="0" cellpadding="0">
+            <tr>
+                <td class="big_pic" style="width: 60%;">
+                    <img src="../images/big_pic.png" /></td>           
+              <td class="small_pic" style="width: 40%;">
+                    <img src="../images/small_pic1.png" style="padding-bottom: 3px;" />
+                    <img src="../images/small_pic2.png" />
+                  </td>
+            </tr>
+        </table>
+    </div>
+    <div class="bottom_pic">
+        <img src="../images/bottom_pic.png" />
+    </div>
+</body>
+</html>
