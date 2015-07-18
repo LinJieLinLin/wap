@@ -9,7 +9,7 @@ bzcp.controller('bzcpCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
     $scope.menuList = {};
     $scope.date = getDateStr();
     $scope.checkWidth = function () {
-        var banWidth = win_w-15;
+        var banWidth = win_w-41;
         $(".banner").width((banWidth));
         $(".banner_w").width((banWidth-3) / 3);
     };

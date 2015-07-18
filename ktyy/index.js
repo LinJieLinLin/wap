@@ -88,8 +88,7 @@ ktyy.controller('ktyySCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
     };
     $timeout(function () {
         $('.select_date').pickadate({
-            min: "1900-01-01",
-            max: $scope.date
+            min: $scope.date,
         });
         $("#select_date").change(function () {
             date = $("#select_date").val();
