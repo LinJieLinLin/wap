@@ -1,0 +1,128 @@
+﻿.body{
+    z-index: 10;
+    padding-top: 30px;
+}
+.back {
+    width: 100%;
+    height: 30px;
+    border-bottom: 1px solid #ff6633;
+    background-color: #ffffff;
+    position: fixed;
+    top:0;
+    left: 0;
+    z-index: 20;
+}
+
+.back_img {
+    float: left;
+    font-size: 14px;
+    padding-left: 15px;
+    font-weight: 900;
+    color: #ff6633;
+    padding: 7px 0px 4px 15px;
+}
+
+.back_text {
+    float: left;
+    font-size: 14px;
+    font-weight: bold;
+    color: #ff6633;
+    padding: 7px 0px 7px 7px;
+}
+
+.note{
+    float: right;
+    padding: 7px 7px 7px 0;
+}
+.note input{
+    float: right;
+    font-size: 14px;
+    font-weight: bold;
+    color: #ff6633;
+    width: 75px;
+}
+
+.note_img {
+    float: right;
+    padding: 6px 6px 6px 0;
+}
+
+.banner {
+    position: relative;
+    border-left: 1px solid #ff6633;
+    border-top: 1px solid #ff6633;
+    border-bottom: 1px solid #ff6633;
+    height: 30px;
+    margin: 10px 7px 10px 7px;
+    width: calc(100% - 15px);
+}
+
+.banner_w {
+    width: 33%;
+    border-right: 1px solid #ff6633;
+    float: left;
+    font-size: 14px;
+    font-weight: bold;
+    color: #ff6633;
+    padding: 6px 0 6px 0;
+    text-align: center;
+}
+
+.cur {
+    background-color: #ff6633;
+    color: #ffffff;
+}
+
+.list {
+    position: relative;
+    border-top: 1px solid #ff6633;
+    border-left: 1px solid #ff6633;
+    border-right: 1px solid #ff6633;
+    /*min-height: 500px;*/
+    margin: 10px 7px 10px 7px;
+    background-color: #fff0e0;
+}
+
+.list_head {
+    position: relative;
+    height: 30px;
+}
+
+.list_head img {
+    width: 100%;
+    height: 30px;
+}
+
+.list_head span {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    text-align: center;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 6px 0 6px 0;
+}
+.list_body {
+    border-bottom: 1px solid #ff6633;
+    padding: 15px 10px;
+}
+.list_type{
+    font-size: 14px;
+    font-weight: bold;
+    color: #ff6633;
+}
+.list_title{
+    margin-top: 10px;
+    font-size: 14px;
+    font-weight: bold;
+}
+.no_data{
+    height: 50px;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    color: #ff6633;
+    line-height: 50px;
+}

@@ -1,13 +1,66 @@
 ﻿<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="bzcp" lang="zh_CN">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
     <title>本周菜谱</title>
-    <link href="../styles/public.css" rel="stylesheet" />
-    <script src="../scripts/jquery.min.js"></script>
-</head>
-<body>
+    <link href="../styles/public.css" rel="stylesheet"/>
+    <link href="index.css" rel="stylesheet"/>
 
+    <script src="../scripts/angular-1.2.9/angular.min.js"></script>
+    <script src="../scripts/jquery.min.js"></script>
+    <script src="../scripts/public.js"></script>
+    <script src="../scripts/datepicker/picker.js"></script>
+    <script src="../scripts/datepicker/picker.date.js"></script>
+    <script src="../scripts/datepicker/legacy.js"></script>
+    <script src="../scripts/datepicker/zh_CN.js"></script>
+    <link href="../scripts/datepicker/themes/default.css" rel="stylesheet" />
+    <link href="../scripts/datepicker/themes/default.date.css" rel="stylesheet" />
+    <script src="index.js"></script>
+
+</head>
+<body ng-controller="bzcpCtrl">
+<div class="back">
+    <div class="back_img" data-ng-click="back()">
+        <img src="../images/back02.png"/>
+    </div>
+    <div class="back_text" data-ng-click="back()">本周菜谱</div>
+    <div class="note">
+        <input class="select_date" ng-model="date" id="select_date" type="text" name="date">
+    </div>
+    <div class="note_img">
+        <img src="../images/date.png"/>
+    </div>
+</div>
+<div class="body">
+    <div class="banner" id="ban">
+        <div class="banner_w " id="ban0" data-ng-class="{cur: cur==0}" data-ng-click="selectBan(0)">
+            早 餐
+        </div>
+        <div class="banner_w" id="ban1" data-ng-class="{cur: cur==1}" data-ng-click="selectBan(1)">
+            午 餐
+        </div>
+        <div class="banner_w" id="ban2" data-ng-class="{cur: cur==2}" data-ng-click="selectBan(2)">
+            晚 餐
+        </div>
+    </div>
+    <div class="list">
+        <div class="list_head">
+            <img src="../images/menu.png">
+            <span data-ng-bind="menuName"></span>
+        </div>
+        <div class="list_body" data-ng-repeat="FmType in menuList.FmTypes">
+            <div class="list_type">
+                / <span data-ng-bind="FmType.FmtName"></span> /
+            </div>
+            <div class="list_title" data-ng-repeat="Food in FmType.Foods">
+                <span data-ng-bind="Food.FmName"></span>
+            </div>
+        </div>
+        <div data-ng-if="!menuList.FmTypes" class="list_body" >
+                <div class="no_data">暂无数据！</div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
