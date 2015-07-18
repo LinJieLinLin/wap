@@ -39,7 +39,7 @@
     font-size: 14px;
     font-weight: bold;
     color: #ff6633;
-    width: 75px;
+    width: 80px;
 }
 
 .note_img {
@@ -78,7 +78,6 @@
     border-top: 1px solid #ff6633;
     border-left: 1px solid #ff6633;
     border-right: 1px solid #ff6633;
-    /*min-height: 500px;*/
     margin: 10px 7px 10px 7px;
     background-color: #fff0e0;
 }
@@ -125,4 +124,12 @@
     text-align: center;
     color: #ff6633;
     line-height: 50px;
+}
+.sp{
+    margin-top: 20px;
+    background-image: url('../images/sp.png');
+    background-repeat: repeat-x;
+    height: 22px;
+    width: 100%;
+    background-color: #eeeeee;
 }
