@@ -49,6 +49,10 @@
     color: #ffffff;
     padding: 18px 19px;
 }
+.list_body{
+    background:#ffffff;
+    min-height: 100px;
+}
 .imgL{
     height: 20px;
     width: 20px;
@@ -69,4 +73,9 @@
 }
 .pR7{
     padding-right: 7px;
+}
+.sp{
+    background: url('../images/sp.png') repeat-x #eeeeee;
+    height: 22px;
+    width: 100%;
 }

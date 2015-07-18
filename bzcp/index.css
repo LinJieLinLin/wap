@@ -52,15 +52,15 @@
     border-left: 1px solid #ff6633;
     border-top: 1px solid #ff6633;
     border-bottom: 1px solid #ff6633;
-    height: 30px;
     margin: 10px 7px 10px 7px;
-    width: calc(100% - 15px);
+    width: 100%;
 }
 
 .banner_w {
     width: 33%;
     border-right: 1px solid #ff6633;
     float: left;
+    height: 30px;
     font-size: 14px;
     font-weight: bold;
     color: #ff6633;
@@ -124,12 +124,4 @@
     text-align: center;
     color: #ff6633;
     line-height: 50px;
-}
-.sp{
-    margin-top: 20px;
-    background-image: url('../images/sp.png');
-    background-repeat: repeat-x;
-    height: 22px;
-    width: 100%;
-    background-color: #eeeeee;
 }

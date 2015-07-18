@@ -1,135 +1,149 @@
 ﻿<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="ktyy">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
     <title>康体预约</title>
-    <link href="../styles/public.css" rel="stylesheet" />
-    <link href="select.css" rel="stylesheet" />
-    <link href="index.css" rel="stylesheet" />
+    <link href="../styles/public.css" rel="stylesheet"/>
+    <link href="select.css" rel="stylesheet"/>
+    <link href="index.css" rel="stylesheet"/>
+    <script src="../scripts/angular-1.2.9/angular.min.js"></script>
     <script src="../scripts/jquery.min.js"></script>
     <script src="../scripts/public.js"></script>
-    <script type="text/javascript">
-        $(function () {
-            var point_w = $(".point").width() + 1 + (2 * 10);//本身宽度+边框+左右外边距           
-            $(".points").css("padding-left", ((win_w - (point_w * 2)) / 2) + 'px');//减去一行按钮长度除以2得
-            
+    <script src="../scripts/datepicker/picker.js"></script>
+    <script src="../scripts/datepicker/picker.date.js"></script>
+    <script src="../scripts/datepicker/legacy.js"></script>
+    <script src="../scripts/datepicker/zh_CN.js"></script>
+    <link href="../scripts/datepicker/themes/default.css" rel="stylesheet" />
+    <link href="../scripts/datepicker/themes/default.date.css" rel="stylesheet" />
+    <script src="index.js"></script>
+    <!--<script type="text/javascript">-->
+    <!--$(function () {-->
+    <!--var point_w = $(".point").width() + 1 + (2 * 10);//本身宽度+边框+左右外边距           -->
+    <!--$(".points").css("padding-left", ((win_w - (point_w * 2)) / 2) + 'px');//减去一行按钮长度除以2得-->
+    <!-- -->
 
-            var time_w = ((win_w - 50) / 3) - 22;
-            $(".time").width(time_w);
+    <!--var time_w = ((win_w - 50) / 3) - 22;-->
+    <!--$(".time").width(time_w);-->
 
 
-            //$(".times").css("padding-left", ((win_w - (time_w * 3)) / 2) + 'px');
+    <!--//$(".times").css("padding-left", ((win_w - (time_w * 3)) / 2) + 'px');-->
 
-            $(".back_link").click(function () {
-                location.href = 'index.html';
-            });
+    <!--$(".back_link").click(function () {-->
+    <!--location.href = 'index.html';-->
+    <!--});-->
 
-            $(".post").click(function () {
-                var title = '预订确认';
-                var content = $("#post_check").html();
-                show_dialog(title, content, null, '确认', function () {
-                    alert('确认');
-                    hide_dialog();
-                }, '返回', function () {
-                    hide_dialog();
-                });
-            });
-            $(".point").click(function () {
-                if ($(this).hasClass("point_2")) {
-                    //灰色点击不起作用
-                    return;
-                }
-                if ($(this).hasClass("point_0")) {//点击的是还没有选择的
+    <!--$(".post").click(function () {-->
+    <!--var title = '预订确认';-->
+    <!--var content = $("#post_check").html();-->
+    <!--show_dialog(title, content, null, '确认', function () {-->
+    <!--alert('确认');-->
+    <!--hide_dialog();-->
+    <!--}, '返回', function () {-->
+    <!--hide_dialog();-->
+    <!--});-->
+    <!--});-->
+    <!--$(".point").click(function () {-->
+    <!--if ($(this).hasClass("point_2")) {-->
+    <!--//灰色点击不起作用-->
+    <!--return;-->
+    <!--}-->
+    <!--if ($(this).hasClass("point_0")) {//点击的是还没有选择的-->
 
-                    $(".point_1").each(function (i, n) {
-                        $(this).removeClass("point_1");
-                        $(this).addClass("point_0");
-                    });
+    <!--$(".point_1").each(function (i, n) {-->
+    <!--$(this).removeClass("point_1");-->
+    <!--$(this).addClass("point_0");-->
+    <!--});-->
 
-                    $(this).removeClass("point_0");
-                    $(this).addClass("point_1");
-                }
-            });
+    <!--$(this).removeClass("point_0");-->
+    <!--$(this).addClass("point_1");-->
+    <!--}-->
+    <!--});-->
 
-            $(".time").click(function () {
-                if ($(this).hasClass("time_2")) {
-                    return;
-                }
-                if ($(this).hasClass("time_0")) {
-                    $(this).removeClass("time_0");
-                    $(this).addClass("time_1");
-                } else {
-                    $(this).removeClass("time_1");
-                    $(this).addClass("time_0");
-                }
-            });
-        });
-    </script>
+    <!--$(".time").click(function () {-->
+    <!--if ($(this).hasClass("time_2")) {-->
+    <!--return;-->
+    <!--}-->
+    <!--if ($(this).hasClass("time_0")) {-->
+    <!--$(this).removeClass("time_0");-->
+    <!--$(this).addClass("time_1");-->
+    <!--} else {-->
+    <!--$(this).removeClass("time_1");-->
+    <!--$(this).addClass("time_0");-->
+    <!--}-->
+    <!--});-->
+    <!--});-->
+    <!--</script>-->
 </head>
-<body>
-    <div class="date_select">
-        <div class="prev_date">
-            <div style="width: 25px; float: left;">&nbsp;</div>
-            <img src="../images/prev.png" />
-        </div>
-        <div class="date_text">预订日期:2015-07-06</div>
-        <div class="next_date">
-            <div style="width: 25px; float: right;">&nbsp;</div>
-            <img src="../images/next.png" />
-        </div>
+<body ng-controller="ktyySCtrl">
+<div class="date_select">
+    <div class="prev_date">
+        <div style="width: 25px; float: left;">&nbsp;</div>
+        <img src="../images/prev.png"/>
     </div>
-    <div class="point_select">
-        <div class="points_text">场地选择</div>
-        <div class="points">
-            <div class="point point_2">网球场1</div>
-            <div class="point point_1">网球场2</div>
-            <div class="point point_0">网球场3</div>
-            <div class="point point_0">网球场4</div>
-        </div>
+    <div class="date_text">
+        预约日期：<input class="select_date" ng-model="date" id="select_date" type="text" name="date">
+    </div>
+
+    <div class="next_date">
+        <div style="width: 25px; float: right;">&nbsp;</div>
+        <img src="../images/next.png"/>
+    </div>
+</div>
+<div class="point_select">
+    <div class="points_text">场地选择</div>
+    <div class="points" data-ng-repeat="place in places">
+        <div class="point point_0" data-ng-class="{point_1: $index==placeCur}" data-ng-bind="place.SpName"
+             data-ng-click="selectPlace($index,place)"></div>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+<div class="time_select">
+    <div class="times_text">时间选择</div>
+    <div class="times" data-ng-repeat="time in timeList" data-ng-click="">
+        <div class="time time_0" data-ng-bind="time.TimeText"></div>
+    </div>
+    <div style="clear: both;"></div>
+
+    <div class="times hide">
+        <div class="time time_2">10:00-11:00</div>
+        <div class="time time_2">11:00-12:00</div>
+        <div class="time time_2">12:00-13:00</div>
+        <div class="time time_1">13:00-14:00</div>
+        <div class="time time_0">14:00-15:00</div>
+        <div class="time time_0">15:00-16:00</div>
+        <div class="time time_0">16:00-17:00</div>
+        <div class="time time_0">17:00-18:00</div>
+        <div class="time time_0">18:00-19:00</div>
+        <div class="time time_0">19:00-20:00</div>
+        <div class="time time_0">20:00-21:00</div>
         <div style="clear: both;"></div>
     </div>
-    <div class="time_select">
-        <div class="times_text">时间选择</div>
-        <div class="times">
-            <div class="time time_2">10:00-11:00</div>
-            <div class="time time_2">11:00-12:00</div>
-            <div class="time time_2">12:00-13:00</div>
-            <div class="time time_1">13:00-14:00</div>
-            <div class="time time_0">14:00-15:00</div>
-            <div class="time time_0">15:00-16:00</div>
-            <div class="time time_0">16:00-17:00</div>
-            <div class="time time_0">17:00-18:00</div>
-            <div class="time time_0">18:00-19:00</div>
-            <div class="time time_0">19:00-20:00</div>
-            <div class="time time_0">20:00-21:00</div>
-            <div style="clear: both;"></div>
-        </div>
-    </div>
-    <div class="sp">
-            
-    </div>
-    <div class="bottom_btn">
-        <div class="back_link">
-            <div class="img_back">
-                <img src="../images/back04.png" />
-            </div>
-            <div class="btn_back">返回</div>
-        </div>
-        <div class="post">
-            <div class="btn_post">确认预订</div>
-        </div>
-    </div>
+</div>
+<div class="sp">
 
-    <div style="display: none;">
-        <div id="post_check">
-            <div style="line-height: 30px; font-size: 11px;">
-                以下为您的预订信息,请确认。<br />
-                预订场地:<span style="color: #ff6633;">网球场2</span><br />
-                预订日期:<span style="color: #ff6633;">2015-07-06</span><br />
-                预订时段:<span style="color: #ff6633;">13:00-14:00</span>
-            </div>
+</div>
+<div class="bottom_btn">
+    <div class="back_link" data-ng-click="back()">
+        <div class="img_back">
+            <img src="../images/back04.png"/>
+        </div>
+        <div class="btn_back">返回</div>
+    </div>
+    <div class="post">
+        <div class="btn_post">确认预订</div>
+    </div>
+</div>
+
+<div style="display: none;">
+    <div id="post_check">
+        <div style="line-height: 30px; font-size: 11px;">
+            以下为您的预订信息,请确认。<br/>
+            预订场地:<span style="color: #ff6633;">网球场2</span><br/>
+            预订日期:<span style="color: #ff6633;">2015-07-06</span><br/>
+            预订时段:<span style="color: #ff6633;">13:00-14:00</span>
         </div>
     </div>
+</div>
 </body>
 </html>

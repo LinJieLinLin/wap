@@ -27,6 +27,7 @@
 
 .content
 {
+	position: relative;
 	width: 100%;
 }
 
@@ -56,6 +57,12 @@
 	font-size: 15px;
 	color: #ff6633;
 }
+.L{
+	float: left;
+}
+.R{
+	float: right;
+}
 
 .item_title_left span
 {
@@ -76,6 +83,7 @@
 
 .item_img
 {
+	position: relative;
 	width: 100%;
 }
 
@@ -86,16 +94,17 @@
 
 .item_text
 {
-    display:none;
 	font-size: 13px;
 	color: #ffffff;
 	position: absolute;
+	bottom: 2px;
 	z-index: 30;
 	width:100%;
 }
 
 .item_text_left
 {
+	height: 35px;
 	float: left;
 	background: #000;
 	filter: alpha(Opacity=30);
@@ -107,7 +116,8 @@
 
 .div_w20_fl
 {
-	width:20px; 
+	/*width:20px; */
+	margin-left: 20px;
 	height:1px; 
 	float:left;
 }
@@ -121,6 +131,7 @@
 
 .item_text_right
 {
+	height: 35px;
 	float: right;
 	background: #ff6633;
 	filter: alpha(Opacity=60);

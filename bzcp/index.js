@@ -9,10 +9,11 @@ bzcp.controller('bzcpCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
     $scope.menuList = {};
     $scope.date = getDateStr();
     $scope.checkWidth = function () {
-        var banWidth = document.getElementById("ban").offsetWidth;
-        $(".banner_w").width((banWidth) / 3 - 1);
+        var banWidth = win_w-15;
+        $(".banner").width((banWidth));
+        $(".banner_w").width((banWidth-3) / 3);
     };
-    $scope.checkWidth();
+
     $scope.selectBan = function (arg_data) {
         $scope.cur = arg_data;
         if (arg_data == 0) {
@@ -88,8 +89,8 @@ bzcp.controller('bzcpCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
             date = $("#select_date").val();
             $scope.getData();
         });
-        $("#begin_date").val(date);
         $("#select_date").change();
+        $scope.checkWidth();
     }, 10);
     $scope.back = function () {
         location.href = "../home/index.html";

@@ -187,7 +187,7 @@ function dateCompare(date1, date2) {
 function show_gray_bg() {
     var gray_bg = $("#gray_bg");
     //onclick="hide_gray_bg()"
-    var div_html = '<div id="gray_bg"  style="position:absolute;filter:alpha(opacity=50); top:0px; left:0px; opacity:0.5;-moz-opacity:0.5; background:#666;  z-index:200; width:' + doc_w + 'px; height:' + doc_h + 'px">&nbsp;</div>'
+    var div_html = '<div id="gray_bg"  style="position:fixed;filter:alpha(opacity=50); top:0px; left:0px; opacity:0.5;-moz-opacity:0.5; background:#666;  z-index:200; width:' + doc_w + 'px; height:' + doc_h + 'px">&nbsp;</div>'
     $("#gray_bg").remove();
     $('body').append(div_html);
 }
@@ -222,7 +222,7 @@ function Alert(msg, Time) {
 function show_dialog(title, content, close, btn1, btn1Event, btn2, btn2Event) {
     show_gray_bg();
     $("#alert_dialog").remove();
-    var dialog = '<div id="alert_dialog" style="position:absolute; width:80%; z-index:300;left:0px; top:0px; ">'
+    var dialog = '<div id="alert_dialog" style="position:fixed; width:80%; z-index:300;left:0px; top:0px; ">'
     dialog = dialog + '<div class="dialog_close">X</div><div class="dialog_title"></div>'
     dialog = dialog + '<div class="dialog_content">'
     dialog = dialog + '<div class="dialog_text"></div>'

@@ -1,69 +1,46 @@
 ﻿<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="ktyy">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
     <title>康体预约</title>
     <link href="../styles/public.css" rel="stylesheet" />
     <link href="index.css" rel="stylesheet" />
+    <script src="../scripts/angular-1.2.9/angular.min.js"></script>
     <script src="../scripts/jquery.min.js"></script>
     <script src="../scripts/public.js"></script>
-    <script type="text/javascript">
-        $(function () {
-            $(".back_img").click(function () {
-                location.href = '../home/index.html';
-            });
-            $(".item_text_right").click(function () {
-                var sid = $(this).parent().attr('sid');
-                location.href = 'select.html?sid='+sid;
-            });
-            $(".item_text_left").click(function () {
-                var sid = $(this).parent().attr('sid');
-                showRule(sid);
-            });
-            $(".order_link").click(function () {
-                location.href = 'order.html';
-            });
-        });
-
-        function showRule(sid) {
-            var content = '';
-            var title="";
-            if (sid == 1) {
-                title='网球场';
-                content = $("#rule1").html();
-            } else {
-                title='多功能体育馆';
-                content = $("#rule2").html();
-            }
-
-            show_dialog(title, content, function () {
-                hide_dialog();
-            });
-        }
-
-        $(window).load(function () {
-            $(".item_text").show();
-            $(".item_text").each(function (i, n) {                
-                var left = $(this).prev().offset().left;
-                $(this).css("left", left);
-                var top = $(this).prev().offset().top + $(this).prev().height() - $(this).height();              
-                $(this).css("top",top);
-            });
-        });
-
-    </script>
+    <script src="index.js"></script>
 </head>
-<body>
+<body ng-controller="ktyyCtrl">
     <div class="back">
-        <div class="back_img">
+        <div class="back_img" data-ng-click="back()">
             <img src="../images/back02.png" />
         </div>
-        <div class="back_text">康体预约</div>
+        <div class="back_text" data-ng-click="back()">康体预约</div>
     </div>
     <div class="content">
         <div class="items">
-            <div class="item">
+            <div class="item" data-ng-repeat="place in places">
+                <div class="item_title">
+                    <div class="item_title_left"><span>&nbsp;</span>{{place.SiteName}}</div>
+                    <div class="item_title_right"><span data-ng-bind="place.SiteAddress"></span></div>
+                </div>
+                <div class="item_img">
+                    <img class="site_img" ng-src="{{place.SitePicture}}" />
+                    <div class="item_text" sid="1">
+                        <div class="item_text_left" data-ng-click="showRule(place.SiteName,place.SiteDescription)">
+                            <div class="div_w20_fl">场地介绍</div>
+                        </div>
+                        <div class="item_text_right" data-ng-click="select(place.SiteID)">
+                            <div class="item_text_right_img">
+                                <img src="../images/go.png" />
+                            </div>
+                            <div class="item_text_right_value" >预订</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="item hide">
                 <div class="item_title">
                     <div class="item_title_left"><span>&nbsp;</span>网球场</div>
                     <div class="item_title_right">北裙楼6楼</div>
@@ -86,7 +63,7 @@
                     </div>
                 </div>
             </div>
-            <div class="item">
+            <div class="item hide">
                 <div class="item_title">
                     <div class="item_title_left"><span>&nbsp;</span>多功能体育馆</div>
                     <div class="item_title_right">北裙楼4楼</div>
@@ -121,55 +98,6 @@
                 <img src="../images/order01.png" />
             </div>
             <div class="btn_order" link="order.html">我的订单</div>
-        </div>
-    </div>
-
-    <div style="display: none;">
-        <div id="rule1" style="font-size: 13px;">
-            一、网球场于每周一开始预订一周内的运动需求，如需取消已预订的场地，<span style="color: #ff6633">请致电：18818811106。</span>
-            二、网球场针对员工开放时间为：<br />
-            <span style="color: #ff6633">周五:17:00-21:30<br />
-                周六:10:00-21:30<br />
-                周日:10:00-15:00.20:00-21:30<br />
-            </span>
-            三、网球场兴趣小组活动时间为：<br />
-            <span style="color: #ff6633">周一:17:30-21:30<br />
-                周二:17:30-21:00<br />
-                周三:17:30-21:30<br />
-                周四:17:30-21:00<br />
-                周日:15:00-20:00<br />
-            </span>
-            四、进入场馆后，请出示您的员工证及手机短信，由场馆管理员核对订场记录及登记后再进行运动。<br />
-            五、请勿穿硬底皮鞋、高跟鞋进入场地运动，须穿不褪色的软胶底运动鞋并清除鞋底异物，以免对场地造成损害。<br />
-            六、请保持场地的环境卫生，勿携带除饮料之外的食物进入场地，禁止吃口香糖等易对场地造成损害的行为。<br />
-            七、场内设施的设置，未经许可请勿私自调校。<br />
-            八、网球场每个场地同时使用人数最多不超过四人。<br />
-            九、个人物品请自行妥善保管，若不慎遗失，请拨打18818811106查询，本馆不负赔偿责任。<br />
-            十、离场时请到前台登记，以便跟进人员使用情况及归还您借用的场馆物品，场馆物品请勿带出场外。<br />
-            十一、请按预定的时间段到场，迟到十五分钟作自动放弃处理，并按预定的时间结束活动，以免影响其它预定。<br />
-            十二、非开放时间未经申请不得进入场内运动。<br />
-            十三、凡违反本规则而不接受劝告者，管理人员有权请其离场。<br />
-        </div>
-        <div id="rule2" style="font-size: 13px;">
-            一、多功能体育馆于每周一开始预订一周内的运动需求，如需取消已预订的场地，<span style="color: #ff6633">请致电：18818811106。</span><br />
-            二、多功能体育馆针对员工开放时间为：<br />
-            <span style="color: #ff6633">周六:10:00－15:00,18:00－21:30<br />
-                周日:10:00－21:30<br />
-            </span>
-            三、多功能体育馆兴趣小组活动时间为：
-            <br />
-            <span style="color: #ff6633">周一、五为篮球兴趣小组(17:30－21:30)<br />
-                周二、四为羽毛球兴趣小组(17:00－21:30)<br />
-                周三为排球兴趣小组(17:30－21:30)<br />
-            </span>
-            四、请按预定的时间段到场，迟到十五分钟作自动放弃处理。请您按预定的时间结束活动，以免影响其它场次的预定。<br />
-            五、进入场馆后，请出示您的员工证及手机短信，由场馆管理员核对订场记录及登记后再进行运动。<br />
-            六、如有需要，可在前台处领取储物柜钥匙，以方便保管个人物品。若不慎遗失，请拨打18818811106查询，本馆不负赔偿责任。<br />
-            七、为保护多功能体育馆地面，进场者请穿运动鞋，严禁穿硬底鞋进入场内。<br />
-            八、请保持室内的环境卫生，请勿随意吐痰、吸烟、吃零食及抛弃杂物。<br />
-            九、离场时请到前台登记，以便跟进人员使用情况及归还您借用的场馆物品，场馆物品请勿带出场外。<br />
-            十、非开放时间未经申请勿进入场内运动。<br />
-            十一、凡违反本规则而不接受劝告者，管理人员有权请其离场。<br />
         </div>
     </div>
 </body>

@@ -19,8 +19,12 @@
 	width:70%;
 	float:left;
 	text-align:center;
-	padding:9px 0px;
-	color:#ffffff;
+	padding:9px 0;
+	color: #ffffff;
+}
+.date_text input{
+	background-color: #ff6633;
+	color: #ffffff;
 }
 
 .next_date
@@ -60,7 +64,6 @@
 	float:left;
 	background-color:#ffffff;
 	width:40%;
-	height:19px;
 	padding:11px 0px 10px 0px;
 	margin:10px;
 }
@@ -110,7 +113,6 @@
 	border-radius:5px;
 	float:left;
 	background-color:#ffffff;
-	height:19px;
 	width:25%;
 	padding:11px 0px 10px 0px;
 	margin:10px;
