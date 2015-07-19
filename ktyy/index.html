@@ -23,7 +23,7 @@
             <div class="item" data-ng-repeat="place in places">
                 <div class="item_title">
                     <div class="item_title_left"><span>&nbsp;</span>{{place.SiteName}}</div>
-                    <div class="item_title_right"><span data-ng-bind="place.SiteAddress"></span></div>
+                    <div class="item_title_right"><span data-ng-bind="'地址：'+place.SiteAddress"></span></div>
                 </div>
                 <div class="item_img">
                     <img class="site_img" ng-src="{{place.SitePicture}}" />
@@ -92,12 +92,12 @@
         </div>
     </div>
 
-    <div class="bottom_btn">
+    <div class="bottom_btn" data-ng-click="toOrder()">
         <div class="order_link">
-            <div class="img_order" link="order.html">
+            <div class="img_order" >
                 <img src="../images/order01.png" />
             </div>
-            <div class="btn_order" link="order.html">我的订单</div>
+            <div class="btn_order" >我的订单</div>
         </div>
     </div>
 </body>

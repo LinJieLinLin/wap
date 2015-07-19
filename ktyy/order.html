@@ -1,98 +1,108 @@
 ﻿<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="ktyy">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
     <title>康体预约</title>
-    <link href="../styles/public.css" rel="stylesheet" />
-    <link href="order.css" rel="stylesheet" />    
+    <link href="../styles/public.css" rel="stylesheet"/>
+    <link href="order.css" rel="stylesheet"/>
+    <script src="../scripts/angular-1.2.9/angular.min.js"></script>
     <script src="../scripts/jquery.min.js"></script>
     <script src="../scripts/public.js"></script>
+    <script src="../scripts/datepicker/picker.js"></script>
+    <script src="../scripts/datepicker/picker.date.js"></script>
+    <script src="../scripts/datepicker/legacy.js"></script>
+    <script src="../scripts/datepicker/zh_CN.js"></script>
+    <link href="../scripts/datepicker/themes/default.css" rel="stylesheet" />
+    <link href="../scripts/datepicker/themes/default.date.css" rel="stylesheet" />
+    <script src="index.js"></script>
     <script type="text/javascript">
         $(function () {
-            $(".content").width(win_w - 40);
-            $(".line").width((win_w - 70) / 2);
-            $(".line0").width($(".line").width() - 7);
-            $(".sp").width(win_w - 20);
-            $(".back_img").click(function () {
-                window.history.back();
-            });
+
         });
     </script>
 </head>
-<body>
-    <div class="back">
-        <div class="back_img">
-            <img src="../images/back03.png" />
-        </div>
-        <div class="back_text">返回</div>
+<body ng-controller="ktyyOCtrl">
+<div class="back" data-ng-click="back()">
+    <div class="back_img">
+        <img src="../images/back03.png"/>
     </div>
-    <div class="content">
-        <div class="dates">
-            <div class="begin_date">2015-07-06<span><img src="../images/down.png" /></span></div>
-            <div class="date_img">
-                <img src="../images/kt_icon.png" />
-            </div>
-            <div class="end_date">2015-07-06<span><img src="../images/down.png" /></span></div>
+    <div class="back_text">返回</div>
+</div>
+<div class="content">
+    <div class="dates">
+        <div class="begin_date">
+            <input id="begin_date" type="text" name="date">
+            <span><img src="../images/down.png"/></span>
         </div>
+        <div class="date_img">
+            <img src="../images/kt_icon.png"/>
+        </div>
+        <div class="end_date">
+            <input id="end_date" type="text" name="date">
+            <span><img src="../images/down.png"/></span></div>
+    </div>
 
-        <div class="lines">
-            <div class="line">
-                <div class="dot1"></div>
-                <div class="line0"></div>
-                <div class="dot2"></div>
-            </div>
-            <div class="line" style="float: right;">
-                <div class="dot1"></div>
-                <div class="line0"></div>
-                <div class="dot2"></div>
-            </div>
+    <div class="lines">
+        <div class="line">
+            <div class="dot1"></div>
+            <div class="line0"></div>
+            <div class="dot2"></div>
         </div>
-        <div style="clear: both"></div>
-        <div class="order">
-            <div class="order_title">
-                <div class="order_date">场地:网球场</div>
-                <div class="order_clear">取消</div>
-            </div>
-            <table class="order_list" cellspacing="0" cellpadding="0">
-                <tr>
-                    <td>
-                        <div class="item">
-                            <div class="item_name">场点:网球场1</div>
-                        </div>
-                        <div class="item">
-                            <div class="item_name">预订日期:B3112</div>
-                        </div>
-                        <div class="item">
-                            <div class="item_name">预订时间:2015－07－06 11:05:22</div>
-                        </div>                       
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <div class="order">
-            <div class="order_title">
-                <div class="order_date">场地:网球场</div>
-                <div class="order_clear">取消</div>
-            </div>
-            <table class="order_list" cellspacing="0" cellpadding="0">
-                <tr>
-                    <td>
-                        <div class="item">
-                            <div class="item_name">场点:网球场2</div>
-                        </div>
-                        <div class="item">
-                            <div class="item_name">预订日期:B3112</div>
-                        </div>
-                        <div class="item">
-                            <div class="item_name">预订时间:2015－07－06 11:05:22</div>
-                        </div>                       
-                    </td>
-                </tr>
-            </table>
+        <div class="line" style="float: right;">
+            <div class="dot1"></div>
+            <div class="line0"></div>
+            <div class="dot2"></div>
         </div>
     </div>
     <div style="clear: both"></div>
-    <div class="sp"></div>
+    <div class="order" data-ng-repeat="order in orders">
+        <div class="order_title">
+            <div class="order_date" data-ng-bind="'场地：'+order.SiteName"></div>
+            <div class="order_clear" data-ng-click="cancelOrder(order)">取消</div>
+        </div>
+        <table class="order_list" cellspacing="0" cellpadding="0">
+            <tr>
+                <td>
+                    <div class="item">
+                        <div class="item_name" data-ng-bind="'场点：'+order.SpName"></div>
+                    </div>
+                    <div class="item">
+                        <div class="item_name" data-ng-bind="'预订日期：'+order.Date"></div>
+                    </div>
+                    <div class="item">
+                        <div class="item_name" data-ng-bind="'预订时间：'+order.TimeText"></div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div data-ng-if="!orders.length" class="order" >
+        <div class="no_data">暂无数据！</div>
+    </div>
+    <div class="order hide">
+        <div class="order_title">
+            <div class="order_date">场地:网球场</div>
+            <div class="order_clear">取消</div>
+        </div>
+        <table class="order_list" cellspacing="0" cellpadding="0">
+            <tr>
+                <td>
+                    <div class="item">
+                        <div class="item_name">场点:网球场1</div>
+                    </div>
+                    <div class="item">
+                        <div class="item_name">预订日期:B3112</div>
+                    </div>
+                    <div class="item">
+                        <div class="item_name">预订时间:2015－07－06 11:05:22</div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div style="clear: both"></div>
+<div class="sp"></div>
 </body>
 </html>

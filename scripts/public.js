@@ -323,7 +323,9 @@ function ajax(data, onSuccess, onError) {
     if (portalno != null) {
         data.portalno = portalno;
     }
-    data.date = date;
+    if(!data.Date){
+        data.date = date;
+    }
     if (ajaxUrl == "") {
         show_loading();
         jQuery.getJSON("http://115.29.179.99:7777/service/Handler.ashx?jsoncallback=?&m=getdataurlbyplid&plid=" + plid,
