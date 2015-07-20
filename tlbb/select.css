@@ -23,16 +23,19 @@
 }
 .content {
     margin-top:10px;
+    width: 100%;
 }
 .user_list {
-
+    width: 100%;
 }
 .user {
     background-color:#ffffff;
     margin-bottom:10px;
+    width: 100%;
 }
 .user_title {
-
+    height: 30px;
+    margin: 0 25px;
 }
 .user_title_pl {
     float:left;
@@ -51,11 +54,14 @@
     float:right;
 }
 .user_info {
-
+    margin: 0 23px 0 18px;
 }
 .user_info_pic {
-    width:34%;
+    width:30%;
     float:left;
+    background-image:url("../images/no_pic.png") ;
+    background-size:100% 100%;
+    margin: 10px 0;
 }
 .user_info_pic img {
     width:100%;
@@ -143,7 +149,7 @@
 	border-radius:5px;
 	float:left;
 	background-color:#ffffff;
-	height:19px;
+	/*height:19px;*/
 	width:25%;
 	padding:11px 0px 10px 0px;
 	margin:10px;

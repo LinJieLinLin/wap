@@ -208,7 +208,24 @@ ktyy.controller('ktyySCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
             '        </div>';
         return content;
     };
-    $(".post").click(function () {
+    $scope.postInf=function () {
+        if(angular.isUndefined($scope.timeList.Times)||$scope.timeList.Times.length==0){
+            return;
+        }
+        var bTimes = ",";
+        var eTimes = ",";
+        var temL = $scope.timeList.Times.length;
+        for (var i = 0; i < temL; i++) {
+            if ($scope.timeList.Times[i].IsOrder == -1) {
+                bTimes += $scope.timeList.Times[i].BTime + ",";
+                eTimes += $scope.timeList.Times[i].ETime + ",";
+            }
+        }
+        if (bTimes == ",") {
+            Alert("请先选择时间！");
+            return;
+        }
+
         var title = '预订确认';
         var content = $scope.getContent();
         show_dialog(title, content, null, '确认', function () {
@@ -217,7 +234,7 @@ ktyy.controller('ktyySCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
         }, '返回', function () {
             hide_dialog();
         });
-    });
+    };
 
 }]);
 ktyy.controller('ktyyOCtrl', ['$scope', '$timeout', function ($scope, $timeout) {

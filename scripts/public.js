@@ -176,6 +176,22 @@ function getDateStr() {
     if (dd < 10) dd = '0' + dd;
     return yyyy + "-" + MM + "-" + dd;
 }
+//获得日期字符串：yyyy-MM-dd 00:00:00
+function getDateTimeStr() {
+    var date = new Date();
+    var yyyy = date.getFullYear();
+    var MM = date.getMonth() + 1;
+    var dd = date.getDate();
+    if (MM < 10) MM = '0' + MM
+    if (dd < 10) dd = '0' + dd;
+    var hour = date.getHours();
+    if (hour < 10) hour = '0' + hour;
+    var minute = date.getMinutes();
+    if (minute < 10) minute = '0' + minute;
+    var second = date.getSeconds();
+    if (second < 10) second = '0' + second;
+    return yyyy + "-" + MM + "-" + dd+" "+hour+":"+minute+":"+second;
+}
 //日期对比
 function dateCompare(date1, date2) {
     var d1 = new Date(date1);

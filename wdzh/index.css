@@ -51,11 +51,16 @@
 }
 .list_body{
     background:#ffffff;
-    min-height: 100px;
+    min-height: 200px;
+}
+.list_p{
+    margin: 0 10px;
+    padding-top: 20px;
 }
 .imgL{
     height: 20px;
     width: 20px;
+    margin-top: -3px;
 }
 .imgR{
     height: 20px;
@@ -78,4 +83,96 @@
     background: url('../images/sp.png') repeat-x #eeeeee;
     height: 22px;
     width: 100%;
+}
+.dates {
+    height: 36px;
+    width: 100%;
+}
+.begin_date {
+    float: left;
+    width: 45%;
+    font-size: 14px;
+    color: #ff6633;
+    text-align: center;
+    padding: 12px 0px 0px 0px;
+}
+.begin_date input{
+    font-size:14px;
+    color: #ff6633;
+    font-weight:bold;
+    width: 80px;
+}
+.begin_date span {
+    padding-left: 5px;
+}
+
+.end_date {
+    float: right;
+    width: 45%;
+    font-size: 14px;
+    color: #ff6633;
+    text-align: center;
+    padding: 12px 0px 0px 0px;
+}
+.end_date input{
+    font-size:14px;
+    color: #ff6633;
+    font-weight:bold;
+    width: 80px;
+}
+
+.end_date span {
+    padding-left: 5px;
+}
+.date_img {
+    width: 10%;
+    float: left;
+    text-align: center;
+    padding: 10px 0px 4px 0px;
+}
+.lines {
+    height: 40px;
+    width: 100%;
+}
+.line {
+    width: 40%;
+    height: 3px;
+    margin-bottom: 9px;
+    float: left;
+}
+
+.dot1 {
+    float: left;
+    height: 3px;
+    width: 3px;
+    background-image: url('../images/dot.png');
+}
+
+.line0 {
+    height: 1px;
+    width: 100%;
+    float: left;
+    border-bottom: 1px solid #dfdfdf;
+    margin-bottom: 1px
+}
+
+.dot2 {
+    float: right;
+    height: 3px;
+    width: 3px;
+    background-image: url('../images/dot.png');
+}
+.btn{
+    text-align: center;
+    border-radius: 5px;
+    color: #ffffff;
+    background-color: #ff6633;
+    padding: 10px 0;
+    width: 40%;
+    position: absolute;
+    left: 30%;
+}
+.search{
+    margin: auto;
+    position: relative;
 }

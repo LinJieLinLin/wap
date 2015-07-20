@@ -1,45 +1,3 @@
-﻿body{
-    background-color: #eeeeee;
-}
-.back{
-    width: 100%;
-    height: 40px;
-    border-bottom: 1px solid #ff6633;
-    background-color: #ffffff;
-    position: fixed;
-    top:0;
-    left: 0;
-    z-index: 200;
-}
-.back_img {
-    float: left;
-    font-size: 15px;
-    font-weight: 900;
-    line-height: 20px;
-    color: #ff6633;
-    padding: 10px 0 10px 16px;
-}
-
-.back_text {
-    float: left;
-    font-size: 15px;
-    font-weight: bold;
-    color: #ff6633;
-    line-height: 20px;
-    padding: 10px 0 10px 7px;
-}
-.note {
-    float:right;
-    font-size: 15px;
-    font-weight:bold;
-    color:#ff6633;
-    line-height: 20px;
-    padding:10px 7px 10px 0px;
-}
-.note_img {
-    float:right;
-    padding:8px 6px 6px 0px;
-}
 body {
     background-color: #eeeeee;
 }
@@ -143,7 +101,6 @@ body {
     position: relative;
     margin: 0 10px;
     background-color: #eeeeee;
-    padding-top: 30px;
 }
 
 .line {
@@ -193,7 +150,7 @@ body {
 }
 
 .show_pic {
-    margin: 20px 0 0 0;
+    margin: 20px 0 10px 0;
     position: relative;
 }
 
@@ -210,6 +167,7 @@ body {
 .goods_r {
     position: relative;
     width: 100%;
+    height: 50%;
 }
 
 .goods_inf {
@@ -238,6 +196,7 @@ body {
 }
 
 .items {
+    height: 100px;
     position: relative;
 }
 
@@ -274,7 +233,7 @@ body {
 }
 .img_order
 {
-    width: 50%;
+    width: 25%;
     float: left;
     padding:15px 0px;
     text-align:right;
@@ -286,7 +245,7 @@ body {
 }
 .btn_order
 {
-    width: 50%;
+    width: 24%;
     text-align: left;
     float: left;
     color:#666666;
