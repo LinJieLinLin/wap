@@ -77,7 +77,7 @@ bzcp.controller('bzcpCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
             );
         }, function (arg_err) {
             console.log(arg_err);
-            alert(arg_err);
+            Alert(angular.toJson(arg_err));
         })
     };
     $timeout(function () {

@@ -136,3 +136,12 @@ img
 	background-image:url('../images/close.png');
 }
 /**以上为对话框样式*/
+.L{
+    float: left;
+}
+.R{
+    float: right;
+}
+.clean{
+    clear: both;
+}

@@ -35,6 +35,7 @@
             });
 
             ajax({ m: 'userquerybyportal2',PortalType:'wx'}, function (result) {
+                result = {UserName:"林冠",PhoneNo:"15920385215"};
                 utils.setParam("userinfo", JSON.stringify(result));
             }, function (result) {
 

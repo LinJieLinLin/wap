@@ -176,6 +176,16 @@ function getDateStr() {
     if (dd < 10) dd = '0' + dd;
     return yyyy + "-" + MM + "-" + dd;
 }
+//
+function getDateStrByDate (arg_d) {
+    var date = arg_d;
+    var yyyy = date.getFullYear();
+    var MM = date.getMonth() + 1;
+    var dd = date.getDate();
+    if (MM < 10) MM = '0' + MM
+    if (dd < 10) dd = '0' + dd;
+    return yyyy + "-" + MM + "-" + dd;
+}
 //获得日期字符串：yyyy-MM-dd 00:00:00
 function getDateTimeStr() {
     var date = new Date();
@@ -191,6 +201,12 @@ function getDateTimeStr() {
     var second = date.getSeconds();
     if (second < 10) second = '0' + second;
     return yyyy + "-" + MM + "-" + dd+" "+hour+":"+minute+":"+second;
+}
+//获取星期几
+function getWeekStr() {
+    var date = new Date();
+    var dayNames = new Array("星期日","星期一","星期二","星期三","星期四","星期五","星期六");
+    return dayNames[date.getDay()];
 }
 //日期对比
 function dateCompare(date1, date2) {

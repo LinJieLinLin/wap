@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="xxyj" lang="zh_CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
+    <title>洗新艳旧</title>
+    <link href="../styles/public.css" rel="stylesheet"/>
+    <script src="../scripts/angular-1.2.9/angular.min.js"></script>
+    <script src="../scripts/jquery.min.js"></script>
+    <script src="../scripts/public.js"></script>
+    <script src="index.js"></script>
+    <link href="cart.css" rel="stylesheet"/>
+</head>
+<body ng-controller="xxyjCCtrl">
+<div class="back" data-ng-click="back()">
+    <div class="back_img">
+        <img src="../images/back03.png"/></div>
+    <div class="back_text">返回</div>
+</div>
+
+<div class="car_list">
+    <!--<div class="car_list" style="width: 501px;" data-ng-repeat="cart in cartData| orderBy:'index':true">-->
+        <div class="car_list" style="width: 501px;" data-ng-repeat="cart in cartData">
+        <div class="order_date" data-ng-if="cart.addDate!=cartData[$index-1].addDate">{{cart.addDate}}&nbsp;{{cart.week}}</div>
+        <div class="car_item">
+            <div class="item_img"><img class="img" data-ng-src="{{cart.WashPicture}}" style="height: 135px;"></div>
+            <div class="item_sp">&nbsp;</div>
+            <div class="item_content">
+                <div class="item_name">{{cart.WashName}}</div>
+                <div class="item_from">来源{{cart.index}}：{{cart.from}}</div>
+                <div class="item_stock">库存：{{cart.WRemainCount}}</div>
+                <div class="item_price">
+                    <!--<div class="item_price_tag">￥</div>-->
+                    <div class="item_price_value">{{cart.WashPrice| currency:'￥'}}</div>
+                </div>
+                <div class="item_set_count">
+                    <div class="subtract" data-ng-click="changeCount(cart,'-',$index)"></div>
+                    <div class="count"><input class="fcount" id="" type="text" data-ng-model="cart.count"></div>
+                    <div class="add" data-ng-click="changeCount(cart,'+',$index)"></div>
+                </div>
+            </div>
+            <div style="clear:both"></div>
+        </div>
+        <div class="line"></div>
+    </div>
+</div>
+
+<div class="bottom_btn">
+
+    <div class="btn_clear" data-ng-click="delAll()">
+        <div class="btn_clear_img">
+            <img src="../images/delete.png"/></div>
+        <div class="btn_clear_text">清空</div>
+    </div>
+    <div class="car_info">
+        <div class="car_info1">共计:<span class="car_info1_money">{{allPrice| currency:''}}</span><span
+                class="car_info1_unit">元</span></div>
+        <div class="car_info2">已选:{{cartData.length}}</div>
+    </div>
+    <div class="btn_go">去结算</div>
+</div>
+
+<div data-ng-if="!cartData.length" style="position:absolute; z-index:2; text-align:center; width:100%;top: 40%;">
+    <div>
+        <img src="../images/cart_null.png"/>
+    </div>
+    <div style="font-size:12px; color:#666666; text-align:center;">
+        空空如也~<br/>
+        快去购物吧！
+    </div>
+</div>
+</body>
+</html>

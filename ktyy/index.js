@@ -109,7 +109,7 @@ ktyy.controller('ktyySCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
         if (arg_d == -1 && date == getDateStr()) {
             return;
         }
-        preDate.setDate(preDate.getDate() + arg_d);  //后一天
+        preDate.setDate(preDate.getDate() + arg_d);
         date = $scope.getDateStr(preDate);
         $("#select_date").val(date);
         $("#select_date").change();
