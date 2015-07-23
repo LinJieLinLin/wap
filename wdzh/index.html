@@ -40,7 +40,7 @@
                 <img src="../images/up02.png" class="imgR"/>
             </div>
             <div class="R list_text">
-                {{userInf.Account1| currency:'￥'}}
+                <span data-ng-bind="userInf.Account1| currency:'￥'"></span>
             </div>
         </div>
         <div data-ng-show="isOpen.eat">
@@ -77,14 +77,14 @@
                     <div data-ng-repeat="eat in data.eat">
                         <div class="date_line_m" data-ng-if="eat.M!=data.eat[$index-1].M">
                             <div class="iconUse imgM" >
-                                {{eat.M}}月
+                                <span data-ng-bind="eat.M"></span>月
                             </div>
                         </div>
                         <div class="data_list_r" >
                             <div class="R data_list_data"  data-ng-style="style.textR">
                                 <div class="imgDay L">
                                     <div class="iconUse" data-ng-if="eat.D!=data.eat[$index-1].D">
-                                        {{eat.D}}日
+                                        <span data-ng-bind="eat.D"></span>日
                                     </div>
                                 </div>
                                 <div class="L data_list_r_icon" >
@@ -94,20 +94,20 @@
                                 <div class="L">
                                     <div class="item_text">
                                         <span data-ng-show="eat.TableType==1">充值</span><span
-                                            data-ng-show="eat.TableType==2">消费</span>时间：{{eat.FeeTime}}
+                                            data-ng-show="eat.TableType==2">消费</span>时间：<span data-ng-bind="eat.FeeTime"></span>
                                     </div>
                                     <div class="item_text" data-ng-show="eat.TableType==1">
-                                        充值金额：<span class="f_color_b">{{eat.FeeMoney|currency:'￥'}}</span>
+                                        充值金额：<span class="f_color_b"><span data-ng-bind="eat.FeeMoney|currency:'￥'"></span></span>
                                     </div>
                                     <div class="item_text" data-ng-show="eat.TableType==2">
-                                        消费金额：<span class="f_color_y">{{eat.FeeMoney|currency:'￥'}}</span>
+                                        消费金额：<span class="f_color_y"><span data-ng-bind="eat.FeeMoney|currency:'￥'"></span></span>
                                     </div>
                                     <div class="item_text">
-                                        账户余额：{{eat.CardMoney|currency:'￥'}}
+                                        账户余额：<span data-ng-bind="eat.CardMoney|currency:'￥'"></span>
                                     </div>
                                     <div class="item_text">
                                         <span data-ng-show="eat.TableType==1">充值类型：</span><span
-                                            data-ng-show="eat.TableType==2">消费地点：</span>{{eat.FeePlace}}
+                                            data-ng-show="eat.TableType==2">消费地点：</span><span data-ng-bind="eat.FeePlace"></span>
                                     </div>
                                 </div>
                             </div>
@@ -120,7 +120,6 @@
                 </div>
                 <div style="height: 40px;"></div>
             </div>
-
             <div class="sp">
             </div>
         </div>
@@ -138,7 +137,7 @@
                 <img src="../images/up02.png" class="imgR"/>
             </div>
             <div class="R list_text">
-                {{userInf.Account2| currency:'￥'}}
+                <span data-ng-bind="userInf.Account2| currency:'￥'"></span>
             </div>
         </div>
         <div data-ng-show="isOpen.wash">
@@ -175,14 +174,14 @@
                     <div data-ng-repeat="wash in data.wash">
                         <div class="date_line_m" data-ng-if="wash.M!=data.wash[$index-1].M">
                             <div class="iconUse imgM" >
-                                {{wash.M}}月
+                                <span data-ng-bind="wash.M"></span>月
                             </div>
                         </div>
                         <div class="data_list_r" >
                             <div class="R data_list_data"  data-ng-style="style.textR">
                                 <div class="imgDay L">
                                     <div class="iconUse" data-ng-if="wash.D!=data.wash[$index-1].D">
-                                        {{wash.D}}日
+                                        <span data-ng-bind="wash.D"></span>日
                                     </div>
                                 </div>
                                 <div class="L data_list_r_icon" >
@@ -192,20 +191,20 @@
                                 <div class="L">
                                     <div class="item_text">
                                         <span data-ng-show="wash.TableType==1">充值</span><span
-                                            data-ng-show="wash.TableType==2">消费</span>时间：{{wash.FeeTime}}
+                                            data-ng-show="wash.TableType==2">消费</span>时间：<span data-ng-bind="wash.FeeTime"></span>
                                     </div>
                                     <div class="item_text" data-ng-show="wash.TableType==1">
-                                        充值金额：<span class="f_color_b">{{wash.FeeMoney|currency:'￥'}}</span>
+                                        充值金额：<span class="f_color_b"><span data-ng-bind="wash.FeeMoney|currency:'￥'"></span></span>
                                     </div>
                                     <div class="item_text" data-ng-show="wash.TableType==2">
-                                        消费金额：<span class="f_color_y">{{wash.FeeMoney|currency:'￥'}}</span>
+                                        消费金额：<span class="f_color_y"><span data-ng-bind="wash.FeeMoney|currency:'￥'"></span></span>
                                     </div>
                                     <div class="item_text">
-                                        账户余额：{{wash.CardMoney|currency:'￥'}}
+                                        账户余额：<span data-ng-bind="wash.CardMoney|currency:'￥'"></span>
                                     </div>
                                     <div class="item_text">
                                         <span data-ng-show="wash.TableType==1">充值类型：</span><span
-                                            data-ng-show="wash.TableType==2">消费地点：</span>{{wash.FeePlace}}
+                                            data-ng-show="wash.TableType==2">消费地点：</span><span data-ng-bind="wash.FeePlace"></span>
                                     </div>
                                 </div>
                             </div>
