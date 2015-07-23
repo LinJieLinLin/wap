@@ -177,14 +177,15 @@ function getDateStr() {
     return yyyy + "-" + MM + "-" + dd;
 }
 //
-function getDateStrByDate (arg_d) {
-    var date = arg_d;
+function getDateStrByOne (arg_d) {
+    var date = new Date(arg_d);
     var yyyy = date.getFullYear();
     var MM = date.getMonth() + 1;
     var dd = date.getDate();
-    if (MM < 10) MM = '0' + MM
-    if (dd < 10) dd = '0' + dd;
-    return yyyy + "-" + MM + "-" + dd;
+    //if (MM < 10) MM = '0' + MM
+    //if (dd < 10) dd = '0' + dd;
+    var data = {y:yyyy,m:MM,d:dd};
+    return data
 }
 //获得日期字符串：yyyy-MM-dd 00:00:00
 function getDateTimeStr() {

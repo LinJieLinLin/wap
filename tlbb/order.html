@@ -13,8 +13,8 @@
     <script src="../scripts/datepicker/picker.date.js"></script>
     <script src="../scripts/datepicker/legacy.js"></script>
     <script src="../scripts/datepicker/zh_CN.js"></script>
-    <link href="../scripts/datepicker/themes/default.css" rel="stylesheet" />
-    <link href="../scripts/datepicker/themes/default.date.css" rel="stylesheet" />
+    <link href="../scripts/datepicker/themes/default.css" rel="stylesheet"/>
+    <link href="../scripts/datepicker/themes/default.date.css" rel="stylesheet"/>
     <script src="index.js"></script>
 </head>
 <body ng-controller="tlbbOCtrl">
@@ -53,20 +53,32 @@
     <div style="clear: both"></div>
     <div class="order" data-ng-repeat="order in orders">
         <div class="order_title">
-        <div class="order_date" data-ng-bind="order.Date"></div>
-        <div class="order_clear" data-ng-click="cancelOrder(order)">取消</div>
+            <div class="order_date" data-ng-bind="order.Date"></div>
+            <div class="order_clear" data-ng-click="cancelOrder(order)">取消</div>
         </div>
         <div class="order_body">
-            <div>
-                <img data-ng-src="{{order.SpPicture}}" />
+            <div class="order_img">
+                <img data-ng-src="{{order.SpPicture}}"/>
             </div>
-            <div>
-
+            <div class="order_text">
+                <div class="item">
+                    <div class="item_name" >预约套餐：<span data-ng-bind="order.SppName"></span></div>
+                </div>
+                <div class="item">
+                    <div class="item_name" >预约服务员：<span data-ng-bind="order.SpName"></span></div>
+                </div>
+                <div class="item">
+                    <div class="item_name" >预约日期：<span data-ng-bind="order.TimeText"></span></div>
+                </div>
+                <div class="item">
+                    <div class="item_name" >预约时间：<span data-ng-bind="order.BTime/100+':00'"></span></div>
+                </div>
             </div>
+            <div class="clean"></div>
         </div>
         <!--<div class="order_title">-->
-            <!--<div class="order_date" data-ng-bind="'场地：'+order.SiteName"></div>-->
-            <!--<div class="order_clear" data-ng-click="cancelOrder(order)">取消</div>-->
+        <!--<div class="order_date" data-ng-bind="'场地：'+order.SiteName"></div>-->
+        <!--<div class="order_clear" data-ng-click="cancelOrder(order)">取消</div>-->
         <!--</div>-->
         <table class="order_list" cellspacing="0" cellpadding="0">
             <tr>
@@ -87,7 +99,7 @@
             </tr>
         </table>
     </div>
-    <div data-ng-if="!orders.length" class="order" >
+    <div data-ng-if="!orders.length" class="order">
         <div class="no_data">暂无数据！</div>
     </div>
     <div class="order hide">

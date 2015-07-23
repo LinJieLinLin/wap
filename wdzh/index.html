@@ -14,8 +14,8 @@
     <script src="../scripts/datepicker/picker.date.js"></script>
     <script src="../scripts/datepicker/legacy.js"></script>
     <script src="../scripts/datepicker/zh_CN.js"></script>
-    <link href="../scripts/datepicker/themes/default.css" rel="stylesheet" />
-    <link href="../scripts/datepicker/themes/default.date.css" rel="stylesheet" />
+    <link href="../scripts/datepicker/themes/default.css" rel="stylesheet"/>
+    <link href="../scripts/datepicker/themes/default.date.css" rel="stylesheet"/>
     <script src="index.js"></script>
 
 </head>
@@ -33,46 +33,96 @@
                 <img src="../images/eit.png" class="imgL"/>
             </div>
             <div class=" L list_text pL7">就餐帐户</div>
-            <div class="R pL7">
+            <div class="R pL7" data-ng-if="!isOpen.eat" data-ng-click="changeOpen('eat')">
                 <img src="../images/down02.png" class="imgR"/>
+            </div>
+            <div class="R pL7" data-ng-if="isOpen.eat" data-ng-click="changeOpen('eat')">
+                <img src="../images/up02.png" class="imgR"/>
             </div>
             <div class="R list_text">
                 {{userInf.Account1| currency:'￥'}}
             </div>
         </div>
-        <div class="list_body">
-            <div class="list_p">
-                <div class="dates">
-                    <div class="begin_date">
-                        <input id="begin_date" type="text" name="date">
-                        <span><img src="../images/down.png"/></span>
+        <div data-ng-show="isOpen.eat">
+            <div class="list_body">
+                <div class="list_p">
+                    <div class="dates">
+                        <div class="begin_date">
+                            <input id="begin_date" type="text" name="date">
+                            <span><img src="../images/down.png"/></span>
+                        </div>
+                        <div class="date_img">
+                            至
+                        </div>
+                        <div class="end_date">
+                            <input id="end_date" type="text" name="date">
+                            <span><img src="../images/down.png"/></span></div>
                     </div>
-                    <div class="date_img">
-                        至
+                    <div class="lines">
+                        <div class="line">
+                            <div class="dot1"></div>
+                            <div class="line0"></div>
+                            <div class="dot2"></div>
+                        </div>
+                        <div class="line" style="float: right;">
+                            <div class="dot1"></div>
+                            <div class="line0"></div>
+                            <div class="dot2"></div>
+                        </div>
                     </div>
-                    <div class="end_date">
-                        <input id="end_date" type="text" name="date">
-                        <span><img src="../images/down.png"/></span></div>
                 </div>
-                <div class="lines">
-                    <div class="line">
-                        <div class="dot1"></div>
-                        <div class="line0"></div>
-                        <div class="dot2"></div>
-                    </div>
-                    <div class="line" style="float: right;">
-                        <div class="dot1"></div>
-                        <div class="line0"></div>
-                        <div class="dot2"></div>
+                <!--//列表-->
+                <div class="data_list" >
+                    <div class="date_line"></div>
+                    <div data-ng-repeat="eat in data.eat">
+                        <div class="date_line_m" data-ng-if="eat.M!=data.eat[$index-1].M">
+                            <div class="iconUse imgM" >
+                                {{eat.M}}月
+                            </div>
+                        </div>
+                        <div class="data_list_r" >
+                            <div class="R data_list_data"  data-ng-style="style.textR">
+                                <div class="imgDay L">
+                                    <div class="iconUse" data-ng-if="eat.D!=data.eat[$index-1].D">
+                                        {{eat.D}}日
+                                    </div>
+                                </div>
+                                <div class="L data_list_r_icon" >
+                                    <img src="../images/xfjt.png"  data-ng-show="eat.TableType==1">
+                                    <img src="../images/czjt.png"  data-ng-show="eat.TableType==2">
+                                </div>
+                                <div class="L">
+                                    <div class="item_text">
+                                        <span data-ng-show="eat.TableType==1">充值</span><span
+                                            data-ng-show="eat.TableType==2">消费</span>时间：{{eat.FeeTime}}
+                                    </div>
+                                    <div class="item_text" data-ng-show="eat.TableType==1">
+                                        充值金额：<span class="f_color_b">{{eat.FeeMoney|currency:'￥'}}</span>
+                                    </div>
+                                    <div class="item_text" data-ng-show="eat.TableType==2">
+                                        消费金额：<span class="f_color_y">{{eat.FeeMoney|currency:'￥'}}</span>
+                                    </div>
+                                    <div class="item_text">
+                                        账户余额：{{eat.CardMoney|currency:'￥'}}
+                                    </div>
+                                    <div class="item_text">
+                                        <span data-ng-show="eat.TableType==1">充值类型：</span><span
+                                            data-ng-show="eat.TableType==2">消费地点：</span>{{eat.FeePlace}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clean"></div>
+                        </div>
                     </div>
                 </div>
-                <div class="search">
-                    <button class="btn">查询</button>
+                <div data-ng-if="!data.eat.length"  class="data_list" >
+                    <div class="no_data">暂无数据！</div>
                 </div>
+                <div style="height: 40px;"></div>
             </div>
-        </div>
-        <div class="sp">
 
+            <div class="sp">
+            </div>
         </div>
     </div>
     <div class="list">
@@ -81,11 +131,95 @@
                 <img src="../images/wash.png" class="imgL"/>
             </div>
             <div class=" L list_text pL7">洗衣帐户</div>
-            <div class="R pL7">
+            <div class="R pL7" data-ng-if="!isOpen.wash" data-ng-click="changeOpen('wash')">
                 <img src="../images/down02.png" class="imgR"/>
+            </div>
+            <div class="R pL7" data-ng-if="isOpen.wash" data-ng-click="changeOpen('wash')">
+                <img src="../images/up02.png" class="imgR"/>
             </div>
             <div class="R list_text">
                 {{userInf.Account2| currency:'￥'}}
+            </div>
+        </div>
+        <div data-ng-show="isOpen.wash">
+            <div class="list_body">
+                <div class="list_p">
+                    <div class="dates">
+                        <div class="begin_date">
+                            <input id="begin_date1" type="text" name="date">
+                            <span><img src="../images/down.png"/></span>
+                        </div>
+                        <div class="date_img">
+                            至
+                        </div>
+                        <div class="end_date">
+                            <input id="end_date1" type="text" name="date">
+                            <span><img src="../images/down.png"/></span></div>
+                    </div>
+                    <div class="lines">
+                        <div class="line">
+                            <div class="dot1"></div>
+                            <div class="line0"></div>
+                            <div class="dot2"></div>
+                        </div>
+                        <div class="line" style="float: right;">
+                            <div class="dot1"></div>
+                            <div class="line0"></div>
+                            <div class="dot2"></div>
+                        </div>
+                    </div>
+                </div>
+                <!--//列表-->
+                <div class="data_list" >
+                    <div class="date_line"></div>
+                    <div data-ng-repeat="wash in data.wash">
+                        <div class="date_line_m" data-ng-if="wash.M!=data.wash[$index-1].M">
+                            <div class="iconUse imgM" >
+                                {{wash.M}}月
+                            </div>
+                        </div>
+                        <div class="data_list_r" >
+                            <div class="R data_list_data"  data-ng-style="style.textR">
+                                <div class="imgDay L">
+                                    <div class="iconUse" data-ng-if="wash.D!=data.wash[$index-1].D">
+                                        {{wash.D}}日
+                                    </div>
+                                </div>
+                                <div class="L data_list_r_icon" >
+                                    <img src="../images/xfjt.png"  data-ng-show="wash.TableType==1">
+                                    <img src="../images/czjt.png"  data-ng-show="wash.TableType==2">
+                                </div>
+                                <div class="L">
+                                    <div class="item_text">
+                                        <span data-ng-show="wash.TableType==1">充值</span><span
+                                            data-ng-show="wash.TableType==2">消费</span>时间：{{wash.FeeTime}}
+                                    </div>
+                                    <div class="item_text" data-ng-show="wash.TableType==1">
+                                        充值金额：<span class="f_color_b">{{wash.FeeMoney|currency:'￥'}}</span>
+                                    </div>
+                                    <div class="item_text" data-ng-show="wash.TableType==2">
+                                        消费金额：<span class="f_color_y">{{wash.FeeMoney|currency:'￥'}}</span>
+                                    </div>
+                                    <div class="item_text">
+                                        账户余额：{{wash.CardMoney|currency:'￥'}}
+                                    </div>
+                                    <div class="item_text">
+                                        <span data-ng-show="wash.TableType==1">充值类型：</span><span
+                                            data-ng-show="wash.TableType==2">消费地点：</span>{{wash.FeePlace}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clean"></div>
+                        </div>
+                    </div>
+                </div>
+                <div data-ng-if="!data.wash.length"  class="data_list" >
+                    <div class="no_data">暂无数据！</div>
+                </div>
+                <div style="height: 40px;"></div>
+            </div>
+
+            <div class="sp">
             </div>
         </div>
     </div>

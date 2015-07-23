@@ -142,6 +142,21 @@
     height: 38px;
     line-height: 38px;
 }
+.order_body{
+    background-color: #fff0e0;
+    padding: 10px  0 0 15px;
+}
+.order_img{
+    float: left;
+    background-image:url("../images/no_pic.png") ;
+    background-size:100% 100%;
+    width: 40%;
+    height: 20%;
+}
+.order_text{
+    float: right;
+    width: 50%;
+}
 
 .order_date {
     float: left;
@@ -166,7 +181,7 @@
 
 .item_name {
     float: left;
-    font-size: 11px;
+    font-size: 12px;
 }
 
 .sp {
@@ -174,7 +189,7 @@
     background-repeat: repeat-x;
     height: 22px;
     width: 100%;
-    margin: 0px 10px 80px 10px;
+    margin: 0 10px 80px 10px;
 }
 
 .no_data {
