@@ -18,16 +18,17 @@
     <div class="back_text">返回</div>
 </div>
 
-<div class="car_list">
+<div class="car_list" style="margin-bottom: 60px;">
     <!--<div class="car_list" style="width: 501px;" data-ng-repeat="cart in cartData| orderBy:'index':true">-->
-        <div class="car_list" style="width: 501px;" data-ng-repeat="cart in cartData">
+    <div class="car_list" style="width: 501px;" data-ng-repeat="cart in cartData">
+        <!--<div class="order_date" data-ng-if="cart.addDate!=cartData[cart.index-$index+1].addDate">{{cart.addDate}}&nbsp;{{cart.week}}</div>-->
         <div class="order_date" data-ng-if="cart.addDate!=cartData[$index-1].addDate">{{cart.addDate}}&nbsp;{{cart.week}}</div>
         <div class="car_item">
             <div class="item_img"><img class="img" data-ng-src="{{cart.WashPicture}}" style="height: 135px;"></div>
             <div class="item_sp">&nbsp;</div>
             <div class="item_content">
                 <div class="item_name">{{cart.WashName}}</div>
-                <div class="item_from">来源{{cart.index}}：{{cart.from}}</div>
+                <div class="item_from">来源：{{cart.from}}</div>
                 <div class="item_stock">库存：{{cart.WRemainCount}}</div>
                 <div class="item_price">
                     <!--<div class="item_price_tag">￥</div>-->
@@ -55,9 +56,9 @@
     <div class="car_info">
         <div class="car_info1">共计:<span class="car_info1_money">{{allPrice| currency:''}}</span><span
                 class="car_info1_unit">元</span></div>
-        <div class="car_info2">已选:{{cartData.length}}</div>
+        <div class="car_info2">已选:{{selectCount}}</div>
     </div>
-    <div class="btn_go">去结算</div>
+    <div class="btn_go" data-ng-click="goToPost()">去结算</div>
 </div>
 
 <div data-ng-if="!cartData.length" style="position:absolute; z-index:2; text-align:center; width:100%;top: 40%;">

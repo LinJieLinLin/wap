@@ -202,6 +202,15 @@ function getDateTimeStr() {
     if (second < 10) second = '0' + second;
     return yyyy + "-" + MM + "-" + dd+" "+hour+":"+minute+":"+second;
 }
+//获取时分,返回12.30形式
+function getDateHourMStr() {
+    var date = new Date();
+    var hour = date.getHours();
+    if (hour < 10) hour = '0' + hour;
+    var minute = date.getMinutes();
+    if (minute < 10) minute = '0' + minute;
+    return hour+"."+minute
+}
 //获取星期几
 function getWeekStr() {
     var date = new Date();

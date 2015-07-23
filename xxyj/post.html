@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="xxyj" lang="zh_CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
+    <title>洗新艳旧</title>
+    <link href="../styles/public.css" rel="stylesheet"/>
+    <script src="../scripts/angular-1.2.9/angular.min.js"></script>
+    <script src="../scripts/jquery.min.js"></script>
+    <script src="../scripts/public.js"></script>
+    <script src="index.js"></script>
+    <link href="post.css" rel="stylesheet"/>
+</head>
+<body ng-controller="xxyjCCtrl">
+<div class="back" data-ng-click="back()">
+    <div class="back_img">
+        <img src="../images/back03.png">
+    </div>
+    <div class="back_text">返回</div>
+</div>
+<div class="user_info">
+    <div class="user_name">
+        <div class="user_text">{{userInf.UserName}}</div>
+        <div class="user_img">
+            <img src="../images/user.png">
+        </div>
+    </div>
+    <div class="user_sp"></div>
+    <div class="user_phone">
+        <div class="phone_img">
+            <img src="../images/phone.png">
+        </div>
+        <div class="phone_text">{{userInf.PhoneNo}}</div>
+    </div>
+</div>
+
+<div class="car_title">
+    <div class="car_title1">商品清单</div>
+    <div class="car_title2">共{{selectCount}}件</div>
+</div>
+<div class="list">
+    <table cellspacing="0" cellpadding="0" class="car_list" data-ng-repeat="cart in cartData">
+        <tbody>
+        <tr>
+            <td class="car_item1">
+                <div class="item_img"><img style="width:67px; height:67px;" data-ng-src="{{cart.WashPicture}}"></div>
+                <div class="item_content">
+                    <div class="item_c_name">{{cart.WashName}}</div>
+                    <div class="item_c_from">来源：{{cart.from}}</div>
+                    <div class="item_c_price">{{cart.WashPrice| currency:'￥'}}</div>
+                </div>
+            </td>
+            <td class="car_item2" style="height: 80px; line-height: 80px;"><span
+                    style="vertical-align: middle">x{{cart.count}}</span></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="car_sum">
+    <div class="car_sum_text"><span>商品金额</span></div>
+    <div class="car_sum_money"><span>{{allPrice| currency:'￥'}}</span></div>
+</div>
+<div class="car_gettime" style="display: none;">
+    <div class="car_gettime_text"><span>领取时间</span></div>
+    <div class="car_gettime_value"><select id="gettime">
+        <option selected="selected">请选择</option>
+    </select>
+    </div>
+</div>
+<div style="clear: both"></div>
+<div style="height: 80px;">&nbsp;</div>
+<div class="bottom_btn">
+    <div class="sum_money">实付款：<span class="sum_price">{{allPrice| currency:'￥'}}</span><span class="sum_unit">元</span>
+    </div>
+    <div class="btn_post" data-ng-click="showSubmit()">提交订单</div>
+</div>
+<img id="divLoading" src="../images/loading.gif"
+     style="width: 70px; height: 70px; border-radius: 100%; border: none; z-index: 1000; opacity: 0.8; position: fixed; top: 392px; left: 215.5px; display: none; background-color: rgb(225, 225, 225);">
+</body>
+</html>
+
+

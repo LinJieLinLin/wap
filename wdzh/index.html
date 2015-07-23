@@ -10,12 +10,12 @@
     <script src="../scripts/angular-1.2.9/angular.min.js"></script>
     <script src="../scripts/jquery.min.js"></script>
     <script src="../scripts/public.js"></script>
-    <!--<script src="../scripts/datepicker/picker.js"></script>-->
-    <!--<script src="../scripts/datepicker/picker.date.js"></script>-->
-    <!--<script src="../scripts/datepicker/legacy.js"></script>-->
-    <!--<script src="../scripts/datepicker/zh_CN.js"></script>-->
-    <!--<link href="../scripts/datepicker/themes/default.css" rel="stylesheet" />-->
-    <!--<link href="../scripts/datepicker/themes/default.date.css" rel="stylesheet" />-->
+    <script src="../scripts/datepicker/picker.js"></script>
+    <script src="../scripts/datepicker/picker.date.js"></script>
+    <script src="../scripts/datepicker/legacy.js"></script>
+    <script src="../scripts/datepicker/zh_CN.js"></script>
+    <link href="../scripts/datepicker/themes/default.css" rel="stylesheet" />
+    <link href="../scripts/datepicker/themes/default.date.css" rel="stylesheet" />
     <script src="index.js"></script>
 
 </head>
@@ -37,7 +37,7 @@
                 <img src="../images/down02.png" class="imgR"/>
             </div>
             <div class="R list_text">
-                ￥731.06
+                {{userInf.Account1| currency:'￥'}}
             </div>
         </div>
         <div class="list_body">
@@ -85,7 +85,7 @@
                 <img src="../images/down02.png" class="imgR"/>
             </div>
             <div class="R list_text">
-                ￥731.06
+                {{userInf.Account2| currency:'￥'}}
             </div>
         </div>
     </div>

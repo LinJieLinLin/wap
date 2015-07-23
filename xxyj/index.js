@@ -13,6 +13,10 @@ xxyj.controller('xxyjCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
     $scope.back = function () {
         location.href = "../home/index.html";
     };
+    //进入其它页面
+    $scope.goTo = function(arg_url){
+        location.href = arg_url+"?" + urlParam;
+    };
     //拿预订规则查询
     $scope.getRule = function () {
         var d = {m: "washorderrulequery", UserID: "3ddff7b03eb1f6cf160d431584b83448"};
@@ -37,8 +41,8 @@ xxyj.controller('xxyjCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
                     }
                 }
             );
-            $scope.nowList = arg_data[arg_i];
-            $scope.getLists($scope.nowList);
+            $scope.nowList = arg_data;
+            //$scope.getLists($scope.listWts[0]);
         }, function (arg_err) {
             console.log(arg_err);
             Alert("请求超时！");
@@ -72,7 +76,7 @@ xxyj.controller('xxyjCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
     $scope.getLists = function (arg_data) {
         var d = {m: "washquerybywtid", UserID: "3ddff7b03eb1f6cf160d431584b83448", WtId: arg_data.WtID};
         ajax(d, function (arg_data) {
-            console.log(angular.toJson(arg_data));
+            //console.log(angular.toJson(arg_data));
             if (!arg_data || !angular.isObject(arg_data)) {
                 alert("没有获取到数据！");
                 return
@@ -137,7 +141,23 @@ xxyj.controller('xxyjCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
         localStorage.goodsData = angular.toJson(arg_date);
         location.href = "detail.html?" + urlParam;
     };
+    //获取用户信息
+    $scope.getUserInf = function () {
+        ajax({
+            m: 'userquerybyportal2',
+            UserID: "3ddff7b03eb1f6cf160d431584b83448",
+            PortalType: 'wx'
+        }, function (result) {
+            utils.setParam("userinfo", JSON.stringify(result));
+        }, function (result) {
+            Alert("连接出错，请重试")
+        });
+    };
 
+    //进入购物车
+    $scope.goToCart = function () {
+        location.href = "cart.html?" + urlParam;
+    };
     $timeout(function () {
         var w = (win_w - 30);
         var h = w * 0.4 * 1.42;
@@ -151,6 +171,7 @@ xxyj.controller('xxyjCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
         $scope.item['width'] = itemW + "px";
         $scope.item['height'] = itemW + "px";
         $scope.getRule();
+        $scope.getUserInf();
 
         $('#date').pickadate({
             min: "1900-01-01",
@@ -207,7 +228,7 @@ xxyj.controller('xxyjDCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
             $scope.goods.WashPrice = $scope.goods.WashDiscountPrice;
         }
         $scope.cartData.push($scope.goods);
-
+        Alert("加入购物车成功");
         localStorage.CARTDATA = angular.toJson($scope.cartData);
     };
     //进入购物车
@@ -216,20 +237,25 @@ xxyj.controller('xxyjDCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
     }
 }]);
 xxyj.controller('xxyjCCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
-
     $scope.cartData = [];
     $scope.cartData = angular.fromJson(localStorage.CARTDATA);
-
+    $scope.userInf = angular.fromJson(localStorage.userinfo);
     $scope.allPrice = 0;
+    $scope.selectCount = 0;
+    $scope.rule = {};
 
     if (!angular.isArray($scope.cartData)) {
         Alert("购物车数据有误");
         return
     }
+    if (!angular.isObject($scope.userInf)) {
+        Alert("用户数据有误");
+        return
+    }
     $scope.back = function () {
         window.history.back();
     };
-    $scope.changeCount = function (arg_data, arg_type,arg_index) {
+    $scope.changeCount = function (arg_data, arg_type, arg_index) {
         if (!arg_data || !arg_type) {
             return;
         }
@@ -239,10 +265,10 @@ xxyj.controller('xxyjCCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
             if (arg_data.count == 1) {
                 show_dialog("提示", "是否移出购物车?", null, '确认', function () {
                     arg_data.count--;
-                    $scope.$apply(function(){
-                        var temL = $scope.cartData.length;
+                    $scope.$apply(function () {
+                        //var temL = $scope.cartData.length;
                         //$scope.cartData.splice(temL-1-arg_index,1);
-                        $scope.cartData.splice(arg_index,1);
+                        $scope.cartData.splice(arg_index, 1);
                         $scope.countPrice();
                         localStorage.CARTDATA = angular.toJson($scope.cartData);
                     });
@@ -257,17 +283,205 @@ xxyj.controller('xxyjCCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
         $scope.countPrice();
         localStorage.CARTDATA = angular.toJson($scope.cartData);
     };
-    $scope.delAll = function(){
+    $scope.delAll = function () {
         $scope.cartData = [];
         $scope.allPrice = 0;
+        $scope.selectCount = 0;
         localStorage.CARTDATA = angular.toJson([]);
     };
-    $scope.countPrice = function(){
+    $scope.countPrice = function () {
         $scope.allPrice = 0;
+        $scope.selectCount = 0;
         var temL = $scope.cartData.length;
-        for(var i=0;i<temL;i++){
-                $scope.allPrice = $scope.allPrice+$scope.cartData[i].count*$scope.cartData[i].WashPrice;
+        for (var i = 0; i < temL; i++) {
+            $scope.selectCount = $scope.selectCount + $scope.cartData[i].count;
+            $scope.allPrice = $scope.allPrice + $scope.cartData[i].count * $scope.cartData[i].WashPrice;
         }
     };
     $scope.countPrice();
+    //去结算
+    $scope.goToPost = function () {
+        if (!$scope.cartData.length) {
+            Alert("购物车空空如也，快去购物吧");
+            return
+        }
+        location.href = "post.html?" + urlParam;
+    };
+    //提交订单
+    $scope.showSubmit = function () {
+        //这里判断规则
+        console.log(localStorage.RULE);
+        $scope.rule = angular.fromJson(localStorage.RULE);
+        var sTime = $scope.rule.OrderBeginTime.replace(":",".")
+        var eTime = $scope.rule.OrderEndTime.replace(":",".")
+        var now = getDateHourMStr();
+        if(now-sTime<0||eTime-now<0){
+            Alert("商品未开放购买")
+            return;
+        }
+        //if($scope.cartData.length>$scope.rule.MinOrderCount){
+        //    Alert("订单商品不能超过"+$scope.rule.MinOrderCount+"件")
+        //    return;
+        //}
+        if($scope.allPrice>$scope.rule.MaxOrderMoney){
+            Alert("订单金额不能超过"+$scope.rule.MaxOrderMoney+"元");
+            return;
+        }
+
+        var content = '' +
+            '<div class="dialog_text">以下为您购买的商品信息，请确认<br>' +
+            '<table style="width:100%; line-height:20px; text-align:left;">' +
+            '<tbody>' +
+            '<tr style="border-bottom:1px solid #666666;">' +
+            '<th style="width:60%;">商品名称</th>' +
+            '<th style="width:20%;">单价</th>' +
+            '<th style="width:20%;">数量</th>' +
+            '</tr>';
+        var temL = $scope.cartData.length;
+        for (var i = 0; i < temL; i++) {
+            content += '<tr><td>' + $scope.cartData[i].WashName + '</td><td>' + $scope.cartData[i].WashPrice.toFixed(2) + '</td><td>' + $scope.cartData[i].count + '</td></tr>';
+        }
+        content += '</tbody>' +
+            '</table>' +
+            '<div style="width:100%; font-size:12px; color:#ff6633;">共计￥' + $scope.allPrice.toFixed(2) + '元</div>' +
+            '</div>';
+        show_dialog("订单确认", content, null, '确认', function () {
+            $scope.submitOrder();
+            hide_dialog();
+        }, '返回', function () {
+            hide_dialog();
+        });
+    };
+    $scope.submitOrder = function () {
+        console.log($scope.cartData[0])
+
+        var orderNo = getTimeStr() + Math.floor(Math.random() * 9999 + 1000);
+        var washIds = "|";
+        var washCounts = "|";
+        var temL = $scope.cartData.length;
+        for (var i = 0; i < temL; i++) {
+            washIds = washIds + $scope.cartData[i].WashID + "|";
+            washCounts = washCounts + $scope.cartData[i].count + "|";
+        }
+        var d = {
+            m: "washorderpost",
+            UserID: "3ddff7b03eb1f6cf160d431584b83448",
+            posid: orderNo,
+            washIds: washIds,
+            washCounts: washCounts
+        };
+        ajax(d, function (arg_data) {
+            console.log(angular.toJson(arg_data));
+            if (!arg_data || !angular.isObject(arg_data)) {
+                alert("没有获取到数据！");
+                return
+            }
+            if (arg_data.Id == 1) {
+                Alert(arg_data.Msg);
+                localStorage.CARTDATA = angular.toJson([]);
+                location.href = "order.html?" + urlParam;
+            } else {
+                Alert(arg_data.Msg);
+                return;
+            }
+        }, function (arg_err) {
+            console.log(arg_err);
+            Alert("请求超时！");
+        })
+    };
+}]);
+xxyj.controller('xxyjOCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
+    $scope.orders = [];
+    $scope.getOrder = function (arg_b, arg_e) {
+        var d = {m: "washorderquery", UserID: "3ddff7b03eb1f6cf160d431584b83448", BeginDate: arg_b, EndDate: arg_e};
+        ajax(d, function (arg_data) {
+            console.log(arg_data);
+            console.log(angular.toJson(arg_data));
+            if (!arg_data || !angular.isObject(arg_data)) {
+                Alert("没有获取到数据！");
+                return
+            }
+            $scope.$apply(
+                function () {
+                    $scope.orders = [];
+                    $scope.orders = arg_data;
+                    var temL = $scope.orders.length;
+                    for(var i=0;i<temL;i++){
+                        var temItem = $scope.orders[i].OrderItems.length;
+                        var p = 0;
+                        for(var j=0;j<temItem; j++){
+                            p=p+$scope.orders[i].OrderItems[j].Price*$scope.orders[i].OrderItems[j].Number;
+                        }
+                        $scope.orders[i].allPrice = p;
+                    }
+                });
+        }, function (arg_err) {
+            //console.log(arg_err);
+            Alert(arg_err);
+        })
+    };
+    $scope.cancelOrder = function (arg_order) {
+        if (!arg_order || !angular.isObject(arg_order)) {
+            return;
+        }
+        var d = {
+            m: "servicesiteorderclear",
+            UserID: "3ddff7b03eb1f6cf160d431584b83448",
+            SoID: arg_order.SoID,
+            Date: arg_order.Date
+        };
+        ajax(d, function (arg_data) {
+            //console.log(arg_data);
+            //console.log(angular.toJson(arg_data));
+            if (!arg_data || !angular.isObject(arg_data)) {
+                Alert("没有获取到数据！");
+                return
+            }
+            Alert(arg_data.Msg);
+            $scope.$apply(function () {
+                var btime = $("#begin_date").val();
+                var etime = $("#end_date").val();
+                if (dateCompare(etime, btime) < 0) {
+                    Alert("结束日期不能大于开始日期！");
+                    return;
+                }
+                $scope.getOrder(btime, etime);
+            });
+        }, function (arg_err) {
+            //console.log(arg_err);
+            Alert(arg_err);
+        })
+    };
+    //进入购物车或首页
+    $scope.goTo = function(arg_url){
+        location.href = arg_url+"?" + urlParam;
+    };
+    $timeout(function () {
+        $(".content").width(win_w - 40);
+        $(".line").width((win_w - 70) / 2);
+        $(".line0").width($(".line").width() - 7);
+        $(".sp").width(win_w - 20);
+
+        $('#begin_date').pickadate({
+            min: "1900-01-01"
+            //max: date
+        });
+        $('#end_date').pickadate({
+            min: "1900-01-01"
+            //max: date
+        });
+
+        $("#begin_date").add("#end_date").change(function () {
+            var btime = $("#begin_date").val();
+            var etime = $("#end_date").val();
+            if (dateCompare(etime, btime) < 0) {
+                Alert("结束日期不能大于开始日期！");
+                return;
+            }
+            $scope.getOrder(btime, etime);
+        });
+        $("#begin_date").val(date);
+        $("#end_date").val(date);
+        $("#begin_date").change();
+    }, 10);
 }]);
