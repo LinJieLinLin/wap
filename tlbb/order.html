@@ -57,21 +57,23 @@
             <div class="order_clear" data-ng-click="cancelOrder(order)">取消</div>
         </div>
         <div class="order_body">
-            <div class="order_img">
+            <div class="order_img" data-ng-style="style.order_img">
                 <img data-ng-src="{{order.SpPicture}}"/>
             </div>
-            <div class="order_text">
-                <div class="item">
-                    <div class="item_name" >预约套餐：<span data-ng-bind="order.SppName"></span></div>
-                </div>
-                <div class="item">
-                    <div class="item_name" >预约服务员：<span data-ng-bind="order.SpName"></span></div>
-                </div>
-                <div class="item">
-                    <div class="item_name" >预约日期：<span data-ng-bind="order.TimeText"></span></div>
-                </div>
-                <div class="item">
-                    <div class="item_name" >预约时间：<span data-ng-bind="order.BTime/100+':00'"></span></div>
+            <div class="order_text" data-ng-style="style.order_text">
+                <div style="position: absolute;bottom: 0;left: 15px;">
+                    <div class="item">
+                        <div class="item_name">预约套餐：<span class="text_color" data-ng-bind="order.SppName"></span></div>
+                    </div>
+                    <div class="item">
+                        <div class="item_name">预约服务员：<span class="text_color" data-ng-bind="order.SpName"></span></div>
+                    </div>
+                    <div class="item">
+                        <div class="item_name">预约日期：<span class="text_color" data-ng-bind="order.DateNew"></span></div>
+                    </div>
+                    <div class="item">
+                        <div class="item_name">预约时间：<span class="text_color" data-ng-bind="order.BTime/100+':00'"></span></div>
+                    </div>
                 </div>
             </div>
             <div class="clean"></div>
@@ -80,24 +82,24 @@
         <!--<div class="order_date" data-ng-bind="'场地：'+order.SiteName"></div>-->
         <!--<div class="order_clear" data-ng-click="cancelOrder(order)">取消</div>-->
         <!--</div>-->
-        <table class="order_list" cellspacing="0" cellpadding="0">
-            <tr>
-                <td>
-                    <div class="item">
-                        <div class="item_name" data-ng-bind="'预约套餐：'+order.SppName"></div>
-                    </div>
-                    <div class="item">
-                        <div class="item_name" data-ng-bind="'预约服务员：'+order.SpName"></div>
-                    </div>
-                    <div class="item">
-                        <div class="item_name" data-ng-bind="'预约日期：'+order.TimeText"></div>
-                    </div>
-                    <div class="item">
-                        <div class="item_name" data-ng-bind="'预约时间：'+order.BTime/100+':00'"></div>
-                    </div>
-                </td>
-            </tr>
-        </table>
+        <!--<table class="order_list" cellspacing="0" cellpadding="0">-->
+        <!--<tr>-->
+        <!--<td>-->
+        <!--<div class="item">-->
+        <!--<div class="item_name" data-ng-bind="'预约套餐：'+order.SppName"></div>-->
+        <!--</div>-->
+        <!--<div class="item">-->
+        <!--<div class="item_name" data-ng-bind="'预约服务员：'+order.SpName"></div>-->
+        <!--</div>-->
+        <!--<div class="item">-->
+        <!--<div class="item_name" data-ng-bind="'预约日期：'+order.TimeText"></div>-->
+        <!--</div>-->
+        <!--<div class="item">-->
+        <!--<div class="item_name" data-ng-bind="'预约时间：'+order.BTime/100+':00'"></div>-->
+        <!--</div>-->
+        <!--</td>-->
+        <!--</tr>-->
+        <!--</table>-->
     </div>
     <div data-ng-if="!orders.length" class="order">
         <div class="no_data">暂无数据！</div>

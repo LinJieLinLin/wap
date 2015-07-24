@@ -145,3 +145,14 @@ img
 .clean{
     clear: both;
 }
+.no_data{
+    height: 50px;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    color: #ff6633;
+    line-height: 50px;
+}
+.m_b_12{
+    margin-bottom: 12px;
+}

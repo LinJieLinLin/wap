@@ -167,8 +167,11 @@ function getTimestamp() {
     return new Date().getTime();
 }
 //获得日期字符串：yyyy-MM-dd
-function getDateStr() {
+function getDateStr(arg_data) {
     var date = new Date();
+    if(arg_data){
+        var date = new Date(arg_data);
+    }
     var yyyy = date.getFullYear();
     var MM = date.getMonth() + 1;
     var dd = date.getDate();
@@ -213,8 +216,11 @@ function getDateHourMStr() {
     return hour+"."+minute
 }
 //获取星期几
-function getWeekStr() {
+function getWeekStr(arg_data) {
     var date = new Date();
+    if(arg_data){
+        date = new Date(arg_data);
+    }
     var dayNames = new Array("星期日","星期一","星期二","星期三","星期四","星期五","星期六");
     return dayNames[date.getDay()];
 }

@@ -183,7 +183,7 @@ body {
     -moz-opacity: 0.4;
     opacity: 0.4;
     font-size: 11px;
-    height: 25px;
+    /*height: 25px;*/
 }
 
 .item_text {
@@ -196,7 +196,7 @@ body {
 }
 
 .items {
-    height: 100px;
+    min-height: 100px;
     position: relative;
 }
 

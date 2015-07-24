@@ -39,7 +39,7 @@
             <div class="R pL7" data-ng-if="isOpen.eat" data-ng-click="changeOpen('eat')">
                 <img src="../images/up02.png" class="imgR"/>
             </div>
-            <div class="R list_text">
+            <div class="R list_text" data-ng-click="changeOpen('eat')">
                 <span data-ng-bind="userInf.Account1| currency:'￥'"></span>
             </div>
         </div>
@@ -136,7 +136,7 @@
             <div class="R pL7" data-ng-if="isOpen.wash" data-ng-click="changeOpen('wash')">
                 <img src="../images/up02.png" class="imgR"/>
             </div>
-            <div class="R list_text">
+            <div class="R list_text" data-ng-click="changeOpen('wash')">
                 <span data-ng-bind="userInf.Account2| currency:'￥'"></span>
             </div>
         </div>

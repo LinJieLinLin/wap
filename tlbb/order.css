@@ -144,18 +144,21 @@
 }
 .order_body{
     background-color: #fff0e0;
-    padding: 10px  0 0 15px;
+    padding: 10px  0 10px 15px;
 }
 .order_img{
     float: left;
     background-image:url("../images/no_pic.png") ;
     background-size:100% 100%;
-    width: 40%;
     height: 20%;
+}
+.order_img img{
+    width: 100%;
+    height: 100%;
 }
 .order_text{
     float: right;
-    width: 50%;
+    position: relative;
 }
 
 .order_date {
@@ -199,4 +202,7 @@
     text-align: center;
     color: #ff6633;
     line-height: 50px;
+}
+.text_color{
+    color: #ff6633;
 }

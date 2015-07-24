@@ -36,6 +36,7 @@
 .user_title {
     height: 30px;
     margin: 0 25px;
+    border-bottom: 1px solid #cccccc;
 }
 .user_title_pl {
     float:left;
@@ -57,7 +58,6 @@
     margin: 0 23px 0 18px;
 }
 .user_info_pic {
-    width:30%;
     float:left;
     background-image:url("../images/no_pic.png") ;
     background-size:100% 100%;
@@ -65,11 +65,17 @@
 }
 .user_info_pic img {
     width:100%;
+    height: 100%;
+}
+.user_info_text{
+    float:left;
+    padding: 20px 0 20px 14px;
+    position: relative;
 }
 .user_info_des {
-    width:52%;
     float:right;
     font-size:11px;
+    position: relative;
 }
 .user_info_des1 {
 }
@@ -125,10 +131,9 @@
 
 .time_select
 {
-	margin-top:10px;
+	margin:10px 25px;
 	background-color:#ffffff;
-	border-bottom:1px solid #cccccc;
-	border-top:1px solid #cccccc;
+    min-height: 100px;
 }
 .times_text
 {
@@ -141,18 +146,20 @@
 {
 	font-size:15px;
     float:left;
-    padding:0px 25px;
+    width: 100%;
 }
 .time
 {
-	text-align:center;
-	border-radius:5px;
-	float:left;
-	background-color:#ffffff;
-	/*height:19px;*/
-	width:25%;
-	padding:11px 0px 10px 0px;
-	margin:10px;
+    font-size:12px;
+    text-align:center;
+    border-radius:5px;
+    float:left;
+    background-color:#ffffff;
+    width:32%;
+    padding:10px 0;
+    margin:10px 0 0 0;
+
+
 }
 /**可选择*/
 .time_0
@@ -166,6 +173,9 @@
 	border:1px solid #ff6633;
 	color:#ffffff;
 	background-color:#ff6633;
+}
+.time_margin_r{
+    margin-right: 2%;
 }
 /**灰色不可选择*/
 .time_2
@@ -184,4 +194,14 @@
 }
 .spOrderTime {
     color:#ff6633;
+}
+.select_date{
+    background-color: #ff6633;
+    font-size: 13px;
+    color: #ffffff;
+    font-weight: bold;
+    width: 70px;
+}
+.select{
+    border-bottom:1px solid #cccccc;
 }

@@ -174,6 +174,7 @@ tlbb.controller('tlbbCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
 }]);
 tlbb.controller('tlbbSCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
     $scope.userList = [];
+    $scope.style = {};
     $scope.service = angular.fromJson(localStorage.Service);
     if (!$scope.service) {
         Alert("没有数据！");
@@ -216,9 +217,18 @@ tlbb.controller('tlbbSCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
         }
         $scope.getTimeList(arg_index);
     };
+    $scope.changeDate = function (arg_d,arg_index) {
+        var preDate = new Date(date);
+        if (arg_d == -1 && date == getDateStr()) {
+            return;
+        }
+        preDate.setDate(preDate.getDate() + arg_d);
+        date = getDateStr(preDate);
+        $("#d" + arg_index).val(date);
+        $("#d" + arg_index).change();
+    };
     $scope.getTimeList = function (arg_index) {
         if (!$scope.userList[arg_index] || $scope.userList[arg_index].SpID < 1) {
-            alert(1)
             return;
         }
         if (!$scope.userList[arg_index].selectDate) {
@@ -272,11 +282,11 @@ tlbb.controller('tlbbSCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
         }
         console.log(arg_data);
         var content = '<div style="font-size:11px;">'+
-        '以下为您的预约信息，请确认<br />'+
-        '预约套餐:<span class="spName">'+$scope.service.SppName+'</span><br />'+
-        '预约服务员:<span class="spPreson">'+arg_data.SpName+'</span><br />'+
-           ' 预约日期:<span class="spOrderDate">'+date+'</span><br />'+
-           ' 预约时间:<span class="spOrderTime">'+art_time.TimeText+'</span><br />'+
+        '<div style="margin: 12px 0 15px 0;">以下为您的预约信息，请确认</div>'+
+        '<div class="m_b_12">预约套餐：<span class="spName">'+$scope.service.SppName+'</span></div>'+
+        '<div class="m_b_12">预约服务员：<span class="spPreson">'+arg_data.SpName+'</span></div>'+
+           '<div class="m_b_12"> 预约日期：<span class="spOrderDate">'+date+'</span></div>'+
+           ' <div class="m_b_12">预约时间：<span class="spOrderTime">'+art_time.TimeText+'</span></div>'+
         '</div>';
         show_dialog("预约确认", content, function () {
             hide_dialog();
@@ -320,9 +330,10 @@ tlbb.controller('tlbbSCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
 
 
     $timeout(function () {
+        var w = win_w-41;
+        $scope.style.user_info_pic = {width:w*0.4+"px",height:w*0.4*1.4+"px"};
+        $scope.style.user_info_text = {width:w*0.6+"px",height:w*0.4*1.4+"px"};
         $scope.getServerUserList();
-
-
         $("#select_date").change(function () {
             date = $("#select_date").val();
             $scope.getPlaceList();
@@ -332,34 +343,34 @@ tlbb.controller('tlbbSCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
     }, 10);
 
     $(function () {
-        var pic_w = $(".user_info_pic").width();
-        var des_w = $(".user_info_des").width();
-        var w = (win_w - pic_w - des_w) / 3;
-        $(".user_info_pic").css("padding-left", w);
-        $(".user_info_pic").css("padding-right", w);
-        $(".user_info_des").css("padding-right", w);
-        $(".user_title_pl").width(w);
-        $(".user_title_pr").width(w);
+        //var pic_w = $(".user_info_pic").width();
+        //var des_w = $(".user_info_des").width();
+        //var w = (win_w - pic_w - des_w) / 3;
+        //$(".user_info_pic").css("padding-left", w);
+        //$(".user_info_pic").css("padding-right", w);
+        //$(".user_info_des").css("padding-right", w);
+        //$(".user_title_pl").width(w);
+        //$(".user_title_pr").width(w);
 
-        $(".time").width(((win_w - 50) / 3) - 22);
-
-        //var time_w = $(".time").width() + 2 + (2 * 10);;//本身宽度+边框+左右外边距
-        //var times_pl = ((win_w- (time_w * 3)) / 2);//窗口宽度-3个时间宽度
-        $(".times_text").css("padding-left", (25 + 11) + 'px');//预订时间位置
-
-        $(".show_hide").click(function () {
-            var spid = $(this).attr("spid");
-            //$(".select").hide();
-            //$(".show_hide").attr("src","../images/down01.png");
-            var $select = $(".select" + spid);
-            if ($select.is(":hidden")) {
-                $select.show();
-                $(this).attr("src", "../images/up01.png");
-            } else {
-                $select.hide();
-                $(this).attr("src", "../images/down01.png");
-            }
-        });
+        //$(".time").width(((win_w - 50) / 3) - 22);
+        //
+        ////var time_w = $(".time").width() + 2 + (2 * 10);;//本身宽度+边框+左右外边距
+        ////var times_pl = ((win_w- (time_w * 3)) / 2);//窗口宽度-3个时间宽度
+        //$(".times_text").css("padding-left", (25 + 11) + 'px');//预订时间位置
+        //
+        //$(".show_hide").click(function () {
+        //    var spid = $(this).attr("spid");
+        //    //$(".select").hide();
+        //    //$(".show_hide").attr("src","../images/down01.png");
+        //    var $select = $(".select" + spid);
+        //    if ($select.is(":hidden")) {
+        //        $select.show();
+        //        $(this).attr("src", "../images/up01.png");
+        //    } else {
+        //        $select.hide();
+        //        $(this).attr("src", "../images/down01.png");
+        //    }
+        //});
 
         //$(".time").click(function () {
         //    if ($(this).hasClass("time_2")) {
@@ -384,15 +395,10 @@ tlbb.controller('tlbbSCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
         //
         //});
     });
-    $(window).load(function () {
-        var pic_h = $(".user_info_pic").height();
-        $(".user_info_des1").height(pic_h - 50);
-    });
-
-
 }]);
 tlbb.controller('tlbbOCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
     $scope.orders = [];
+    $scope.style = {};
     $scope.getOrder = function (arg_b, arg_e) {
         var d = {m: "servicesiteorderquerybyuserid", UserID: "3ddff7b03eb1f6cf160d431584b83448", BeginDate: arg_b, EndDate: arg_e};
         ajax(d, function (arg_data) {
@@ -406,6 +412,10 @@ tlbb.controller('tlbbOCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
                 function () {
                     $scope.orders = [];
                     $scope.orders = arg_data;
+                    var temL = arg_data.length;
+                    for(var i=0;i<temL;i++){
+                        $scope.orders[i].DateNew =$scope.orders[i].Date.split(" ")[0] +"，"+getWeekStr($scope.orders[i].Date)
+                    }
                 });
         }, function (arg_err) {
             //console.log(arg_err);
@@ -450,6 +460,10 @@ tlbb.controller('tlbbOCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
     };
 
     $timeout(function () {
+
+        var obW = (win_w-55);
+        $scope.style.order_img = {width:obW/3+"px",height:obW/3*1.4+"px"};
+        $scope.style.order_text = {width:obW/3*2+"px",height:obW/3*1.4+"px"};
         $(".content").width(win_w - 40);
         $(".line").width((win_w - 70) / 2);
         $(".line0").width($(".line").width() - 7);
