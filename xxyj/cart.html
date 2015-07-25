@@ -20,7 +20,7 @@
 
 <div class="car_list" style="margin-bottom: 60px;">
     <!--<div class="car_list" style="width: 501px;" data-ng-repeat="cart in cartData| orderBy:'index':true">-->
-    <div class="car_list" style="width: 501px;" data-ng-repeat="cart in cartData">
+    <div class="car_list" data-ng-repeat="cart in cartData">
         <!--<div class="order_date" data-ng-if="cart.addDate!=cartData[cart.index-$index+1].addDate">{{cart.addDate}}&nbsp;{{cart.week}}</div>-->
         <div class="order_date" data-ng-if="cart.addDate!=cartData[$index-1].addDate">{{cart.addDate}}&nbsp;{{cart.week}}</div>
         <div class="car_item">

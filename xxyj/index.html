@@ -116,8 +116,8 @@
         <div class="car_link" data-ng-click="goToCart()">
             <div class="btn_car">购物车</div>
             <div class="img_car">
-                <div class="car_count">0</div>
                 <img class="img_car_img" src="../images/car01.png" />
+                <div class="car_count" data-ng-show="cartData.length" >{{cartData.length}}</div>
             </div>
         </div>
     </div>

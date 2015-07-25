@@ -8,6 +8,10 @@ xxyj.controller('xxyjCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
     $scope.item = {};
     $scope.listPic = 1;
     $scope.rule = {};
+    $scope.cartData = angular.fromJson(localStorage.CARTDATA);
+    if(angular.isUndefined($scope.cartData)){
+        $scope.cartData = [];
+    }
     //当前类别
     $scope.nowList = {};
     $scope.back = function () {
@@ -197,6 +201,10 @@ xxyj.controller('xxyjDCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
     $scope.back = function () {
         window.history.back();
     };
+    $scope.goTo = function(arg_url){
+        location.href = arg_url+"?" + urlParam;
+    };
+    $scope.cartData = angular.fromJson(localStorage.CARTDATA);
     //加入购物车
     $scope.addCart = function () {
         if (angular.isUndefined(localStorage.CARTDATA) || angular.fromJson(localStorage.CARTDATA).length == 0) {

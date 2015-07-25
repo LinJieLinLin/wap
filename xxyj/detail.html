@@ -21,56 +21,145 @@
 <div class="back" data-ng-click="back()">
     <img src="../images/back.png"/>
 </div>
-<div style="min-height: 200px;">
-    <img data-ng-src="{{goods.WashPicture}}"/>
+<div class="pic">
+    <img class="item_pic" data-ng-src="{{goods.WashPicture}}"
+         style="height: 211.25px;">
 </div>
-<div style="height: 500px;">
-    <div>
-        {{goods.WashName}}({{goods.WashUnit}})
+<div class="content">
+    <div class="item_name">
+        <div class="item_text">{{goods.WashName}}</div>
+        <div class="item_p">({{goods.WashUnit}})</div>
     </div>
-    <div>
-        价格：<span data-ng-if="goods.WashUseDisCount==0">{{goods.WashPrice}}</span>
-        <span data-ng-if="goods.WashUseDisCount==1">{{goods.WashDiscountPrice}}</span>
+    <div class="item_price">
+        <div class="field_text">价格：
+        </div>
+        <div class="price price1" data-ng-if="goods.WashUseDisCount==0">{{goods.WashPrice| currency:'￥'}}</div>
+        <div class="price price1" data-ng-if="goods.WashUseDisCount==1">{{goods.WashDiscountPrice| currency:'￥'}}</div>
+
     </div>
-    <div>
-        库存：{{goods.WRemainCount}}
+    <div class="item_stock">
+        <div class="field_text">库存：</div>
+        <div class="stock">{{goods.WRemainCount}}</div>
     </div>
-    <div data-ng-init="goods.count=1">
-        数量：<input name="count" data-ng-model="goods.count" type="text">
+    <div class="item_from">
+        <div class="field_text">来源：</div>
+        <div class="from">洗新艳旧</div>
     </div>
-    <!--<div>-->
-    <!--洗涤品整体购买单位：{{goods.WashBoxUnit}}-->
+    <!--<div class="item_maxcount">-->
+    <!--<div class="field_text">限购：</div>-->
+    <!--<div class="maxcount">0</div>-->
     <!--</div>-->
-    <!--<div>-->
-    <!--洗涤品整体购买数量：{{goods.WashBoxCount}}-->
-    <!--</div>-->
-    <!--<div>-->
-    <!--简介:{{goods.WashIntroduction}}-->
-    <!--</div>-->
-    <!--<div>-->
-    <!--详细：{{goods.WashDescription}}-->
-    <!--</div>-->
-</div>
-<div>
-    <div class="" style="width: 100%;height: 100px;">
-        <div class="L " style="width: 20%">
-            <div class="btn_order_img">
-                <img src="../images/order01.png"/>
+    <div class="item_count">
+        <div class="field_text" style="padding-top: 9px;">数量：</div>
+        <div class="set_count">
+            <div class="subtract"></div>
+            <div class="count" data-ng-init="goods.count=1">
+                <input id="count" maxlength="7" type="text" data-ng-model="goods.count"
+                       style="width: 50px; text-align: center">
             </div>
-            <div class="">我的订单</div>
+            <div class="add"></div>
         </div>
-        <div class=" L" style="width: 30%" data-ng-click="goToCart()">
-            <div class="">
-                <div class="">0</div>
-                <img class="" src="../images/car01.png"/>
-            </div>
-            <div class="">购物车</div>
+    </div>
+
+    <div style="clear: both"></div>
+</div>
+<div class="sp">
+    <table cellspacing="0" cellpadding="0">
+        <tbody>
+        <tr>
+            <td>&nbsp;</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="item_rule">
+    <div>
+        <div class="rule_img">
+            <img src="../images/rule.png">
         </div>
-        <div class="L" style="width: 50%;" data-ng-click="addCart()">
-            放入购物车
+        <div class="rule_text">产品说明</div>
+        <div class="rule_detail" style="width: 100%;" >
+            <div data-ng-show="goods.WashDescription" data-ng-bind="goods.WashDescription"></div>
+            <div data-ng-hide="goods.WashDescription" class="no_data">暂无</div>
         </div>
-        <div class="clean"></div>
     </div>
 </div>
+<div style="clear: both"></div>
+<div class="bottom_div">&nbsp;</div>
+<div class="bottom_btn">
+    <div class="order_link btn_order">
+        <div class="btn_order_img">
+            <img src="../images/order01.png">
+        </div>
+        <div class="btn_order_text" data-ng-click="goTo('order.html')">我的订单</div>
+    </div>
+    <div class="car_link btn_car" data-ng-click="goToCart()">
+        <div class="btn_car_img">
+            <div style="position: relative">
+                <img class="img_car_img" src="../images/car01.png">
+                <div class="car_count" data-ng-show="cartData.length" >{{cartData.length}}</div>
+            </div>
+        </div>
+        <div class="btn_car_text">购物车</div>
+    </div>
+    <div class="btn_add_car" data-ng-click="addCart()">放入购物车</div>
+</div>
+
+
+<img id="divLoading" src="../images/loading.gif"
+     style="width: 70px; height: 70px; border-radius: 100%; border: none; z-index: 1000;
+     opacity: 0.8; position: fixed; top: 392px; left: 311px; display: none; background-color: rgb(225, 225, 225);"
+        >
+<!--<div style="min-height: 200px;">-->
+<!--<img data-ng-src="{{goods.WashPicture}}"/>-->
+<!--</div>-->
+<!--<div style="height: 500px;">-->
+<!--<div>-->
+<!--{{goods.WashName}}({{goods.WashUnit}})-->
+<!--</div>-->
+<!--<div>-->
+<!--价格：<span data-ng-if="goods.WashUseDisCount==0">{{goods.WashPrice}}</span>-->
+<!--<span data-ng-if="goods.WashUseDisCount==1">{{goods.WashDiscountPrice}}</span>-->
+<!--</div>-->
+<!--<div>-->
+<!--库存：{{goods.WRemainCount}}-->
+<!--</div>-->
+<!--<div data-ng-init="goods.count=1">-->
+<!--数量：<input name="count" data-ng-model="goods.count" type="text">-->
+<!--</div>-->
+<!--&lt;!&ndash;<div>&ndash;&gt;-->
+<!--&lt;!&ndash;洗涤品整体购买单位：{{goods.WashBoxUnit}}&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;<div>&ndash;&gt;-->
+<!--&lt;!&ndash;洗涤品整体购买数量：{{goods.WashBoxCount}}&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;<div>&ndash;&gt;-->
+<!--&lt;!&ndash;简介:{{goods.WashIntroduction}}&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;<div>&ndash;&gt;-->
+<!--&lt;!&ndash;详细：{{goods.WashDescription}}&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--</div>-->
+<!--<div>-->
+<!--<div class="" style="width: 100%;height: 100px;">-->
+<!--<div class="L " style="width: 20%">-->
+<!--<div class="btn_order_img">-->
+<!--<img src="../images/order01.png"/>-->
+<!--</div>-->
+<!--<div class="">我的订单</div>-->
+<!--</div>-->
+<!--<div class=" L" style="width: 30%" data-ng-click="goToCart()">-->
+<!--<div class="">-->
+<!--<div class="">0</div>-->
+<!--<img class="" src="../images/car01.png"/>-->
+<!--</div>-->
+<!--<div class="">购物车</div>-->
+<!--</div>-->
+<!--<div class="L" style="width: 50%;" data-ng-click="addCart()">-->
+<!--放入购物车-->
+<!--</div>-->
+<!--<div class="clean"></div>-->
+<!--</div>-->
+<!--</div>-->
 </body>
 </html>
