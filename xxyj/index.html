@@ -41,7 +41,7 @@
     <div style="clear: both;"></div>
 </div>
 <div class="content">
-    <div class="date">
+    <div class="date" style="display: none;">
         <table style="margin: auto;">
             <tr>
                 <td>
@@ -53,11 +53,11 @@
             </tr>
         </table>
     </div>
-    <div class="line">
-        <div class="dot1"></div>
-        <div class="line0"></div>
-        <div class="dot2"></div>
-    </div>
+    <!--<div class="line">-->
+        <!--<div class="dot1"></div>-->
+        <!--<div class="line0"></div>-->
+        <!--<div class="dot2"></div>-->
+    <!--</div>-->
     <div class="show_pic">
         <div class="show_pic_img" data-ng-click="show_rule()">
             <img data-ng-src="../images/wash_{{listPic}}.png" ng-style="leftPic"/>
@@ -90,12 +90,12 @@
         </div>
     </div>
     <div class="items">
-        <div class="item" ng-style="item" data-ng-repeat="goods in listGoods.WashList" data-ng-class="{'item_margin_r': ($index+1-2)%3}"
+        <div class="item" ng-style="item"  data-ng-repeat="goods in listGoods.WashList" data-ng-class="{'item_margin_r': ($index+1-2)%3}"
              data-ng-if="$index>1" data-ng-click="goDetail(goods)">
             <div class="goods_img">
                 <img  data-ng-src="{{goods.WashPicture}}"/>
             </div>
-            <div class="goods_inf" data-ng-click="goDetail(goods)">
+            <div class="goods_inf"style="height: 44px;" data-ng-click="goDetail(goods)">
                 <div class="L item_text" data-ng-bind="goods.WashName">
                 </div>
                 <!--<div class="R item_img">-->

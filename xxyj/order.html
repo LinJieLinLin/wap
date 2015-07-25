@@ -31,7 +31,7 @@
             <span><img src="../images/down.png"/></span>
         </div>
         <div class="date_img">
-            <img src="../images/car_icon.png"/>
+            <img src="../images/date.png"/>
         </div>
         <div class="end_date">
             <input id="end_date" type="text" name="date">
@@ -62,12 +62,12 @@
             <div class="order_listData">
                 <div class="item" style="border-bottom: 1px solid #ff6633;">
                     <div class="L" data-ng-bind="order.OrderTime"></div>
-                    <div class="R">{{order.OrderMoney}}共计{{order.allPrice}};{{order.OrderState}}</div>
+                    <div class="R">共计{{order.allPrice| currency:''}}，{{order.OrderState}}</div>
                 </div>
                 <div class="clean"></div>
                 <div class="item" data-ng-repeat="item in order.OrderItems">
                     <div class="L" data-ng-bind="item.Name+'('+item.Number+item.Unit+')'"></div>
-                    <div class="R" data-ng-bind="'单价：'+item.Price"></div>
+                    <div class="R" data-ng-bind="item.Number*item.Price| currency:'￥'"></div>
                 </div>
                 <div class="clean" style="height: 10px;"></div>
             </div>
@@ -96,6 +96,7 @@
     <div class="footer_list">
         <div class="R">
             <img src="../images/car01.png">
+            <div class="car_count" data-ng-show="cartData.length" >{{cartData.length}}</div>
         </div>
     </div>
     <div class="footer_list">

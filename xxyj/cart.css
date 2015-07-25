@@ -211,3 +211,14 @@
     color:#ffffff;
 	padding:16px 0px 15px 0px;
 }
+.delAll{
+	opacity: 1;
+	text-align: center;
+	height: 45px;
+	line-height: 45px;
+	background-color: #ffffff;
+}
+.disable{
+	color: #666666;
+	background-color: #cccccc;
+}

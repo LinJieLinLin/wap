@@ -52,12 +52,12 @@
     <div class="item_count">
         <div class="field_text" style="padding-top: 9px;">数量：</div>
         <div class="set_count">
-            <div class="subtract"></div>
+            <div class="subtract" data-ng-click="changeCount('-')"></div>
             <div class="count" data-ng-init="goods.count=1">
                 <input id="count" maxlength="7" type="text" data-ng-model="goods.count"
                        style="width: 50px; text-align: center">
             </div>
-            <div class="add"></div>
+            <div class="add" data-ng-click="changeCount('+')"></div>
         </div>
     </div>
 

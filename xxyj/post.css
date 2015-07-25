@@ -91,8 +91,7 @@
 	font-size:12px;
 	color:#222222;
 	width:23%;
-	padding:8px 0px;
-	text-align:right;
+	padding:8px 0 0 20px;
 }
 .car_title2
 {
@@ -173,8 +172,8 @@
 }
 .car_sum_money
 {
-    width:30%;
-    float:right;
+    width:28%;
+    float:left;
 	padding: 6px 0px;
 	color:#ff6633;
 	font-size:11px;

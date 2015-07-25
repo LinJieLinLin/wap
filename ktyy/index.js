@@ -63,6 +63,7 @@ ktyy.controller('ktyySCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
     $scope.places = [];
     $scope.timeList = {};
     $scope.placeCur = 0;
+    $scope.endDate = 0;
     //$scope.date = getDateStr();
     $scope.back = function () {
         location.href = "index.html?" + localStorage.ktyyUrlParam;
@@ -93,16 +94,32 @@ ktyy.controller('ktyySCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
             Alert(arg_err);
         })
     };
+    $scope.getDateList = function(){
+        ajax({ m: 'foodorderrulequery',UserID: "3ddff7b03eb1f6cf160d431584b83448" }, function (arg_data) {
+            utils.setParam("foodorderrulequery", JSON.stringify(arg_data));
+            var dates = JSON.parse(arg_data.CanOrderDates);//获取可预订的日期
+            var temD = dates[dates.length-1];
+            if(temD.length!=3){
+                Alert("获取日期出错！");
+                return;
+            }
+            var temDate = temD[0]+"-"+(temD[1]+1)+"-"+(temD[2]+1);
+            $scope.endDate = temDate;
+            $('.select_date').pickadate({
+                disable: dates
+            });
+            $("#select_date").change(function () {
+                date = $("#select_date").val();
+                $scope.getPlaceList();
+            });
+            $("#select_date").val(date);
+            $("#select_date").change();
+        }, function (arg_data) {
+            Alert("请求超时")
+        });
+    };
     $timeout(function () {
-        $('.select_date').pickadate({
-            min: date
-        });
-        $("#select_date").change(function () {
-            date = $("#select_date").val();
-            $scope.getPlaceList();
-        });
-        $("#select_date").val(date);
-        $("#select_date").change();
+        $scope.getDateList();
     }, 10);
     $scope.changeDate = function (arg_d) {
         var preDate = new Date(date);
@@ -110,6 +127,9 @@ ktyy.controller('ktyySCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
             return;
         }
         preDate.setDate(preDate.getDate() + arg_d);
+        if(dateCompare($scope.getDateStr(preDate),$scope.endDate)>0){
+            return;
+        }
         date = $scope.getDateStr(preDate);
         $("#select_date").val(date);
         $("#select_date").change();

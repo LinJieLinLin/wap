@@ -205,6 +205,14 @@ xxyj.controller('xxyjDCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
         location.href = arg_url+"?" + urlParam;
     };
     $scope.cartData = angular.fromJson(localStorage.CARTDATA);
+    //修改数量
+    $scope.changeCount = function(arg_type){
+        if(arg_type == "-"&&$scope.goods.count>1){
+            $scope.goods.count = $scope.goods.count-1;
+        }else if(arg_type == "+"){
+            $scope.goods.count = $scope.goods.count+1;
+        }
+    };
     //加入购物车
     $scope.addCart = function () {
         if (angular.isUndefined(localStorage.CARTDATA) || angular.fromJson(localStorage.CARTDATA).length == 0) {
@@ -251,6 +259,7 @@ xxyj.controller('xxyjCCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
     $scope.allPrice = 0;
     $scope.selectCount = 0;
     $scope.rule = {};
+    $scope.delAll = false;
 
     if (!angular.isArray($scope.cartData)) {
         Alert("购物车数据有误");
@@ -291,11 +300,15 @@ xxyj.controller('xxyjCCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
         $scope.countPrice();
         localStorage.CARTDATA = angular.toJson($scope.cartData);
     };
-    $scope.delAll = function () {
+    $scope.showDelAll = function (arg_data) {
+        $scope.delAll = arg_data;
+    };
+    $scope.delAllData = function () {
         $scope.cartData = [];
         $scope.allPrice = 0;
         $scope.selectCount = 0;
         localStorage.CARTDATA = angular.toJson([]);
+        $scope.showDelAll(false);
     };
     $scope.countPrice = function () {
         $scope.allPrice = 0;
@@ -400,6 +413,10 @@ xxyj.controller('xxyjCCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
 }]);
 xxyj.controller('xxyjOCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
     $scope.orders = [];
+    $scope.cartData = angular.fromJson(localStorage.CARTDATA);
+    if(angular.isUndefined($scope.cartData)){
+        $scope.cartData = [];
+    }
     $scope.getOrder = function (arg_b, arg_e) {
         var d = {m: "washorderquery", UserID: "3ddff7b03eb1f6cf160d431584b83448", BeginDate: arg_b, EndDate: arg_e};
         ajax(d, function (arg_data) {

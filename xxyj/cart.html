@@ -22,7 +22,7 @@
     <!--<div class="car_list" style="width: 501px;" data-ng-repeat="cart in cartData| orderBy:'index':true">-->
     <div class="car_list" data-ng-repeat="cart in cartData">
         <!--<div class="order_date" data-ng-if="cart.addDate!=cartData[cart.index-$index+1].addDate">{{cart.addDate}}&nbsp;{{cart.week}}</div>-->
-        <div class="order_date" data-ng-if="cart.addDate!=cartData[$index-1].addDate">{{cart.addDate}}&nbsp;{{cart.week}}</div>
+        <!--<div class="order_date" data-ng-if="cart.addDate!=cartData[$index-1].addDate">{{cart.addDate}}&nbsp;{{cart.week}}</div>-->
         <div class="car_item">
             <div class="item_img"><img class="img" data-ng-src="{{cart.WashPicture}}" style="height: 135px;"></div>
             <div class="item_sp">&nbsp;</div>
@@ -32,7 +32,9 @@
                 <div class="item_stock">库存：{{cart.WRemainCount}}</div>
                 <div class="item_price">
                     <!--<div class="item_price_tag">￥</div>-->
-                    <div class="item_price_value">{{cart.WashPrice| currency:'￥'}}</div>
+                    <div class="L" style="font-size: 9px;">￥</div>
+                    <div class="item_price_value L">{{cart.WashPrice| currency:''}}</div>
+                    <div class="clean"></div>
                 </div>
                 <div class="item_set_count">
                     <div class="subtract" data-ng-click="changeCount(cart,'-',$index)"></div>
@@ -47,8 +49,7 @@
 </div>
 
 <div class="bottom_btn">
-
-    <div class="btn_clear" data-ng-click="delAll()">
+    <div class="btn_clear" data-ng-click="showDelAll(true)">
         <div class="btn_clear_img">
             <img src="../images/delete.png"/></div>
         <div class="btn_clear_text">清空</div>
@@ -58,7 +59,7 @@
                 class="car_info1_unit">元</span></div>
         <div class="car_info2">已选:{{selectCount}}</div>
     </div>
-    <div class="btn_go" data-ng-click="goToPost()">去结算</div>
+    <div class="btn_go" data-ng-class="{disable:!cartData.length}" data-ng-click="goToPost()">去结算</div>
 </div>
 
 <div data-ng-if="!cartData.length" style="position:absolute; z-index:2; text-align:center; width:100%;top: 40%;">
@@ -70,5 +71,20 @@
         快去购物吧！
     </div>
 </div>
+<div style="position: fixed;height: 100%;width: 100%;background: #000;opacity: 0.6;top: 0;left: 0;z-index: 10"
+     data-ng-click="showDelAll(false)" data-ng-if="delAll==true">
+</div>
+<div class="bottom_btn" style="height: auto;z-index: 20" data-ng-if="delAll==true">
+    <div class="delAll" style="color: #494949;font-size: 14px;">
+        确定要清空购物车吗？
+    </div>
+    <div class="delAll" style="color: #ff0000;font-size: 16px;margin-top: 1px;" data-ng-click="delAllData()">
+        确定
+    </div>
+    <div class="delAll" style="color: #008aff;font-size: 16px;margin-top: 3px;" data-ng-click="showDelAll(false)">
+        取消
+    </div>
+</div>
+
 </body>
 </html>

@@ -99,7 +99,7 @@ body {
 
 .content {
     position: relative;
-    margin: 0 10px;
+    margin: -10px 10px 0 10px;
     background-color: #eeeeee;
 }
 
@@ -187,12 +187,14 @@ body {
 }
 
 .item_text {
-    margin-left: 10px;
-    line-height: 25px;
+    /*margin-left: 10px;*/
+    /*line-height: 25px;*/
+    padding: 8px 6px;
 }
 
 .item_img img {
     margin: 4px 10px 4px 0;
+    padding-top: 5px;
 }
 
 .items {

@@ -175,6 +175,8 @@ tlbb.controller('tlbbCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
 tlbb.controller('tlbbSCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
     $scope.userList = [];
     $scope.style = {};
+    $scope.dateList = [];
+    $scope.endDate = "";
     $scope.service = angular.fromJson(localStorage.Service);
     if (!$scope.service) {
         Alert("没有数据！");
@@ -210,19 +212,22 @@ tlbb.controller('tlbbSCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
             Alert(arg_err);
         })
     };
-    $scope.openList=function(arg_index){
+    $scope.openList = function (arg_index) {
         if ($scope.userList[arg_index].showTime) {
             $scope.userList[arg_index].showTime = false;
             return
         }
         $scope.getTimeList(arg_index);
     };
-    $scope.changeDate = function (arg_d,arg_index) {
+    $scope.changeDate = function (arg_d, arg_index) {
         var preDate = new Date(date);
         if (arg_d == -1 && date == getDateStr()) {
             return;
         }
         preDate.setDate(preDate.getDate() + arg_d);
+        if(dateCompare(getDateStr(preDate),$scope.endDate)>0){
+            return;
+        }
         date = getDateStr(preDate);
         $("#d" + arg_index).val(date);
         $("#d" + arg_index).change();
@@ -233,8 +238,12 @@ tlbb.controller('tlbbSCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
         }
         if (!$scope.userList[arg_index].selectDate) {
             $scope.userList[arg_index].selectDate = getDateStr();
+            if (!$scope.dateList.length) {
+                Alert("可选日期数据有误！");
+                return;
+            }
             $('.select_date').pickadate({
-                min: date
+                disable: $scope.dateList
             });
             $("#d" + arg_index).change(function () {
                 date = $("#d" + arg_index).val();
@@ -258,7 +267,7 @@ tlbb.controller('tlbbSCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
                 return
             }
             $scope.$apply(function () {
-                if(!arg_data.SitePersonTimeList){
+                if (!arg_data.SitePersonTimeList) {
                     $scope.userList[arg_index].userDate = [];
                 }
                 $scope.userList[arg_index].userDate = [];
@@ -276,31 +285,31 @@ tlbb.controller('tlbbSCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
             Alert(arg_err);
         })
     };
-    $scope.openWin = function(arg_data,art_time){
-        if(!arg_data){
+    $scope.openWin = function (arg_data, art_time) {
+        if (!arg_data) {
             return;
         }
         console.log(arg_data);
-        var content = '<div style="font-size:11px;">'+
-        '<div style="margin: 12px 0 15px 0;">以下为您的预约信息，请确认</div>'+
-        '<div class="m_b_12">预约套餐：<span class="spName">'+$scope.service.SppName+'</span></div>'+
-        '<div class="m_b_12">预约服务员：<span class="spPreson">'+arg_data.SpName+'</span></div>'+
-           '<div class="m_b_12"> 预约日期：<span class="spOrderDate">'+date+'</span></div>'+
-           ' <div class="m_b_12">预约时间：<span class="spOrderTime">'+art_time.TimeText+'</span></div>'+
-        '</div>';
+        var content = '<div style="font-size:11px;">' +
+            '<div style="margin: 12px 0 15px 0;">以下为您的预约信息，请确认</div>' +
+            '<div class="m_b_12">预约套餐：<span class="spName">' + $scope.service.SppName + '</span></div>' +
+            '<div class="m_b_12">预约服务员：<span class="spPreson">' + arg_data.SpName + '</span></div>' +
+            '<div class="m_b_12"> 预约日期：<span class="spOrderDate">' + date + '</span></div>' +
+            ' <div class="m_b_12">预约时间：<span class="spOrderTime">' + art_time.TimeText + '</span></div>' +
+            '</div>';
         show_dialog("预约确认", content, function () {
             hide_dialog();
         }, '确认', function () {
             var d = {
                 m: "servicesiteordersubmit",
                 UserID: "3ddff7b03eb1f6cf160d431584b83448",
-                SiteID:11,
-                SppID:$scope.service.SppID,
+                SiteID: 11,
+                SppID: $scope.service.SppID,
                 SpID: arg_data.SpID,
-                SoDate:date,
-                SoBeginTime:art_time.BTime,
-                SoEndTime:art_time.BTime+100,
-                Date:getDateTimeStr()
+                SoDate: date,
+                SoBeginTime: art_time.BTime,
+                SoEndTime: art_time.BTime + 100,
+                Date: getDateTimeStr()
             };
             ajax(d, function (arg_data) {
                 console.log(arg_data);
@@ -312,10 +321,10 @@ tlbb.controller('tlbbSCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
                 }
                 alert(arg_data.Msg)
 
-                if(arg_data.Id==1){
+                if (arg_data.Id == 1) {
                     location.href = 'order.html?' + urlParam;
                     hide_dialog();
-                }else{
+                } else {
                     Alert(arg_data.Msg)
                 }
             });
@@ -327,19 +336,37 @@ tlbb.controller('tlbbSCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
         });
     };
 
-
-
-    $timeout(function () {
-        var w = win_w-41;
-        $scope.style.user_info_pic = {width:w*0.4+"px",height:w*0.4*1.4+"px"};
-        $scope.style.user_info_text = {width:w*0.6+"px",height:w*0.4*1.4+"px"};
-        $scope.getServerUserList();
-        $("#select_date").change(function () {
-            date = $("#select_date").val();
-            $scope.getPlaceList();
+    $scope.getDateList = function () {
+        ajax({m: 'foodorderrulequery', UserID: "3ddff7b03eb1f6cf160d431584b83448"}, function (arg_data) {
+            console.log('foodorderrulequery:');
+            console.log(arg_data);
+            utils.setParam("foodorderrulequery", JSON.stringify(arg_data));
+            $scope.$apply(function () {
+                $scope.dateList = JSON.parse(arg_data.CanOrderDates);//获取可预订的日期
+                var temD = $scope.dateList[$scope.dateList.length-1];
+                if(temD.length!=3){
+                    Alert("获取日期出错！");
+                    return;
+                }
+                $scope.endDate = temD[0]+"-"+(temD[1]+1)+"-"+(temD[2]+1);
+            });
+        }, function (arg_data) {
+            Alert("请求超时")
         });
-        $("#select_date").val(date);
-        $("#select_date").change();
+    };
+    $timeout(function () {
+        var w = win_w - 41;
+        $scope.style.user_info_pic = {width: w * 0.4 + "px", height: w * 0.4 * 1.4 + "px"};
+        $scope.style.user_info_text = {width: w * 0.6 + "px", height: w * 0.4 * 1.4 + "px"};
+        $scope.getDateList();
+        $scope.getServerUserList();
+
+        //$("#select_date").change(function () {
+        //    date = $("#select_date").val();
+        //    $scope.getPlaceList();
+        //});
+        //$("#select_date").val(date);
+        //$("#select_date").change();
     }, 10);
 
     $(function () {
@@ -400,7 +427,12 @@ tlbb.controller('tlbbOCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
     $scope.orders = [];
     $scope.style = {};
     $scope.getOrder = function (arg_b, arg_e) {
-        var d = {m: "servicesiteorderquerybyuserid", UserID: "3ddff7b03eb1f6cf160d431584b83448", BeginDate: arg_b, EndDate: arg_e};
+        var d = {
+            m: "servicesiteorderquerybyuserid",
+            UserID: "3ddff7b03eb1f6cf160d431584b83448",
+            BeginDate: arg_b,
+            EndDate: arg_e
+        };
         ajax(d, function (arg_data) {
             console.log(arg_data);
             console.log(angular.toJson(arg_data));
@@ -413,8 +445,8 @@ tlbb.controller('tlbbOCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
                     $scope.orders = [];
                     $scope.orders = arg_data;
                     var temL = arg_data.length;
-                    for(var i=0;i<temL;i++){
-                        $scope.orders[i].DateNew =$scope.orders[i].Date.split(" ")[0] +"，"+getWeekStr($scope.orders[i].Date)
+                    for (var i = 0; i < temL; i++) {
+                        $scope.orders[i].DateNew = $scope.orders[i].Date.split(" ")[0] + "，" + getWeekStr($scope.orders[i].Date)
                     }
                 });
         }, function (arg_err) {
@@ -461,9 +493,9 @@ tlbb.controller('tlbbOCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
 
     $timeout(function () {
 
-        var obW = (win_w-55);
-        $scope.style.order_img = {width:obW/3+"px",height:obW/3*1.4+"px"};
-        $scope.style.order_text = {width:obW/3*2+"px",height:obW/3*1.4+"px"};
+        var obW = (win_w - 55);
+        $scope.style.order_img = {width: obW / 3 + "px", height: obW / 3 * 1.4 + "px"};
+        $scope.style.order_text = {width: obW / 3 * 2 + "px", height: obW / 3 * 1.4 + "px"};
         $(".content").width(win_w - 40);
         $(".line").width((win_w - 70) / 2);
         $(".line0").width($(".line").width() - 7);
