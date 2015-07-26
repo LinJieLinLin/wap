@@ -199,7 +199,8 @@ xxyj.controller('xxyjDCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
         return
     }
     $scope.back = function () {
-        window.history.back();
+        //window.history.back();
+        location.href = "index.html"+"?" + urlParam;
     };
     $scope.goTo = function(arg_url){
         location.href = arg_url+"?" + urlParam;
@@ -260,6 +261,8 @@ xxyj.controller('xxyjCCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
     $scope.selectCount = 0;
     $scope.rule = {};
     $scope.delAll = false;
+    $scope.delOne = false;
+    $scope.delIndex = "";
 
     $scope.swipeLeft = function(arg_type,arg_index,arg_d){
         var tmeW = $("#car_"+arg_index).width();
@@ -300,7 +303,7 @@ xxyj.controller('xxyjCCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
     $scope.back = function () {
         window.history.back();
     };
-    $scope.delOne = function(arg_data,arg_index){
+    $scope.delOneD = function(arg_data,arg_index){
         show_dialog("提示", "是否移出购物车?", null, '确认', function () {
             arg_data.count--;
             $scope.$apply(function () {
@@ -324,19 +327,20 @@ xxyj.controller('xxyjCCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
             arg_data.count++;
         } else if (arg_type == '-') {
             if (arg_data.count == 1) {
-                show_dialog("提示", "是否移出购物车?", null, '确认', function () {
-                    arg_data.count--;
-                    $scope.$apply(function () {
-                        //var temL = $scope.cartData.length;
-                        //$scope.cartData.splice(temL-1-arg_index,1);
-                        $scope.cartData.splice(arg_index, 1);
-                        $scope.countPrice();
-                        localStorage.CARTDATA = angular.toJson($scope.cartData);
-                    });
-                    hide_dialog();
-                }, '返回', function () {
-                    hide_dialog();
-                });
+                $scope.showDelOne(arg_index);
+                //show_dialog("提示", "是否移出购物车?", null, '确认', function () {
+                //    arg_data.count--;
+                //    $scope.$apply(function () {
+                //        //var temL = $scope.cartData.length;
+                //        //$scope.cartData.splice(temL-1-arg_index,1);
+                //        $scope.cartData.splice(arg_index, 1);
+                //        $scope.countPrice();
+                //        localStorage.CARTDATA = angular.toJson($scope.cartData);
+                //    });
+                //    hide_dialog();
+                //}, '返回', function () {
+                //    hide_dialog();
+                //});
                 return;
             }
             arg_data.count--;
@@ -353,6 +357,23 @@ xxyj.controller('xxyjCCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
         $scope.selectCount = 0;
         localStorage.CARTDATA = angular.toJson([]);
         $scope.showDelAll(false);
+    };
+    $scope.showDelOne = function (arg_index) {
+        if(angular.isNumber(arg_index)){
+            $scope.delOne = true;
+            $scope.delIndex = arg_index;
+        }else{
+            $scope.delOne = false;
+        }
+    };
+    $scope.delOneData = function () {
+        if(!angular.isNumber($scope.delIndex)){
+            return;
+        }
+        $scope.cartData.splice($scope.delIndex, 1);
+        $scope.countPrice();
+        localStorage.CARTDATA = angular.toJson($scope.cartData);
+        $scope.showDelOne(false);
     };
     $scope.countPrice = function () {
         $scope.allPrice = 0;

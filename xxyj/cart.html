@@ -27,7 +27,7 @@
         <!--<div class="order_date" data-ng-if="cart.addDate!=cartData[$index-1].addDate">{{cart.addDate}}&nbsp;{{cart.week}}</div>-->
         <div class="car_item" style="position: relative;height: 124px;">
             <div style="height: 100%;">
-                <div class="delOne" data-ng-click="delOne(cart,$index)">删除</div>
+                <div class="delOne" data-ng-click="showDelOne($index)">删除</div>
                 <div style="position: absolute;overflow:hidden;z-index: 3;width: 100%;background-color:#ffffff;"
                      id="car_{{$index}}">
                     <div style="margin: 10px 0;">
@@ -89,6 +89,9 @@
 <div style="position: fixed;height: 100%;width: 100%;background: #000;opacity: 0.6;top: 0;left: 0;z-index: 55"
      data-ng-click="showDelAll(false)" data-ng-if="delAll==true">
 </div>
+<div style="position: fixed;height: 100%;width: 100%;background: #000;opacity: 0.6;top: 0;left: 0;z-index: 55"
+     data-ng-click="showDelOne(false)" data-ng-if="delOne==true">
+</div>
 <div class="bottom_btn" style="height: auto;z-index: 56" data-ng-if="delAll==true">
     <div class="delAll" style="color: #494949;font-size: 14px;">
         确定要清空购物车吗？
@@ -97,6 +100,17 @@
         确定
     </div>
     <div class="delAll" style="color: #008aff;font-size: 16px;margin-top: 3px;" data-ng-click="showDelAll(false)">
+        取消
+    </div>
+</div>
+<div class="bottom_btn" style="height: auto;z-index: 56" data-ng-if="delOne==true">
+    <div class="delAll" style="color: #494949;font-size: 14px;">
+        是否移出购物车？
+    </div>
+    <div class="delAll" style="color: #ff0000;font-size: 16px;margin-top: 1px;" data-ng-click="delOneData()">
+        确定
+    </div>
+    <div class="delAll" style="color: #008aff;font-size: 16px;margin-top: 3px;" data-ng-click="showDelOne(false)">
         取消
     </div>
 </div>
