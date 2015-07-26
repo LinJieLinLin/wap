@@ -195,6 +195,7 @@ wqct.controller('wqctCCtrl', ['$scope', '$timeout', '$compile', function ($scope
             $(this).height($(this).width());
             $(".cat_h").height($(this).width());
             $(".delOne").height($(this).width()+23);
+            $(".delOne").css("line-height",$(this).width()+23+"px");
         });
 
         $(".btn_clear").click(carClear);
