@@ -87,7 +87,7 @@ wqct.controller('wqctCCtrl', ['$scope', '$timeout', '$compile', function ($scope
                     //添加一行日期
 //                        car_list += '<div class="order_date">'+o.OrderDate+'&nbsp;'+o.WeekDay+'</div>';
                 }
-                car_list +='<div id="cart_item_'+o.FId+'" style="height: 151px;position: relative;">';
+                car_list +='<div class="cat_h" id="cart_item_'+o.FId+'" style="position: relative;">';
                 car_list += '<div class="car_item" id="cart_'+o.FId+'" ng-swipe-left="swipeLeft('+"'left'"+','+o.FId+')" ng-swipe-right="swipeLeft('+"'right'"+','+o.FId+')"   >';
                 car_list += '    <div class="item_img">';
                 car_list += '        <img class="img" src="' + o.FPicture + '" /></div>';
@@ -119,7 +119,7 @@ wqct.controller('wqctCCtrl', ['$scope', '$timeout', '$compile', function ($scope
                     //console.log(JSON.stringify(result2));
 
                     $.each(result2, function (i, o) {
-                        car_list +='<div id="cart_item_'+o.FId+'" style="height: 151px;position: relative;">';
+                        car_list +='<div class="cat_h" id="cart_item_'+o.FId+'" style="position: relative;">';
                         car_list += '<div class="car_item" id="cart_'+o.FId+'" ng-swipe-left="swipeLeft('+"'left'"+','+o.FId+')" ng-swipe-right="swipeLeft('+"'right'"+','+o.FId+')"   >';
                         car_list += '    <div class="item_img">';
                         car_list += '        <img class="img" src="' + o.FPicture + '" /></div>';
@@ -193,6 +193,8 @@ wqct.controller('wqctCCtrl', ['$scope', '$timeout', '$compile', function ($scope
 
         $(".img").each(function (i, n) {
             $(this).height($(this).width());
+            $(".cat_h").height($(this).width());
+            $(".delOne").height($(this).width()+23);
         });
 
         $(".btn_clear").click(carClear);
