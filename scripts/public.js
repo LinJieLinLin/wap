@@ -129,7 +129,7 @@ function linkAddParam(links) {
 }
 //回到页面顶部
 function goTop() {
-    $('body,html').animate({ scrollTop: 0 }, 1000);
+    $('body,html').animate({scrollTop: 0}, 1000);
     return false;
 }
 //获取图片的原始大小
@@ -169,7 +169,7 @@ function getTimestamp() {
 //获得日期字符串：yyyy-MM-dd
 function getDateStr(arg_data) {
     var date = new Date();
-    if(arg_data){
+    if (arg_data) {
         var date = new Date(arg_data);
     }
     var yyyy = date.getFullYear();
@@ -180,9 +180,9 @@ function getDateStr(arg_data) {
     return yyyy + "-" + MM + "-" + dd;
 }
 //增加或减去n天
-function changeDateStr(arg_data,arg_day) {
+function changeDateStr(arg_data, arg_day) {
     var date = new Date();
-    if(arg_data&&arg_day){
+    if (arg_data && arg_day) {
         var date = new Date(arg_data);
         date.setDate(date.getDate() + arg_day);
     }
@@ -194,14 +194,14 @@ function changeDateStr(arg_data,arg_day) {
     return yyyy + "-" + MM + "-" + dd;
 }
 //
-function getDateStrByOne (arg_d) {
+function getDateStrByOne(arg_d) {
     var date = new Date(arg_d);
     var yyyy = date.getFullYear();
     var MM = date.getMonth() + 1;
     var dd = date.getDate();
     //if (MM < 10) MM = '0' + MM
     //if (dd < 10) dd = '0' + dd;
-    var data = {y:yyyy,m:MM,d:dd};
+    var data = {y: yyyy, m: MM, d: dd};
     return data
 }
 //获得日期字符串：yyyy-MM-dd 00:00:00
@@ -218,7 +218,7 @@ function getDateTimeStr() {
     if (minute < 10) minute = '0' + minute;
     var second = date.getSeconds();
     if (second < 10) second = '0' + second;
-    return yyyy + "-" + MM + "-" + dd+" "+hour+":"+minute+":"+second;
+    return yyyy + "-" + MM + "-" + dd + " " + hour + ":" + minute + ":" + second;
 }
 //获取时分,返回12.30形式
 function getDateHourMStr() {
@@ -227,15 +227,15 @@ function getDateHourMStr() {
     if (hour < 10) hour = '0' + hour;
     var minute = date.getMinutes();
     if (minute < 10) minute = '0' + minute;
-    return hour+"."+minute
+    return hour + "." + minute
 }
 //获取星期几
 function getWeekStr(arg_data) {
     var date = new Date();
-    if(arg_data){
+    if (arg_data) {
         date = new Date(arg_data);
     }
-    var dayNames = new Array("星期日","星期一","星期二","星期三","星期四","星期五","星期六");
+    var dayNames = new Array("星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六");
     return dayNames[date.getDay()];
 }
 //日期对比
@@ -261,7 +261,9 @@ function hide_gray_bg() {
 //Msg:信息
 //Time:显示时间
 function Alert(msg, Time) {
-    if (Time == null || Time == undefined || Time == "") { Time = 1000; }
+    if (Time == null || Time == undefined || Time == "") {
+        Time = 1000;
+    }
     var ele = '<div style="text-align:center;max-width:90%;position:fixed;background-color:rgba(0, 0, 0, 0.60);z-index:999999999;color:#fff;font-size:16px;padding:10px;border-radius:5px;word-wrap: break-word;word-break: normal;" class="divHint">' + msg + '</div>';
     $(".divHint").remove();
     $("body").append(ele);
@@ -272,7 +274,7 @@ function Alert(msg, Time) {
     //显示Time时间后，再2秒内淡出
     setTimeout(function () {
         $(".divHint").animate(
-            { opacity: 0 },
+            {opacity: 0},
             2000,
             function () {
                 $(".divHint").remove();
@@ -373,7 +375,6 @@ function hide_loading() {
 //onSuccess:请求成功后执行的函数
 //onError:请求失败后执行的函数
 function ajax(data, onSuccess, onError) {
-    data.UserID= "3ddff7b03eb1f6cf160d431584b83448";
     if (plid != null) {
         data.plid = plid;
     }
@@ -383,25 +384,28 @@ function ajax(data, onSuccess, onError) {
     if (userid != null) {
         data.userid = userid;
     }
+    if (!data.userid) {
+        data.userid = "3ddff7b03eb1f6cf160d431584b83448";
+    }
     if (portalno != null) {
         data.portalno = portalno;
     }
-    if(!data.Date){
+    if (!data.Date) {
         data.date = date;
     }
     if (ajaxUrl == "") {
         show_loading();
         jQuery.getJSON("http://115.29.179.99:7777/service/Handler.ashx?jsoncallback=?&m=getdataurlbyplid&plid=" + plid,
-        function (res, textStatus, jqXHR) {
-            ajaxUrl = res;
-            hide_dialog();
-            ajax(data, onSuccess, onError);
-        });
+            function (res, textStatus, jqXHR) {
+                ajaxUrl = res;
+                hide_dialog();
+                ajax(data, onSuccess, onError);
+            });
     }
     else {
         show_loading();
         //console.log("ajaxUrl:" + ajaxUrl);
-        console.log("ajaxUrl:" + ajaxUrl+"\ndata:" + JSON.stringify(data));
+        console.log("ajaxUrl:" + ajaxUrl + "\ndata:" + JSON.stringify(data));
         $.ajax({
             url: ajaxUrl,
             timeout: 7000,
