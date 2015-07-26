@@ -11,17 +11,16 @@ wqct.controller('wqctCCtrl', ['$scope', '$timeout', '$compile', function ($scope
     //$scope.rule = {};
     $scope.delAll = false;
     $scope.delOne = false;
+    $scope.delIndex = "";
+    $scope.delOdate = "";
     $scope.t = 0;
 
-    $scope.swipeLeft = function (arg_type, arg_index, arg_d) {
-        var tmeW = $("#car_" + arg_index).width();
+    $scope.swipeLeft = function (arg_type, arg_index) {
+        var tmeW = $("#cart_" + arg_index).width();
         if (arg_type == "left") {
-            //$("#car_"+arg_index).animate({left:'-20%'});
-            //arg_d.style = {left:'-'+tmeW*0.2+'px'};
-            $("#car_" + arg_index).css("left", "-" + tmeW * 0.2 + "px");
+            $("#cart_" + arg_index).css("left", "-" + tmeW * 0.2 + "px");
         } else {
-            arg_d.style = {left: "0%"};
-            $("#car_" + arg_index).css("left", "0%");
+            $("#cart_" + arg_index).css("left", "0%");
             //$("#car_"+arg_index).animate({left:'0%'});
         }
     };
@@ -39,7 +38,10 @@ wqct.controller('wqctCCtrl', ['$scope', '$timeout', '$compile', function ($scope
         window.history.back();
     };
 
-    $scope.showDelOne = function (arg_fid, arg_odate) {
+    $scope.showDelOne = function (arg_fid, arg_odate,arg_t) {
+        if(arg_t){
+            $scope.t = arg_t;
+        }
         if (angular.isDefined(arg_fid)) {
             $scope.delOne = true;
             $scope.delIndex = arg_fid;
@@ -55,7 +57,7 @@ wqct.controller('wqctCCtrl', ['$scope', '$timeout', '$compile', function ($scope
         if ($scope.t == "2") {
             cart2.del($scope.delIndex, $scope.delOdate);
         }
-        $("#cart_"+$scope.delIndex).hide();
+        $("#cart_item_"+$scope.delIndex).hide();
         refCount();
         $scope.showDelOne();
     };
@@ -85,8 +87,8 @@ wqct.controller('wqctCCtrl', ['$scope', '$timeout', '$compile', function ($scope
                     //添加一行日期
 //                        car_list += '<div class="order_date">'+o.OrderDate+'&nbsp;'+o.WeekDay+'</div>';
                 }
-                car_list +='<div style="height: 151px;position: relative;">';
-                car_list += '<div class="car_item" id="cart_'+o.FId+'">';
+                car_list +='<div id="cart_item_'+o.FId+'" style="height: 151px;position: relative;">';
+                car_list += '<div class="car_item" id="cart_'+o.FId+'" ng-swipe-left="swipeLeft('+"'left'"+','+o.FId+')" ng-swipe-right="swipeLeft('+"'right'"+','+o.FId+')"   >';
                 car_list += '    <div class="item_img">';
                 car_list += '        <img class="img" src="' + o.FPicture + '" /></div>';
                 car_list += '    <div class="item_sp">&nbsp;</div>';
@@ -107,7 +109,7 @@ wqct.controller('wqctCCtrl', ['$scope', '$timeout', '$compile', function ($scope
                 car_list += '     <div style="clear:both"></div>';
                 car_list += '</div>';
                 car_list += '<div class="line"></div>';
-                car_list += '<div class="delOne" data-ng-click="showDelOne($index)">删除</div>';
+                car_list += '<div class="delOne" data-ng-click="showDelOne('+"'"+o.FId+"'"+",'"+ o.OrderDate+"',1"+')">删除</div>';
                 car_list +='</div>'
             });
             if (ids2 != null && ids2 != "" && ids2.length > 2) {
@@ -117,7 +119,8 @@ wqct.controller('wqctCCtrl', ['$scope', '$timeout', '$compile', function ($scope
                     //console.log(JSON.stringify(result2));
 
                     $.each(result2, function (i, o) {
-                        car_list += '<div class="car_item">';
+                        car_list +='<div id="cart_item_'+o.FId+'" style="height: 151px;position: relative;">';
+                        car_list += '<div class="car_item" id="cart_'+o.FId+'" ng-swipe-left="swipeLeft('+"'left'"+','+o.FId+')" ng-swipe-right="swipeLeft('+"'right'"+','+o.FId+')"   >';
                         car_list += '    <div class="item_img">';
                         car_list += '        <img class="img" src="' + o.FPicture + '" /></div>';
                         car_list += '    <div class="item_sp">&nbsp;</div>';
@@ -138,6 +141,8 @@ wqct.controller('wqctCCtrl', ['$scope', '$timeout', '$compile', function ($scope
                         car_list += '     <div style="clear:both"></div>';
                         car_list += '</div>';
                         car_list += '<div class="line"></div>';
+                        car_list += '<div class="delOne" data-ng-click="showDelOne('+"'"+o.FId+"'"+",'"+ o.OrderDate+"',2"+')">删除</div>';
+                        car_list +='</div>'
                     });
                     //$(".car_list").html(car_list);
                     $(".car_list").html($compile(car_list)($scope));
