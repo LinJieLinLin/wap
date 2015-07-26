@@ -217,22 +217,24 @@
 	font-size: 35px;
 	color: #ffffff;
 	text-align: center;
-	width: 32px;
-	height: 32px;
+	width: 30px;
+	height: 30px;
 	float: left;
 	background-image:url('../images/add.png');
 }
 
-.count
-{
+.count{
 	font-size: 16px;
 	color: #222222;
-	text-align: center;
-	border: 1px solid #ff6633;
 	width: 50px;
+	border: 1px solid #ff6633;
 	height: 30px;
 	float: left;
 	line-height:32px;
+}
+.count input{
+	width: 48px;
+	text-align: center;
 }
 
 .subtract
@@ -241,8 +243,8 @@
 	color: #ffffff;
 	text-align: center;
 	width: 32px;
-	height: 32px;
-	line-height:32px;
+	height: 30px;
+	line-height:30px;
 	float: left;
 	background-image:url('../images/subtract.png');
 }

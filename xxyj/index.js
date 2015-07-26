@@ -1,4 +1,4 @@
-var xxyj = angular.module('xxyj', []);
+var xxyj = angular.module('xxyj', ['ngTouch']);
 xxyj.controller('xxyjCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
     $scope.listWtCur = 0;
     $scope.listWts = [];
@@ -261,6 +261,34 @@ xxyj.controller('xxyjCCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
     $scope.rule = {};
     $scope.delAll = false;
 
+    $scope.swipeLeft = function(arg_type,arg_index,arg_d){
+        var tmeW = $("#car_"+arg_index).width();
+        if(arg_type=="left"){
+            //$("#car_"+arg_index).animate({left:'-20%'});
+            //arg_d.style = {left:'-'+tmeW*0.2+'px'};
+            $("#car_"+arg_index).css("left","-"+tmeW*0.2+"px");
+        }else{
+            arg_d.style={left:"0%"};
+            $("#car_"+arg_index).css("left","0%");
+            //$("#car_"+arg_index).animate({left:'0%'});
+        }
+    };
+
+
+    $scope.tem1 = function(arg_d,arg_index){
+        $scope.tem = !$scope.tem;
+        if($scope.tem){
+            arg_d.style = {left:'-80px'};
+            //$("#car_"+arg_index).animate({left:'-20%'});
+            //$("#car_"+arg_index).css("left","-20%");
+        }else {
+            arg_d.style = {left:'0%'};
+
+            //$("#car_"+arg_index).css("left","0%");
+            //$("#car_"+arg_index).animate({left:'0%'});
+        }
+    };
+
     if (!angular.isArray($scope.cartData)) {
         Alert("购物车数据有误");
         return
@@ -271,6 +299,22 @@ xxyj.controller('xxyjCCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
     }
     $scope.back = function () {
         window.history.back();
+    };
+    $scope.delOne = function(arg_data,arg_index){
+        show_dialog("提示", "是否移出购物车?", null, '确认', function () {
+            arg_data.count--;
+            $scope.$apply(function () {
+                //var temL = $scope.cartData.length;
+                //$scope.cartData.splice(temL-1-arg_index,1);
+                $scope.cartData.splice(arg_index, 1);
+                $scope.countPrice();
+                localStorage.CARTDATA = angular.toJson($scope.cartData);
+            });
+            hide_dialog();
+        }, '返回', function () {
+            hide_dialog();
+        });
+        return;
     };
     $scope.changeCount = function (arg_data, arg_type, arg_index) {
         if (!arg_data || !arg_type) {
