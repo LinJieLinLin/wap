@@ -23,7 +23,7 @@ xxyj.controller('xxyjCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
     };
     //拿预订规则查询
     $scope.getRule = function () {
-        var d = {m: "washorderrulequery", UserID: "3ddff7b03eb1f6cf160d431584b83448"};
+        var d = {m: "washorderrulequery"};
         ajax(d, function (arg_data) {
             console.log(arg_data[0]);
             console.log(angular.toJson(arg_data));
@@ -57,7 +57,7 @@ xxyj.controller('xxyjCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
         if (angular.isUndefined(arg_i)) {
             arg_i = 0;
         }
-        var d = {m: "washtypequery", UserID: "3ddff7b03eb1f6cf160d431584b83448", WtId: -1};
+        var d = {m: "washtypequery", WtId: -1};
         ajax(d, function (arg_data) {
             console.log(arg_data[0]);
             console.log(angular.toJson(arg_data));
@@ -78,7 +78,7 @@ xxyj.controller('xxyjCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
     };
     //根据商品类别查询商品列表
     $scope.getLists = function (arg_data) {
-        var d = {m: "washquerybywtid", UserID: "3ddff7b03eb1f6cf160d431584b83448", WtId: arg_data.WtID};
+        var d = {m: "washquerybywtid", WtId: arg_data.WtID};
         ajax(d, function (arg_data) {
             //console.log(angular.toJson(arg_data));
             if (!arg_data || !angular.isObject(arg_data)) {
@@ -149,7 +149,6 @@ xxyj.controller('xxyjCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
     $scope.getUserInf = function () {
         ajax({
             m: 'userquerybyportal2',
-            UserID: "3ddff7b03eb1f6cf160d431584b83448",
             PortalType: 'wx'
         }, function (result) {
             utils.setParam("userinfo", JSON.stringify(result));
@@ -451,7 +450,6 @@ xxyj.controller('xxyjCCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
         }
         var d = {
             m: "washorderpost",
-            UserID: "3ddff7b03eb1f6cf160d431584b83448",
             posid: orderNo,
             washIds: washIds,
             washCounts: washCounts
@@ -483,7 +481,7 @@ xxyj.controller('xxyjOCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
         $scope.cartData = [];
     }
     $scope.getOrder = function (arg_b, arg_e) {
-        var d = {m: "washorderquery", UserID: "3ddff7b03eb1f6cf160d431584b83448", BeginDate: arg_b, EndDate: arg_e};
+        var d = {m: "washorderquery", BeginDate: arg_b, EndDate: arg_e};
         ajax(d, function (arg_data) {
             console.log(arg_data);
             console.log(angular.toJson(arg_data));
@@ -516,7 +514,6 @@ xxyj.controller('xxyjOCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
         }
         var d = {
             m: "servicesiteorderclear",
-            UserID: "3ddff7b03eb1f6cf160d431584b83448",
             SoID: arg_order.SoID,
             Date: arg_order.Date
         };

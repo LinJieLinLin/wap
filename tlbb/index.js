@@ -11,7 +11,7 @@ tlbb.controller('tlbbCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
     };
 
     $scope.getPlace = function () {
-        var d = {m: "servicesitequerybysiteid", UserID: "3ddff7b03eb1f6cf160d431584b83448", SiteID: "-1"};
+        var d = {m: "servicesitequerybysiteid", SiteID: "-1"};
         ajax(d, function (arg_data) {
             //console.log(arg_data.length)
             console.log(arg_data[0]);
@@ -36,7 +36,6 @@ tlbb.controller('tlbbCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
         }
         var d = {
             m: "servicesitepersonporjectquerybysiteid",
-            UserID: "3ddff7b03eb1f6cf160d431584b83448",
             SiteID: arg_SiteID
         };
         ajax(d, function (arg_data) {
@@ -192,7 +191,6 @@ tlbb.controller('tlbbSCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
         }
         var d = {
             m: "servicesitepersonquerybysppid",
-            UserID: "3ddff7b03eb1f6cf160d431584b83448",
             SppID: SppID,
             SiteID: 11
         };
@@ -228,6 +226,7 @@ tlbb.controller('tlbbSCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
         if(dateCompare(getDateStr(preDate),$scope.endDate)>0){
             return;
         }
+
         date = getDateStr(preDate);
         $("#d" + arg_index).val(date);
         $("#d" + arg_index).change();
@@ -236,26 +235,10 @@ tlbb.controller('tlbbSCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
         if (!$scope.userList[arg_index] || $scope.userList[arg_index].SpID < 1) {
             return;
         }
-        if (!$scope.userList[arg_index].selectDate) {
-            $scope.userList[arg_index].selectDate = getDateStr();
-            if (!$scope.dateList.length) {
-                Alert("可选日期数据有误！");
-                return;
-            }
-            $('.select_date').pickadate({
-                disable: $scope.dateList
-            });
-            $("#d" + arg_index).change(function () {
-                date = $("#d" + arg_index).val();
-                $scope.getTimeList(arg_index);
-            });
-            $("#d" + arg_index).val(date);
-            $("#d" + arg_index).change();
-        }
+
 
         var d = {
             m: "servicesitepersontimequerybyspid",
-            UserID: "3ddff7b03eb1f6cf160d431584b83448",
             SpID: $scope.userList[arg_index].SpID
         };
         ajax(d, function (arg_data) {
@@ -267,6 +250,36 @@ tlbb.controller('tlbbSCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
                 return
             }
             $scope.$apply(function () {
+
+
+                var dates = JSON.parse(arg_data.CanOrderDates);//获取可预订的日期
+                $scope.dateList = dates;
+                var temD = dates[dates.length-1];
+                if(temD.length!=3){
+                    Alert("获取日期出错！");
+                    return;
+                }
+                var temDate = temD[0]+"-"+(temD[1]+1)+"-"+(temD[2]+1);
+                $scope.endDate = temDate;
+                if (!$scope.userList[arg_index].selectDate) {
+                    $scope.userList[arg_index].selectDate = getDateStr();
+                    if (!$scope.dateList.length) {
+                        Alert("可选日期数据有误！");
+                        return;
+                    }
+                    $('.select_date').pickadate({
+                        disable: $scope.dateList
+                    });
+                    $("#d" + arg_index).change(function () {
+                        date = $("#d" + arg_index).val();
+                        $scope.getTimeList(arg_index);
+                    });
+                    $("#d" + arg_index).val(date);
+                    $("#d" + arg_index).change();
+                }
+
+
+
                 if (!arg_data.SitePersonTimeList) {
                     $scope.userList[arg_index].userDate = [];
                 }
@@ -302,7 +315,6 @@ tlbb.controller('tlbbSCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
         }, '确认', function () {
             var d = {
                 m: "servicesiteordersubmit",
-                UserID: "3ddff7b03eb1f6cf160d431584b83448",
                 SiteID: 11,
                 SppID: $scope.service.SppID,
                 SpID: arg_data.SpID,
@@ -337,7 +349,7 @@ tlbb.controller('tlbbSCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
     };
 
     $scope.getDateList = function () {
-        ajax({m: 'foodorderrulequery', UserID: "3ddff7b03eb1f6cf160d431584b83448"}, function (arg_data) {
+        ajax({m: 'foodorderrulequery'}, function (arg_data) {
             console.log('foodorderrulequery:');
             console.log(arg_data);
             utils.setParam("foodorderrulequery", JSON.stringify(arg_data));
@@ -358,7 +370,7 @@ tlbb.controller('tlbbSCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
         var w = win_w - 41;
         $scope.style.user_info_pic = {width: w * 0.4 + "px", height: w * 0.4 * 1.4 + "px"};
         $scope.style.user_info_text = {width: w * 0.6 + "px", height: w * 0.4 * 1.4 + "px"};
-        $scope.getDateList();
+        //$scope.getDateList();
         $scope.getServerUserList();
 
         //$("#select_date").change(function () {
@@ -429,7 +441,6 @@ tlbb.controller('tlbbOCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
     $scope.getOrder = function (arg_b, arg_e) {
         var d = {
             m: "servicesiteorderquerybyuserid",
-            UserID: "3ddff7b03eb1f6cf160d431584b83448",
             BeginDate: arg_b,
             EndDate: arg_e
         };
@@ -464,7 +475,6 @@ tlbb.controller('tlbbOCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
         }
         var d = {
             m: "servicesiteorderclear",
-            UserID: "3ddff7b03eb1f6cf160d431584b83448",
             SoID: arg_order.SoID,
             Date: arg_order.Date
         };
@@ -520,7 +530,7 @@ tlbb.controller('tlbbOCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
             $scope.getOrder(btime, etime);
         });
         $("#begin_date").val(date);
-        $("#end_date").val(date);
+        $("#end_date").val(changeDateStr(date,7));
         $("#begin_date").change();
     }, 10);
 }]);

@@ -8,7 +8,7 @@ ktyy.controller('ktyyCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
         location.href = "order.html?" + urlParam;
     };
     $scope.getPlace = function () {
-        var d = {m: "sitequerybysiteid", UserID: "3ddff7b03eb1f6cf160d431584b83448", SiteID: "-1"};
+        var d = {m: "sitequerybysiteid",  SiteID: "-1"};
         ajax(d, function (arg_data) {
             //console.log(arg_data[0]);
             //console.log(angular.toJson(arg_data));
@@ -73,7 +73,7 @@ ktyy.controller('ktyySCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
         if (!sid) {
             return
         }
-        var d = {m: "sitepointquerybysiteid", UserID: "3ddff7b03eb1f6cf160d431584b83448", SiteID: sid};
+        var d = {m: "sitepointquerybysiteid",  SiteID: sid};
         ajax(d, function (arg_data) {
             //console.log(arg_data);
             //console.log(angular.toJson(arg_data));
@@ -88,6 +88,23 @@ ktyy.controller('ktyySCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
                     $scope.placeCur = 0;
                     $scope.places = arg_data.SitePointList;
                     $scope.timeList = $scope.places[0];
+                    var dates = JSON.parse(arg_data.CanOrderDates);//获取可预订的日期
+                    var temD = dates[dates.length-1];
+                    if(temD.length!=3){
+                        Alert("获取日期出错！");
+                        return;
+                    }
+                    var temDate = temD[0]+"-"+(temD[1]+1)+"-"+(temD[2]+1);
+                    $scope.endDate = temDate;
+                    $('.select_date').pickadate({
+                        disable: dates
+                    });
+                    $("#select_date").change(function () {
+                        date = $("#select_date").val();
+                        //$scope.getPlaceList();
+                    });
+                    $("#select_date").val(date);
+                    $("#select_date").change();
                 });
         }, function (arg_err) {
             //console.log(arg_err);
@@ -95,7 +112,7 @@ ktyy.controller('ktyySCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
         })
     };
     $scope.getDateList = function(){
-        ajax({ m: 'foodorderrulequery',UserID: "3ddff7b03eb1f6cf160d431584b83448" }, function (arg_data) {
+        ajax({ m: 'foodorderrulequery' }, function (arg_data) {
             utils.setParam("foodorderrulequery", JSON.stringify(arg_data));
             var dates = JSON.parse(arg_data.CanOrderDates);//获取可预订的日期
             var temD = dates[dates.length-1];
@@ -119,7 +136,8 @@ ktyy.controller('ktyySCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
         });
     };
     $timeout(function () {
-        $scope.getDateList();
+        $scope.getPlaceList();
+        //$scope.getDateList();
     }, 10);
     $scope.changeDate = function (arg_d) {
         var preDate = new Date(date);
@@ -127,21 +145,12 @@ ktyy.controller('ktyySCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
             return;
         }
         preDate.setDate(preDate.getDate() + arg_d);
-        if(dateCompare($scope.getDateStr(preDate),$scope.endDate)>0){
+        if(dateCompare(getDateStr(preDate),$scope.endDate)>0){
             return;
         }
-        date = $scope.getDateStr(preDate);
+        date = getDateStr(preDate);
         $("#select_date").val(date);
         $("#select_date").change();
-    };
-    $scope.getDateStr = function (arg_d) {
-        var date = arg_d;
-        var yyyy = date.getFullYear();
-        var MM = date.getMonth() + 1;
-        var dd = date.getDate();
-        if (MM < 10) MM = '0' + MM
-        if (dd < 10) dd = '0' + dd;
-        return yyyy + "-" + MM + "-" + dd;
     };
     $scope.selectPlace = function (arg_index, arg_data) {
         if (!arg_data) {
@@ -189,7 +198,6 @@ ktyy.controller('ktyySCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
         }
         var d = {
             m: "siteorderpost",
-            UserID: "3ddff7b03eb1f6cf160d431584b83448",
             SpID: spID,
             BTimes: bTimes,
             ETimes: eTimes
@@ -236,7 +244,7 @@ ktyy.controller('ktyySCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
         var eTimes = ",";
         var temL = $scope.timeList.Times.length;
         for (var i = 0; i < temL; i++) {
-            if ($scope.timeList.Times[i].IsOrder == -1) {
+            if (angular.isDefined($scope.timeList.Times[i].IsOrder)&&$scope.timeList.Times[i].IsOrder == -1) {
                 bTimes += $scope.timeList.Times[i].BTime + ",";
                 eTimes += $scope.timeList.Times[i].ETime + ",";
             }
@@ -260,7 +268,7 @@ ktyy.controller('ktyySCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
 ktyy.controller('ktyyOCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
     $scope.orders = [];
     $scope.getOrder = function (arg_b, arg_e) {
-        var d = {m: "siteorderquery", UserID: "3ddff7b03eb1f6cf160d431584b83448", BeginDate: arg_b, EndDate: arg_e};
+        var d = {m: "siteorderquery",  BeginDate: arg_b, EndDate: arg_e};
         ajax(d, function (arg_data) {
             console.log(arg_data);
             console.log(angular.toJson(arg_data));
@@ -287,7 +295,6 @@ ktyy.controller('ktyyOCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
         }
         var d = {
             m: "servicesiteorderclear",
-            UserID: "3ddff7b03eb1f6cf160d431584b83448",
             SoID: arg_order.SoID,
             Date: arg_order.Date
         };
@@ -339,7 +346,7 @@ ktyy.controller('ktyyOCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
             $scope.getOrder(btime, etime);
         });
         $("#begin_date").val(date);
-        $("#end_date").val(date);
+        $("#end_date").val(changeDateStr(date,7));
         $("#begin_date").change();
     }, 10);
 }]);

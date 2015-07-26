@@ -21,7 +21,7 @@ wdzh.controller('wdzhCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
         }
     };
     $scope.getMoney = function () {
-        var d = {m: "accountinfoquery", UserID: "3ddff7b03eb1f6cf160d431584b83448"};
+        var d = {m: "accountinfoquery"};
         ajax(d, function (arg_data) {
             console.log(arg_data[0]);
             console.log(angular.toJson(arg_data));
@@ -48,7 +48,7 @@ wdzh.controller('wdzhCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
         }else if (arg_type == "wash"){
             m = "laundryaccountquery";
         }
-        var d = {m: m, UserID: "3ddff7b03eb1f6cf160d431584b83448", BeginDate: arg_b, EndDate: arg_e};
+        var d = {m: m, BeginDate: arg_b, EndDate: arg_e};
         ajax(d, function (arg_data) {
             console.log(arg_data);
             console.log(angular.toJson(arg_data));

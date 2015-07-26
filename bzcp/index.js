@@ -55,7 +55,7 @@ bzcp.controller('bzcpCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
         }
     };
     $scope.getData = function () {
-        var d = {m: "getfoodmenubydate", UserID: "3ddff7b03eb1f6cf160d431584b83448"};
+        var d = {m: "getfoodmenubydate"};
         ajax(d, function (arg_data) {
             if (!arg_data || !angular.isArray(arg_data)) {
                 alert("没有获取到数据！");

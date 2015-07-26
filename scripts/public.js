@@ -179,6 +179,20 @@ function getDateStr(arg_data) {
     if (dd < 10) dd = '0' + dd;
     return yyyy + "-" + MM + "-" + dd;
 }
+//增加或减去n天
+function changeDateStr(arg_data,arg_day) {
+    var date = new Date();
+    if(arg_data&&arg_day){
+        var date = new Date(arg_data);
+        date.setDate(date.getDate() + arg_day);
+    }
+    var yyyy = date.getFullYear();
+    var MM = date.getMonth() + 1;
+    var dd = date.getDate();
+    if (MM < 10) MM = '0' + MM
+    if (dd < 10) dd = '0' + dd;
+    return yyyy + "-" + MM + "-" + dd;
+}
 //
 function getDateStrByOne (arg_d) {
     var date = new Date(arg_d);
@@ -359,6 +373,7 @@ function hide_loading() {
 //onSuccess:请求成功后执行的函数
 //onError:请求失败后执行的函数
 function ajax(data, onSuccess, onError) {
+    data.UserID= "3ddff7b03eb1f6cf160d431584b83448";
     if (plid != null) {
         data.plid = plid;
     }
