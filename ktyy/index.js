@@ -171,7 +171,7 @@ ktyy.controller('ktyySCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
                             $scope.getPlaceList();
                         }
                     });
-                    if(dateCompare($scope.startDate,date)>0){
+                    if (dateCompare($scope.startDate, date) > 0) {
                         date = $scope.startDate;
                     }
                     $("#select_date").val(date);
@@ -222,11 +222,12 @@ ktyy.controller('ktyySCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
             if (dateCompare(getDateStr(preDate), $scope.startDate) < 0) {
                 return;
             }
-        }else{
+        } else {
             console.log(dateCompare(getDateStr(preDate), $scope.endDate));
             if (dateCompare(getDateStr(preDate), $scope.endDate) > 28800000) {
                 return;
-            }        }
+            }
+        }
 
         date = getDateStr(preDate);
         $("#select_date").val(date);

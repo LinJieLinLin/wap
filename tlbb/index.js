@@ -177,6 +177,7 @@ tlbb.controller('tlbbSCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
     $scope.style = {};
     $scope.dateList = [];
     $scope.endDate = "";
+    $scope.startDate = "";
     $scope.service = angular.fromJson(localStorage.Service);
     if (!$scope.service) {
         Alert("没有数据！");
@@ -224,8 +225,16 @@ tlbb.controller('tlbbSCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
             return;
         }
         preDate.setDate(preDate.getDate() + arg_d);
-        if(dateCompare(getDateStr(preDate),$scope.endDate)>0){
-            return;
+        if (arg_d == -1) {
+            console.log(dateCompare(getDateStr(preDate), $scope.startDate));
+            if (dateCompare(getDateStr(preDate), $scope.startDate) < 0) {
+                return;
+            }
+        } else {
+            console.log(dateCompare(getDateStr(preDate), $scope.endDate));
+            if (dateCompare(getDateStr(preDate), $scope.endDate) > 28800000) {
+                return;
+            }
         }
 
         date = getDateStr(preDate);
@@ -247,21 +256,32 @@ tlbb.controller('tlbbSCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
             console.log(angular.toJson(arg_data));
             if (!arg_data || !angular.isObject(arg_data)) {
                 Alert("没有获取到数据！");
-                alert("没有获取到数据！");
                 return
             }
             $scope.$apply(function () {
-
-
                 var dates = JSON.parse(arg_data.CanOrderDates);//获取可预订的日期
                 $scope.dateList = dates;
-                var temD = dates[dates.length-1];
-                if(temD.length!=3){
+                console.log(dates);
+                var temL = dates.length;
+                if (temL < 1) {
+                    Alert("暂无可预订日期！");
+                    return;
+                }
+                var temD = dates[temL - 1];
+                if (temD.length != 3) {
                     Alert("获取日期出错！");
                     return;
                 }
-                var temDate = temD[0]+"-"+(temD[1]+1)+"-"+(temD[2]+1);
+                //var temDate = temD[0] + "-" + (temD[1] + 1) + "-" + (temD[2] + 1);
+                var temDate = temD[0] + "-" + (temD[1] + 1) + "-" + (temD[2]);
                 $scope.endDate = temDate;
+                temD = dates[1];
+                if (temD.length != 3) {
+                    Alert("获取日期出错！");
+                    return;
+                }
+                temDate = temD[0] + "-" + (temD[1] + 1) + "-" + (temD[2]);
+                $scope.startDate = temDate;
                 if (!$scope.userList[arg_index].selectDate) {
                     $scope.userList[arg_index].selectDate = getDateStr();
                     if (!$scope.dateList.length) {
@@ -275,6 +295,9 @@ tlbb.controller('tlbbSCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
                         date = $("#d" + arg_index).val();
                         $scope.getTimeList(arg_index);
                     });
+                    if(dateCompare($scope.startDate,date)>0){
+                        date = $scope.startDate;
+                    }
                     $("#d" + arg_index).val(date);
                     $("#d" + arg_index).change();
                 }
@@ -329,10 +352,9 @@ tlbb.controller('tlbbSCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
                 console.log(angular.toJson(arg_data));
                 if (!arg_data || !angular.isObject(arg_data)) {
                     Alert("没有获取到数据！");
-                    alert("没有获取到数据！");
                     return
                 }
-                alert(arg_data.Msg)
+                Alert(arg_data.Msg)
 
                 if (arg_data.Id == 1) {
                     location.href = 'order.html?' + urlParam;
