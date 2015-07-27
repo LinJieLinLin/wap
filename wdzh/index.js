@@ -132,6 +132,7 @@ wdzh.controller('wdzhCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
         $("#begin_date1").val(date);
         $("#end_date1").val(date);
         $scope.getMoney();
+        $("body").css("display","inline");
     }, 10);
 }]);
 

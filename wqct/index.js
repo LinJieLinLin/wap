@@ -62,6 +62,7 @@ wqct.controller('wqctCCtrl', ['$scope', '$timeout', '$compile', function ($scope
         $scope.showDelOne();
     };
     $timeout(function () {
+        $("body").css("display","inline");
         loadData();
     }, 10);
 
@@ -193,9 +194,9 @@ wqct.controller('wqctCCtrl', ['$scope', '$timeout', '$compile', function ($scope
 
         $(".img").each(function (i, n) {
             $(this).height($(this).width());
-            $(".cat_h").height($(this).width());
-            $(".delOne").height($(this).width()+23);
-            $(".delOne").css("line-height",$(this).width()+23+"px");
+            $(".cat_h").height($(".car_item").outerHeight(true));
+            $(".delOne").height($(".car_item").outerHeight(true));
+            $(".delOne").css("line-height",$(".car_item").outerHeight(true)+"px");
         });
 
         $(".btn_clear").click(carClear);

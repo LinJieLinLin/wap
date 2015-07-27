@@ -91,6 +91,7 @@ bzcp.controller('bzcpCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
         });
         $("#select_date").change();
         $scope.checkWidth();
+        $("body").css("display","inline");
     }, 10);
     $scope.back = function () {
         location.href = "../home/index.html";

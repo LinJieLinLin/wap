@@ -18,7 +18,7 @@
     <!--<link href="../scripts/datepicker/themes/default.date.css" rel="stylesheet"/>-->
     <script src="index.js"></script>
 </head>
-<body ng-controller="xxyjDCtrl">
+<body ng-controller="xxyjDCtrl" style="display: none;">
 <div class="back" data-ng-click="back()">
     <img src="../images/back.png"/>
 </div>
@@ -34,7 +34,7 @@
     <div class="item_price">
         <div class="field_text">价格：
         </div>
-        <div class="price price1" data-ng-if="goods.WashUseDisCount==0">{{goods.WashPrice| currency:'￥'}}</div>
+        <div class="price">￥</div><div class="price1" data-ng-if="goods.WashUseDisCount==0">{{goods.WashPrice| currency:''}}</div>
         <div class="price price1" data-ng-if="goods.WashUseDisCount==1">{{goods.WashDiscountPrice| currency:'￥'}}</div>
 
     </div>
@@ -56,7 +56,7 @@
             <div class="subtract" data-ng-click="changeCount('-')"></div>
             <div class="count" data-ng-init="goods.count=1">
                 <input id="count" maxlength="7" type="text" data-ng-model="goods.count"
-                       style="width: 50px; text-align: center">
+                       style="width: 48px; text-align: center">
             </div>
             <div class="add" data-ng-click="changeCount('+')"></div>
         </div>

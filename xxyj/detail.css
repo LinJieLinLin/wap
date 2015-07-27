@@ -90,7 +90,6 @@ html { -webkit-text-size-adjust:none }
 {
     float: left;
     color: #222222;
-    font-size: 16px;
     padding-top:4px;
 }
 .item_stock
@@ -103,7 +102,7 @@ html { -webkit-text-size-adjust:none }
 .stock {
     float: left;
     color: #ff6633;
-    font-size: 16px;
+    /*font-size: 16px;*/
     margin-left: 9px;
     margin-top:4px;
 }
@@ -117,7 +116,7 @@ html { -webkit-text-size-adjust:none }
 .from {
     float: left;
     color: #ff6633;
-    font-size: 16px;
+    /*font-size: 16px;*/
     margin-left: 9px;
     margin-top:4px;
 }
@@ -239,7 +238,7 @@ html { -webkit-text-size-adjust:none }
     color: #222222;
     text-align: center;
     border: 1px solid #ff6633;
-    width: 80px;
+    width: 50px;
     height: 30px;
     float: left;
     line-height:32px;

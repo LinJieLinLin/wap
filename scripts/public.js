@@ -257,6 +257,21 @@ function show_gray_bg() {
 function hide_gray_bg() {
     $("#gray_bg").remove();
 }
+
+//获得下个星期天的日期
+function getSunday() {
+    var max_date = new Date();
+    day = max_date.getDay();//获取当前是星期几0-6，0代表星期天
+    add_day = 0;	//离最大时间 有多少天
+    //当前是星期天 着不用加（等于加0）
+    if (day != 0) {//1-6	不是星期天，7-当前星期几，得到离星期天还有多少天
+        add_day = 7 - day;
+    }
+    max_date.setDate(max_date.getDate() + add_day); // 系统会自动转换
+    max_date = getDateStr(max_date);
+    return max_date;
+}
+
 //弹出提示框
 //Msg:信息
 //Time:显示时间

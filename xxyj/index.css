@@ -183,18 +183,19 @@ body {
     -moz-opacity: 0.4;
     opacity: 0.4;
     font-size: 11px;
-    /*height: 25px;*/
+    height: 23px;
 }
 
 .item_text {
     /*margin-left: 10px;*/
     /*line-height: 25px;*/
-    padding: 8px 6px;
+    padding: 3px 3px;
+    font-size: 10px;
 }
 
 .item_img img {
     margin: 4px 10px 4px 0;
-    padding-top: 5px;
+    /*padding-top: 5px;*/
 }
 
 .items {

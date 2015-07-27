@@ -18,7 +18,7 @@
     <link href="../scripts/datepicker/themes/default.date.css" rel="stylesheet"/>
     <script src="index.js"></script>
 </head>
-<body ng-controller="xxyjCtrl">
+<body ng-controller="xxyjCtrl" style="display: none;">
 <div class="back">
     <div class="back_img" data-ng-click="back()">
         <img src="../images/back02.png"/>
@@ -96,7 +96,7 @@
             <div class="goods_img">
                 <img  data-ng-src="{{goods.WashPicture}}"/>
             </div>
-            <div class="goods_inf"style="height: 44px;" data-ng-click="goDetail(goods)">
+            <div class="goods_inf"style="height: 32px;" data-ng-click="goDetail(goods)">
                 <div class="L item_text" data-ng-bind="goods.WashName">
                 </div>
                 <!--<div class="R item_img">-->

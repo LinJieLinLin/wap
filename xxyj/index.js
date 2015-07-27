@@ -9,7 +9,7 @@ xxyj.controller('xxyjCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
     $scope.listPic = 1;
     $scope.rule = {};
     $scope.cartData = angular.fromJson(localStorage.CARTDATA);
-    if(angular.isUndefined($scope.cartData)){
+    if (angular.isUndefined($scope.cartData)) {
         $scope.cartData = [];
     }
     //当前类别
@@ -18,8 +18,8 @@ xxyj.controller('xxyjCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
         location.href = "../home/index.html";
     };
     //进入其它页面
-    $scope.goTo = function(arg_url){
-        location.href = arg_url+"?" + urlParam;
+    $scope.goTo = function (arg_url) {
+        location.href = arg_url + "?" + urlParam;
     };
     //拿预订规则查询
     $scope.getRule = function () {
@@ -188,7 +188,7 @@ xxyj.controller('xxyjCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
         $("#date").change();
         $("#show_pic_r").width(win_w - 206 - 10 - 10 - 10);
     }, 10);
-
+    $("body").css("display", "inline");
 }]);
 xxyj.controller('xxyjDCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
     console.log(localStorage.goodsData);
@@ -199,18 +199,18 @@ xxyj.controller('xxyjDCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
     }
     $scope.back = function () {
         //window.history.back();
-        location.href = "index.html"+"?" + urlParam;
+        location.href = "index.html" + "?" + urlParam;
     };
-    $scope.goTo = function(arg_url){
-        location.href = arg_url+"?" + urlParam;
+    $scope.goTo = function (arg_url) {
+        location.href = arg_url + "?" + urlParam;
     };
     $scope.cartData = angular.fromJson(localStorage.CARTDATA);
     //修改数量
-    $scope.changeCount = function(arg_type){
-        if(arg_type == "-"&&$scope.goods.count>1){
-            $scope.goods.count = $scope.goods.count-1;
-        }else if(arg_type == "+"){
-            $scope.goods.count = $scope.goods.count+1;
+    $scope.changeCount = function (arg_type) {
+        if (arg_type == "-" && $scope.goods.count > 1) {
+            $scope.goods.count = $scope.goods.count - 1;
+        } else if (arg_type == "+") {
+            $scope.goods.count = $scope.goods.count + 1;
         }
     };
     //加入购物车
@@ -250,7 +250,8 @@ xxyj.controller('xxyjDCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
     //进入购物车
     $scope.goToCart = function () {
         location.href = "cart.html?" + urlParam;
-    }
+    };
+    $("body").css("display", "inline");
 }]);
 xxyj.controller('xxyjCCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
     $scope.cartData = [];
@@ -263,28 +264,28 @@ xxyj.controller('xxyjCCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
     $scope.delOne = false;
     $scope.delIndex = "";
 
-    $scope.swipeLeft = function(arg_type,arg_index,arg_d){
-        var tmeW = $("#car_"+arg_index).width();
-        if(arg_type=="left"){
+    $scope.swipeLeft = function (arg_type, arg_index, arg_d) {
+        var tmeW = $("#car_" + arg_index).width();
+        if (arg_type == "left") {
             //$("#car_"+arg_index).animate({left:'-20%'});
             //arg_d.style = {left:'-'+tmeW*0.2+'px'};
-            $("#car_"+arg_index).css("left","-"+tmeW*0.2+"px");
-        }else{
-            arg_d.style={left:"0%"};
-            $("#car_"+arg_index).css("left","0%");
+            $("#car_" + arg_index).css("left", "-" + tmeW * 0.2 + "px");
+        } else {
+            arg_d.style = {left: "0%"};
+            $("#car_" + arg_index).css("left", "0%");
             //$("#car_"+arg_index).animate({left:'0%'});
         }
     };
 
 
-    $scope.tem1 = function(arg_d,arg_index){
+    $scope.tem1 = function (arg_d, arg_index) {
         $scope.tem = !$scope.tem;
-        if($scope.tem){
-            arg_d.style = {left:'-80px'};
+        if ($scope.tem) {
+            arg_d.style = {left: '-80px'};
             //$("#car_"+arg_index).animate({left:'-20%'});
             //$("#car_"+arg_index).css("left","-20%");
-        }else {
-            arg_d.style = {left:'0%'};
+        } else {
+            arg_d.style = {left: '0%'};
 
             //$("#car_"+arg_index).css("left","0%");
             //$("#car_"+arg_index).animate({left:'0%'});
@@ -302,7 +303,7 @@ xxyj.controller('xxyjCCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
     $scope.back = function () {
         window.history.back();
     };
-    $scope.delOneD = function(arg_data,arg_index){
+    $scope.delOneD = function (arg_data, arg_index) {
         show_dialog("提示", "是否移出购物车?", null, '确认', function () {
             arg_data.count--;
             $scope.$apply(function () {
@@ -358,15 +359,15 @@ xxyj.controller('xxyjCCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
         $scope.showDelAll(false);
     };
     $scope.showDelOne = function (arg_index) {
-        if(angular.isNumber(arg_index)){
+        if (angular.isNumber(arg_index)) {
             $scope.delOne = true;
             $scope.delIndex = arg_index;
-        }else{
+        } else {
             $scope.delOne = false;
         }
     };
     $scope.delOneData = function () {
-        if(!angular.isNumber($scope.delIndex)){
+        if (!angular.isNumber($scope.delIndex)) {
             return;
         }
         $scope.cartData.splice($scope.delIndex, 1);
@@ -397,10 +398,10 @@ xxyj.controller('xxyjCCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
         //这里判断规则
         console.log(localStorage.RULE);
         $scope.rule = angular.fromJson(localStorage.RULE);
-        var sTime = $scope.rule.OrderBeginTime.replace(":",".")
-        var eTime = $scope.rule.OrderEndTime.replace(":",".")
+        var sTime = $scope.rule.OrderBeginTime.replace(":", ".")
+        var eTime = $scope.rule.OrderEndTime.replace(":", ".")
         var now = getDateHourMStr();
-        if(now-sTime<0||eTime-now<0){
+        if (now - sTime < 0 || eTime - now < 0) {
             Alert("商品未开放购买")
             return;
         }
@@ -408,8 +409,8 @@ xxyj.controller('xxyjCCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
         //    Alert("订单商品不能超过"+$scope.rule.MinOrderCount+"件")
         //    return;
         //}
-        if($scope.allPrice>$scope.rule.MaxOrderMoney){
-            Alert("订单金额不能超过"+$scope.rule.MaxOrderMoney+"元");
+        if ($scope.allPrice > $scope.rule.MaxOrderMoney) {
+            Alert("订单金额不能超过" + $scope.rule.MaxOrderMoney + "元");
             return;
         }
 
@@ -473,11 +474,24 @@ xxyj.controller('xxyjCCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
             Alert("请求超时！");
         })
     };
+    $("body").css("display", "inline");
+    $timeout(function () {
+        $(".img").each(function (i, n) {
+            $(this).height($(this).width());
+        });
+        $(".car_body").each(function (i, n) {
+            $(".cat_h").height($(this).outerHeight(true));
+            $(".delOne").height($(this).outerHeight(true));
+            $(".delOne").css("line-height", $(this).outerHeight(true) + "px");
+        });
+    }, 10);
+
+
 }]);
 xxyj.controller('xxyjOCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
     $scope.orders = [];
     $scope.cartData = angular.fromJson(localStorage.CARTDATA);
-    if(angular.isUndefined($scope.cartData)){
+    if (angular.isUndefined($scope.cartData)) {
         $scope.cartData = [];
     }
     $scope.getOrder = function (arg_b, arg_e) {
@@ -494,11 +508,11 @@ xxyj.controller('xxyjOCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
                     $scope.orders = [];
                     $scope.orders = arg_data;
                     var temL = $scope.orders.length;
-                    for(var i=0;i<temL;i++){
+                    for (var i = 0; i < temL; i++) {
                         var temItem = $scope.orders[i].OrderItems.length;
                         var p = 0;
-                        for(var j=0;j<temItem; j++){
-                            p=p+$scope.orders[i].OrderItems[j].Price*$scope.orders[i].OrderItems[j].Number;
+                        for (var j = 0; j < temItem; j++) {
+                            p = p + $scope.orders[i].OrderItems[j].Price * $scope.orders[i].OrderItems[j].Number;
                         }
                         $scope.orders[i].allPrice = p;
                     }
@@ -540,8 +554,8 @@ xxyj.controller('xxyjOCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
         })
     };
     //进入购物车或首页
-    $scope.goTo = function(arg_url){
-        location.href = arg_url+"?" + urlParam;
+    $scope.goTo = function (arg_url) {
+        location.href = arg_url + "?" + urlParam;
     };
     $timeout(function () {
         $(".content").width(win_w - 40);
@@ -570,5 +584,6 @@ xxyj.controller('xxyjOCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
         $("#begin_date").val(date);
         $("#end_date").val(date);
         $("#begin_date").change();
+        $("body").css("display", "inline")
     }, 10);
 }]);

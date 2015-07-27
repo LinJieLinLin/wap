@@ -79,6 +79,7 @@ tlbb.controller('tlbbCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
 
         $scope.getPlace();
         localStorage.ktyyUrlParam = urlParam;
+        $("body").css("display","inline");
     }, 10);
     //$scope.info=function (arg_name) {
     //    var content = "";
@@ -379,6 +380,7 @@ tlbb.controller('tlbbSCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
         //});
         //$("#select_date").val(date);
         //$("#select_date").change();
+        $("body").css("display","inline");
     }, 10);
 
     $(function () {
@@ -530,7 +532,8 @@ tlbb.controller('tlbbOCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
             $scope.getOrder(btime, etime);
         });
         $("#begin_date").val(date);
-        $("#end_date").val(changeDateStr(date,7));
+        $("#end_date").val(getSunday());
         $("#begin_date").change();
+        $("body").css("display","inline");
     }, 10);
 }]);
