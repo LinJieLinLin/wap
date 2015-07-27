@@ -263,6 +263,7 @@ xxyj.controller('xxyjCCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
     $scope.delAll = false;
     $scope.delOne = false;
     $scope.delIndex = "";
+    $("body").css("display", "inline");
 
     $scope.swipeLeft = function (arg_type, arg_index, arg_d) {
         var tmeW = $("#car_" + arg_index).width();
@@ -293,11 +294,16 @@ xxyj.controller('xxyjCCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
     };
 
     if (!angular.isArray($scope.cartData)) {
-        Alert("购物车数据有误");
-        return
+        $timeout(function () {
+            //Alert("购物车数据有误", 1000000);
+        }, 10);
+        //return
     }
     if (!angular.isObject($scope.userInf)) {
-        Alert("用户数据有误");
+        $timeout(function () {
+            Alert("用户数据有误");
+            location.href = homeurl;
+        }, 10);
         return
     }
     $scope.back = function () {
@@ -385,7 +391,7 @@ xxyj.controller('xxyjCCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
         }
     };
     $scope.countPrice();
-    //去结算
+//去结算
     $scope.goToPost = function () {
         if (!$scope.cartData.length) {
             Alert("购物车空空如也，快去购物吧");
@@ -393,7 +399,7 @@ xxyj.controller('xxyjCCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
         }
         location.href = "post.html?" + urlParam;
     };
-    //提交订单
+//提交订单
     $scope.showSubmit = function () {
         //这里判断规则
         console.log(localStorage.RULE);
@@ -474,7 +480,6 @@ xxyj.controller('xxyjCCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
             Alert("请求超时！");
         })
     };
-    $("body").css("display", "inline");
     $timeout(function () {
         $(".img").each(function (i, n) {
             $(this).height($(this).width());
@@ -487,7 +492,8 @@ xxyj.controller('xxyjCCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
     }, 10);
 
 
-}]);
+}])
+;
 xxyj.controller('xxyjOCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
     $scope.orders = [];
     $scope.cartData = angular.fromJson(localStorage.CARTDATA);

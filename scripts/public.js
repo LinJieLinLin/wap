@@ -22,6 +22,9 @@ var date = "";
 var today = "";
 //数据请求地址
 var ajaxUrl = "";
+//主页
+var homeurl="../home/index.html";
+
 //var ajaxUrl = "http://115.29.179.99:7777/service/Handler.ashx?jsoncallback=?";
 //获取请求路径中指定参数的值
 (function ($) {
