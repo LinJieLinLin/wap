@@ -2,7 +2,7 @@ var ktyy = angular.module('ktyy', []);
 ktyy.controller('ktyyCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
     $scope.places = [];
     $scope.back = function () {
-        location.href = "../home/index.html";
+        location.href = homeurl;
     };
     $scope.toOrder = function () {
         location.href = "order.html?" + urlParam;

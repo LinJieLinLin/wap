@@ -94,7 +94,7 @@ bzcp.controller('bzcpCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
         $("body").css("display","inline");
     }, 10);
     $scope.back = function () {
-        location.href = "../home/index.html";
+        location.href = homeurl;
     }
 }]);
 

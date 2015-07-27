@@ -15,7 +15,7 @@ xxyj.controller('xxyjCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
     //当前类别
     $scope.nowList = {};
     $scope.back = function () {
-        location.href = "../home/index.html";
+        location.href = homeurl;
     };
     //进入其它页面
     $scope.goTo = function (arg_url) {
