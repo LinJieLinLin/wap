@@ -256,7 +256,7 @@ xxyj.controller('xxyjDCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
 xxyj.controller('xxyjCCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
     $scope.cartData = [];
     $scope.cartData = angular.fromJson(localStorage.CARTDATA);
-    $scope.userInf = angular.fromJson(localStorage.userinf);
+    $scope.userInf = angular.fromJson(localStorage.userinfo);
     $scope.allPrice = 0;
     $scope.selectCount = 0;
     $scope.rule = {};
