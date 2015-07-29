@@ -264,6 +264,11 @@ xxyj.controller('xxyjCCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
     $scope.delOne = false;
     $scope.delIndex = "";
     $("body").css("display", "inline");
+    if(angular.isUndefined($scope.cartData)){
+        $scope.cartData = [];
+    }
+
+
 
     $scope.swipeLeft = function (arg_type, arg_index, arg_d) {
         var tmeW = $("#car_" + arg_index).width();
@@ -278,20 +283,6 @@ xxyj.controller('xxyjCCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
         }
     };
 
-
-    $scope.tem1 = function (arg_d, arg_index) {
-        $scope.tem = !$scope.tem;
-        if ($scope.tem) {
-            arg_d.style = {left: '-80px'};
-            //$("#car_"+arg_index).animate({left:'-20%'});
-            //$("#car_"+arg_index).css("left","-20%");
-        } else {
-            arg_d.style = {left: '0%'};
-
-            //$("#car_"+arg_index).css("left","0%");
-            //$("#car_"+arg_index).animate({left:'0%'});
-        }
-    };
 
     if (!angular.isArray($scope.cartData)) {
         $timeout(function () {
@@ -485,15 +476,14 @@ xxyj.controller('xxyjCCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
             $(this).height($(this).width());
         });
         $(".car_body").each(function (i, n) {
-            $(".cat_h").height($(this).outerHeight(true));
+            $(".car_item").height($(this).outerHeight(true));
             $(".delOne").height($(this).outerHeight(true));
             $(".delOne").css("line-height", $(this).outerHeight(true) + "px");
         });
     }, 10);
 
 
-}])
-;
+}]);
 xxyj.controller('xxyjOCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
     $scope.orders = [];
     $scope.cartData = angular.fromJson(localStorage.CARTDATA);
