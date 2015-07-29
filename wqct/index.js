@@ -25,6 +25,9 @@ wqct.controller('wqctCCtrl', ['$scope', '$timeout', '$compile', function ($scope
         }
     };
     $scope.showDelAll = function (arg_data) {
+        if($(".car_info2").text()=="已选:0"){
+            return;
+        }
         $scope.delAll = arg_data;
     };
     $scope.delAllData = function () {

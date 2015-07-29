@@ -34,11 +34,11 @@
                 loadType();
             });
 
-            ajax({ m: 'userquerybyportal2',PortalType:'wx'}, function (result) {
-                utils.setParam("userinfo", JSON.stringify(result));
-            }, function (result) {
-
-            });
+//            ajax({ m: 'userquerybyportal2',PortalType:'wx'}, function (result) {
+//                utils.setParam("userinfo", JSON.stringify(result));
+//            }, function (result) {
+//
+//            });
 
             ajax({ m: 'foodorderrulequery' }, function (result) {
                 utils.setParam("foodorderrulequery", JSON.stringify(result));
@@ -94,6 +94,10 @@
                 location.href = "order1.html?" + urlParam;
             });
             $(".car_link").click(function () {
+                if((parseInt(osum.totalNumber) + parseInt(osum2.totalNumber))==0){
+                    Alert("购物车为空，先选购些商品吧！");
+                    return;
+                }
                 location.href = "car1.html?" + urlParam;
             });
             $(".line0").width($(".line").width() - 6);
@@ -358,12 +362,12 @@
                         <img src="../images/md.png" />
                     </td>
                     <td class="small small_pic1" fid="0">
-
+                            <span style="visibility:hidden">1</span>
                     </td>
                 </tr>
                 <tr>
                     <td class="small small_pic2" fid="0">
-
+                        <span style="visibility:hidden">1</span>
                     </td>
                 </tr>
             </table>

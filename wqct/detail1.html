@@ -129,21 +129,23 @@
             }
             else {
                 console.log("添加产品：" + JSON.stringify(product));
+
                 if (ftid != 65536) {
-                    if (cart2.get() == null) {
+                    if (cart2.get() == null||cart2.get().length==0) {
                         cart.add(product);
                     } else {
                         Alert("熟食不能与其他类别同时放入购物车！");
                         return;
                     }
                 } else {
-                    if (cart.get() == null) {
+                    if (cart.get() == null||cart.get().length==0) {
                         cart2.add(product);
                     } else {
                         Alert("熟食不能与其他类别同时放入购物车！");
                         return;
                     }
                 }
+
                 //console.log("car1-ids=" + cart.getvalues('id'));
                 //console.log("car1-nums=" + cart.getvalues('num'));
                 //console.log("car1-odates=" + cart.getvalues('odate'));
@@ -190,6 +192,10 @@
                 location.href = "order1.html?" + urlParam;
             });
             $(".car_link").click(function () {
+                if((parseInt(osum.totalNumber) + parseInt(osum2.totalNumber))==0){
+                    Alert("购物车为空，先选购些商品吧！");
+                    return;
+                }
                 location.href = "car1.html?" + urlParam;
             });
             //var left = $(".car_count").next().offset().left + $(".car_count").next().width();

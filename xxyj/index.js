@@ -90,10 +90,25 @@ xxyj.controller('xxyjCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
                     $scope.listGoods = arg_data;
                 }
             );
+            $scope.setCss();
         }, function (arg_err) {
             console.log(arg_err);
             alert(arg_err);
         })
+    };
+    $scope.setCss = function () {
+        //alert(123)
+        var maxH = 0;
+        $(".goods_h").each(function (i, n) {
+            if ($(this).outerHeight(true) > maxH) {
+                maxH = $(this).outerHeight(true);
+            }
+        });
+        console.log(maxH);
+        $(".goods_h").height(maxH + 6 + "px");
+        $(".goods_text").each(function (i, n) {
+            $(this).css("margin-top", (maxH + 6 - $(this).outerHeight(true)) * 0.5);
+        });
     };
     $scope.changeList = function (arg_data, arg_index) {
         if (!arg_data) {
@@ -159,6 +174,10 @@ xxyj.controller('xxyjCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
 
     //进入购物车
     $scope.goToCart = function () {
+        if (angular.isUndefined($scope.cartData) || $scope.cartData.length == 0) {
+            Alert("购物车为空，先选购些商品吧！");
+            return;
+        }
         location.href = "cart.html?" + urlParam;
     };
     $timeout(function () {
@@ -174,7 +193,7 @@ xxyj.controller('xxyjCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
         $scope.item['width'] = itemW + "px";
         $scope.item['height'] = itemW + "px";
         $scope.getRule();
-        $scope.getUserInf();
+        //$scope.getUserInf();
 
         $('#date').pickadate({
             min: "1900-01-01",
@@ -249,6 +268,10 @@ xxyj.controller('xxyjDCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
     };
     //进入购物车
     $scope.goToCart = function () {
+        if (angular.isUndefined($scope.cartData) || $scope.cartData.length == 0) {
+            Alert("购物车为空，先选购些商品吧！");
+            return;
+        }
         location.href = "cart.html?" + urlParam;
     };
     $("body").css("display", "inline");
@@ -264,10 +287,9 @@ xxyj.controller('xxyjCCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
     $scope.delOne = false;
     $scope.delIndex = "";
     $("body").css("display", "inline");
-    if(angular.isUndefined($scope.cartData)){
+    if (angular.isUndefined($scope.cartData)) {
         $scope.cartData = [];
     }
-
 
 
     $scope.swipeLeft = function (arg_type, arg_index, arg_d) {
@@ -293,8 +315,10 @@ xxyj.controller('xxyjCCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
     if (!angular.isObject($scope.userInf)) {
         $timeout(function () {
             Alert("用户数据有误");
-            location.href = homeurl;
         }, 10);
+        $timeout(function () {
+            location.href = homeurl;
+        }, 1000);
         return
     }
     $scope.back = function () {
@@ -385,7 +409,6 @@ xxyj.controller('xxyjCCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
 //去结算
     $scope.goToPost = function () {
         if (!$scope.cartData.length) {
-            Alert("购物车空空如也，快去购物吧");
             return
         }
         location.href = "post.html?" + urlParam;

@@ -295,6 +295,7 @@ tlbb.controller('tlbbSCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
                         date = $("#d" + arg_index).val();
                         $scope.getTimeList(arg_index);
                     });
+                    date = getDateStr();
                     if(dateCompare($scope.startDate,date)>0){
                         date = $scope.startDate;
                     }
@@ -324,6 +325,9 @@ tlbb.controller('tlbbSCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
     };
     $scope.openWin = function (arg_data, art_time) {
         if (!arg_data) {
+            return;
+        }
+        if(art_time.IsOrder==1){
             return;
         }
         console.log(arg_data);

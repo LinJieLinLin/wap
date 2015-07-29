@@ -69,7 +69,7 @@
                     <img  data-ng-src="{{listGoods.WashList[0].WashPicture}}"  />
                 </div>
                 <div class="goods_inf" data-ng-click="goDetail(listGoods.WashList[0])">
-                    <div class="L item_text" data-ng-bind="listGoods.WashList[0].WashName">
+                    <div class="L item_text" style="margin-top:3px;" data-ng-bind="listGoods.WashList[0].WashName">
                     </div>
                     <div class="R item_img">
                         <img src="../images/go.png">
@@ -81,7 +81,7 @@
                     <img  data-ng-src="{{listGoods.WashList[1].WashPicture}}"/>
                 </div>
                 <div class="goods_inf" data-ng-click="goDetail(listGoods.WashList[1])">
-                    <div class="L item_text" data-ng-bind="listGoods.WashList[1].WashName">
+                    <div class="L item_text" style="margin-top:3px;"  data-ng-bind="listGoods.WashList[1].WashName">
                     </div>
                     <div class="R item_img">
                         <img src="../images/go.png">
@@ -96,8 +96,9 @@
             <div class="goods_img">
                 <img  data-ng-src="{{goods.WashPicture}}"/>
             </div>
-            <div class="goods_inf"style="height: 32px;" data-ng-click="goDetail(goods)">
-                <div class="L item_text" data-ng-bind="goods.WashName">
+            <div class="goods_inf " style="height: auto" data-ng-click="goDetail(goods)">
+                <div class="L item_text goods_h" >
+                    <div data-ng-bind="goods.WashName" class="goods_text"></div>
                 </div>
                 <!--<div class="R item_img">-->
                     <!--<img src="../images/go.png">-->

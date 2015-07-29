@@ -178,7 +178,7 @@ function getDateStr(arg_data) {
     var yyyy = date.getFullYear();
     var MM = date.getMonth() + 1;
     var dd = date.getDate();
-    if (MM < 10) MM = '0' + MM
+    if (MM < 10) MM = '0' + MM;
     if (dd < 10) dd = '0' + dd;
     return yyyy + "-" + MM + "-" + dd;
 }

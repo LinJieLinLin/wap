@@ -14,8 +14,8 @@
     <script src="../scripts/datepicker/picker.date.js"></script>
     <script src="../scripts/datepicker/legacy.js"></script>
     <script src="../scripts/datepicker/zh_CN.js"></script>
-    <link href="../scripts/datepicker/themes/default.css" rel="stylesheet" />
-    <link href="../scripts/datepicker/themes/default.date.css" rel="stylesheet" />
+    <link href="../scripts/datepicker/themes/default.css" rel="stylesheet"/>
+    <link href="../scripts/datepicker/themes/default.date.css" rel="stylesheet"/>
     <script src="index.js"></script>
 </head>
 <body ng-controller="ktyySCtrl" style="display: none;">
@@ -35,25 +35,29 @@
 </div>
 <div class="point_select">
     <div class="points_text">场地选择</div>
-    <div class="points" data-ng-repeat="place in places" >
-        <div class="point point_0" ng-class-odd="'L'" ng-class-even="'R'" data-ng-class="{point_1: $index==placeCur}" data-ng-bind="place.SpName"
+    <div class="points" data-ng-repeat="place in places">
+        <div class="point point_0" ng-class-odd="'L'" ng-class-even="'R'" data-ng-class="{point_1: $index==placeCur}"
+             data-ng-bind="place.SpName"
              data-ng-click="selectPlace($index,place)"></div>
     </div>
-    <div data-ng-if="!places" class="points" >
+    <div data-ng-if="!places" class="points">
         <div class="no_data">暂无数据！</div>
     </div>
     <div style="clear: both;"></div>
 </div>
 <div class="time_select">
-    <div class="times_text">时间选择</div>
-    <div class="times" data-ng-repeat="time in timeList.Times" data-ng-click="">
-        <div class="time time_0"  data-ng-class="{'time_margin_r': ($index+1)%3,'time_1': time.IsOrder==-1,time_2:time.IsOrder>0}"
-             data-ng-bind="time.TimeText" data-ng-click="selectTime(time)"></div>
+    <div style="margin: 0 25px;">
+        <div class="times_text">时间选择</div>
+        <div class="times" data-ng-repeat="time in timeList.Times" data-ng-click="">
+            <div class="time time_0"
+                 data-ng-class="{'time_margin_r': ($index+1)%3,'time_1': time.IsOrder==-1,time_2:time.IsOrder>0}"
+                 data-ng-bind="time.TimeText" data-ng-click="selectTime(time)"></div>
+        </div>
+        <div data-ng-if="!timeList.Times.length" class="points">
+            <div class="no_data">暂无数据！</div>
+        </div>
+        <div style="clear: both;"></div>
     </div>
-    <div data-ng-if="!timeList.Times.length" class="points" >
-        <div class="no_data">暂无数据！</div>
-    </div>
-    <div style="clear: both;"></div>
 </div>
 <div class="sp">
 
@@ -66,7 +70,7 @@
         <div class="btn_back">返回</div>
     </div>
     <div class="post" data-ng-click="postInf()">
-        <div class="btn_post" >确认预订</div>
+        <div class="btn_post">确认预订</div>
     </div>
 </div>
 

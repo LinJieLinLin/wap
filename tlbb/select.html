@@ -47,10 +47,12 @@
                         <div class="user_info_des1" data-ng-bind="user.SpDescription">
                         </div>
                     </div>
-                    <div style="position: absolute;bottom: 0;left: 14px;">
+                    <div style="position: absolute;bottom: 0;left: 14px;width: 100%;">
                         <div class="user_info_des2">
-                            【医师级别收费】<br/>
-                            治疗需加收20元服务费，套餐二、特色一、三除外。
+                            <div data-ng-show="user.SpJobTitle=='医师'">
+                                【医师级别收费】<br/>
+                                治疗需加收20元服务费，套餐二、特色一、三除外。
+                            </div>
                         </div>
                         <div class="show_time">
                             <img data-ng-show="!user.showTime" src="../images/down01.png"
@@ -83,7 +85,7 @@
                     <div class="times_text">预约时间</div>
                     <div class="times">
                         <div class="time time_0" data-ng-repeat="time in user.userDate.TimeTexts"
-                             data-ng-class="{'time_margin_r': ($index+1)%3,'time_1': time.IsOrder==-1,time_2:time.IsOrder>0}"
+                             data-ng-class="{'time_margin_r': ($index+1)%3,'time_1': time.IsOrder==-1,time_2:time.IsOrder==1}"
                              data-ng-click="openWin(user,time)"
                              data-ng-bind="time.TimeText"></div>
                         <div data-ng-if="!user.userDate.TimeTexts.length" class="points">
