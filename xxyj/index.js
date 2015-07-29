@@ -480,7 +480,7 @@ xxyj.controller('xxyjCCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
             $(".delOne").height($(this).outerHeight(true));
             $(".delOne").css("line-height", $(this).outerHeight(true) + "px");
         });
-    }, 10);
+    }, 100);
 
 
 }]);
