@@ -51,8 +51,10 @@
                 }
                 $("#CarNumbers").change(function () {
                     var v = $(this).val();
-                    $("#tbCarNumber").val(v);
-                    $("#tbCarNumbers").text(v);
+                    if (v != null) {
+                        $("#tbCarNumber").val(v);
+                        $("#tbCarNumbers").text(v);
+                    }
                 });
                 $("#CarNumbers").change();
                 $(".btn_post").css("background-color", "#eeeeee");
@@ -378,11 +380,11 @@
                         </div>
                         <div class="service_item">
                             <img class="service_img" src="../images/circle0.png" />
-                            <div class="service_name">上雨刮水</div>
+                            <div class="service_name">加雨刮水</div>
                         </div>
                         <div class="service_item">
                             <img class="service_img" src="../images/circle0.png" />
-                            <div class="service_name">轮胎加气</div>
+                            <div class="service_name">加气</div>
                         </div>
                     </div>
                 </td>

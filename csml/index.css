@@ -170,6 +170,7 @@
     float: left;
     text-align:right;
 	padding:20px 0px;
+    display:none;
 }
 .img_back img
 {
@@ -184,15 +185,16 @@
     border-right:1px solid #cccccc;
     font-size:14px;
 	padding:17px 0px;
+    display:none;
 }
 
 .btn_order
 {
-    width: 50%;
+    /*width: 50%;*/
+    width:100%;
     float: right;
     color:#666666;
     font-size:14px;
 	padding:17px 0px;
 	text-align:center;
-
 }
