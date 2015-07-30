@@ -1,6 +1,33 @@
-﻿.date_select
+﻿.back{
+	width: 100%;
+	height: 40px;
+	border-bottom: 1px solid #ff6633;
+	background-color: #ffffff;
+	position: fixed;
+	top:0;
+	left: 0;
+	z-index: 200;
+}
+.back_img {
+	float: left;
+	font-size: 15px;
+	font-weight: 900;
+	line-height: 20px;
+	color: #ff6633;
+	padding: 10px 0 10px 16px;
+}
+
+.back_text {
+	float: left;
+	font-size: 15px;
+	font-weight: bold;
+	color: #ff6633;
+	line-height: 20px;
+	padding: 10px 0 10px 7px;
+}
+.date_select
 {
-	margin-top:10px;
+	margin-top:50px;
 	background-color:#ff6633;
 	font-size:13px;
 	font-weight:bold;
@@ -197,7 +224,7 @@
 
 .btn_post
 {
-    width: 50%;
+    width: 100%;
     float: right;
     color:#666666;
     font-size:14px;

@@ -28,7 +28,8 @@ wqct.controller('wqctCCtrl', ['$scope', '$timeout', '$compile', function ($scope
         if($(".car_info2").text()=="已选:0"){
             return;
         }
-        $scope.delAll = arg_data;
+        carClear();
+        //$scope.delAll = arg_data;
     };
     $scope.delAllData = function () {
         $(".car_list").hide();
@@ -42,16 +43,29 @@ wqct.controller('wqctCCtrl', ['$scope', '$timeout', '$compile', function ($scope
     };
 
     $scope.showDelOne = function (arg_fid, arg_odate,arg_t) {
-        if(arg_t){
-            $scope.t = arg_t;
-        }
-        if (angular.isDefined(arg_fid)) {
-            $scope.delOne = true;
-            $scope.delIndex = arg_fid;
-            $scope.delOdate = arg_odate;
-        } else {
-            $scope.delOne = false;
-        }
+        //if(arg_t){
+        //    $scope.t = arg_t;
+        //}
+        //if (angular.isDefined(arg_fid)) {
+        //    $scope.delOne = true;
+        //    $scope.delIndex = arg_fid;
+        //    $scope.delOdate = arg_odate;
+        //} else {
+        //    $scope.delOne = false;
+        //}
+        show_dialog("提示", "是否移出购物车?", null, '确认', function () {
+            if (arg_t == '1') {
+                cart.del(arg_fid, arg_odate);
+            }
+            if (arg_t == "2") {
+                cart2.del(arg_fid, arg_odate);
+            }
+            $("#cart_item_"+arg_fid).hide();
+            refCount();
+            hide_dialog();
+        }, '返回', function () {
+            hide_dialog();
+        });
     };
     $scope.delOneData = function () {
         if ($scope.t == '1') {
@@ -219,22 +233,23 @@ wqct.controller('wqctCCtrl', ['$scope', '$timeout', '$compile', function ($scope
                     cart2.set(fid, odate, newcount);
                 }
             } else {
-                $scope.$apply(function () {
-                    $scope.showDelOne(fid, odate);
-                    $scope.t = t;
-                });
-                //show_dialog("提示", "是否移出购物车?", null, '确认', function () {
-                //    if (t == '1') {
-                //        cart.del(fid, odate);
-                //    }
-                //    if (t == "2") {
-                //        cart2.del(fid, odate);
-                //    }
-                //
-                //    hide_dialog();
-                //}, '返回', function () {
-                //    hide_dialog();
+                //$scope.$apply(function () {
+                //    $scope.showDelOne(fid, odate);
+                //    $scope.t = t;
                 //});
+                show_dialog("提示", "是否移出购物车?", null, '确认', function () {
+                    if (t == '1') {
+                        cart.del(fid, odate);
+                    }
+                    if (t == "2") {
+                        cart2.del(fid, odate);
+                    }
+                    $("#cart_item_"+fid).hide();
+                    refCount();
+                    hide_dialog();
+                }, '返回', function () {
+                    hide_dialog();
+                });
             }
             refCount();
         });
@@ -258,6 +273,9 @@ wqct.controller('wqctCCtrl', ['$scope', '$timeout', '$compile', function ($scope
     }
 
     function carClear() {
+        if($(".car_info2").text()=="已选:0"){
+            return;
+        }
         show_dialog("提示", "确认要清空吗？", function () {
                 hide_dialog()
             }, "确认", function () {

@@ -19,6 +19,12 @@
     <script src="index.js"></script>
 </head>
 <body ng-controller="ktyySCtrl" style="display: none;">
+<div class="back"  data-ng-click="back()">
+        <div class="back_img">
+            <img src="../images/back02.png" />
+        </div>
+        <div class="back_text">返回</div>
+    </div>
 <div class="date_select">
     <div class="prev_date" data-ng-click="changeDate(-1)">
         <div style="width: 25px; float: left;">&nbsp;</div>
@@ -63,7 +69,7 @@
 
 </div>
 <div class="bottom_btn">
-    <div class="back_link" data-ng-click="back()">
+    <div class="back_link" style="display:none;" data-ng-click="back()">
         <div class="img_back">
             <img src="../images/back04.png"/>
         </div>

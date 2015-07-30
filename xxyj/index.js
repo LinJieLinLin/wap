@@ -348,20 +348,20 @@ xxyj.controller('xxyjCCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
             arg_data.count++;
         } else if (arg_type == '-') {
             if (arg_data.count == 1) {
-                $scope.showDelOne(arg_index);
-                //show_dialog("提示", "是否移出购物车?", null, '确认', function () {
-                //    arg_data.count--;
-                //    $scope.$apply(function () {
-                //        //var temL = $scope.cartData.length;
-                //        //$scope.cartData.splice(temL-1-arg_index,1);
-                //        $scope.cartData.splice(arg_index, 1);
-                //        $scope.countPrice();
-                //        localStorage.CARTDATA = angular.toJson($scope.cartData);
-                //    });
-                //    hide_dialog();
-                //}, '返回', function () {
-                //    hide_dialog();
-                //});
+                //$scope.showDelOne(arg_index);
+                show_dialog("提示", "是否移出购物车?", null, '确认', function () {
+                    arg_data.count--;
+                    $scope.$apply(function () {
+                        //var temL = $scope.cartData.length;
+                        //$scope.cartData.splice(temL-1-arg_index,1);
+                        $scope.cartData.splice(arg_index, 1);
+                        $scope.countPrice();
+                        localStorage.CARTDATA = angular.toJson($scope.cartData);
+                    });
+                    hide_dialog();
+                }, '返回', function () {
+                    hide_dialog();
+                });
                 return;
             }
             arg_data.count--;
@@ -370,7 +370,26 @@ xxyj.controller('xxyjCCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
         localStorage.CARTDATA = angular.toJson($scope.cartData);
     };
     $scope.showDelAll = function (arg_data) {
-        $scope.delAll = arg_data;
+        //$scope.delAll = arg_data;
+        if($scope.selectCount==0){
+            return;
+        }
+        show_dialog("提示", "确认要清空吗？", function () {
+                hide_dialog()
+            }, "确认", function () {
+                $scope.$apply(function(){
+                    $scope.cartData = [];
+                    $scope.allPrice = 0;
+                    $scope.selectCount = 0;
+                    localStorage.CARTDATA = angular.toJson([]);
+                });
+                hide_dialog();
+            }, "取消", function () {
+                hide_dialog();
+            }
+        );
+
+
     };
     $scope.delAllData = function () {
         $scope.cartData = [];

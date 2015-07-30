@@ -15,7 +15,7 @@
 <body ng-controller="xxyjCCtrl" style="display: none;">
 <div class="back" data-ng-click="back()">
     <div class="back_img">
-        <img src="../images/back03.png"/></div>
+        <img src="../images/back02.png"/></div>
     <div class="back_text">返回</div>
 </div>
 
@@ -27,7 +27,7 @@
         <!--<div class="order_date" data-ng-if="cart.addDate!=cartData[$index-1].addDate">{{cart.addDate}}&nbsp;{{cart.week}}</div>-->
         <div class="car_item" style="position: relative;">
             <div style="height: 100%;">
-                <div class="delOne" data-ng-click="showDelOne($index)">删除</div>
+                <div class="delOne" data-ng-click="delOneD(cart,$index)">删除</div>
                 <div style="position: absolute;overflow:hidden;z-index: 3;width: 100%;background-color:#ffffff;"
                      id="car_{{$index}}">
                     <div style="margin: 10px 0;" class="car_body">
