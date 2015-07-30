@@ -87,7 +87,7 @@ tlbb.controller('tlbbCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
     //        return;
     //    }else if(arg_name=="套餐介绍"){
     //        content = $scope.places[0]
-    //    }else if(arg_name=="预约需知"){
+    //    }else if(arg_name=="预约须知"){
     //
     //    }
     //    show_dialog(arg_name, content, function () {
@@ -97,13 +97,13 @@ tlbb.controller('tlbbCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
     $(function () {
         $(".note").click(function () {
             var content = $("#note").html();
-            show_dialog("预约需知", content, function () {
+            show_dialog("预约须知", content, function () {
                 hide_dialog();
             });
         });
         $(".note_img").click(function () {
             var content = $("#note").html();
-            show_dialog("预约需知", content, function () {
+            show_dialog("预约须知", content, function () {
                 hide_dialog();
             });
         });

@@ -96,7 +96,7 @@
                 order += '            <td>';
                 order += '                <div class="order_state">';
                 order += '                    <div class="order_time">' + o.OrderTime + '</div>';
-                order += '                    <div class="order_money">共计:' + '，' + o.OrderState + '</div>';
+                order += '                    <div class="order_money">共计:'+ o.OrderMoney.toFixed(2) + '，' + o.OrderState + '</div>';
                 order += '                </div>';
 
                 order += createItems(o.OrderItems);
