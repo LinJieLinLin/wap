@@ -541,6 +541,9 @@ xxyj.controller('xxyjCCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
 xxyj.controller('xxyjOCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
     $scope.orders = [];
     $scope.cartData = angular.fromJson(localStorage.CARTDATA);
+    $scope.back = function () {
+        window.history.back();
+    };
     if (angular.isUndefined($scope.cartData)) {
         $scope.cartData = [];
     }

@@ -22,6 +22,10 @@
             $(".line").width((win_w - 70) / 2);
             $(".line0").width($(".line").width() - 7);
             $(".sp").width(win_w - 20);
+            
+            $(".back_img").click(function () {
+                window.history.back();
+            });
             $(".index_link").click(function () {
                 location.href = "index1.html?" + urlParam;
             });
@@ -127,6 +131,13 @@
     </script>
 </head>
 <body>
+    <div class="back">
+        <div class="back_img">
+            <img src="../images/back02.png" />
+        </div>
+        <div class="back_text">返回</div>
+    </div>
+
     <div class="content">
         <div class="dates">
             <div class="begin_date">
@@ -164,7 +175,7 @@
     <div style="clear: both"></div>
     <div class="sp">
     </div>
-    <div class="bottom_btn">
+    <div class="bottom_btn" style="display:none;">
         <div class="index_link">
             <div class="img_index">
                 <img src="../images/wqct.png" />
