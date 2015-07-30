@@ -9,13 +9,19 @@ xxyj.controller('xxyjCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
     $scope.listPic = 1;
     $scope.rule = {};
     $scope.cartData = angular.fromJson(localStorage.CARTDATA);
+    var xxyjIndex = angular.fromJson(localStorage.xxyjIndex);
+    if(angular.isDefined(xxyjIndex)&&angular.isDefined(xxyjIndex.listWtCur)){
+        $scope.listWtCur = xxyjIndex.listWtCur;
+        $scope.listPic = xxyjIndex.listPic;
+    }
     if (angular.isUndefined($scope.cartData)) {
         $scope.cartData = [];
     }
     //当前类别
     $scope.nowList = {};
     $scope.back = function () {
-        location.href = homeurl;
+        localStorage.xxyjIndex = "123";
+        location.href = homeurl+'?'+urlParam;
     };
     //进入其它页面
     $scope.goTo = function (arg_url) {
@@ -97,7 +103,6 @@ xxyj.controller('xxyjCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
         })
     };
     $scope.setCss = function () {
-        //alert(123)
         var maxH = 0;
         $(".goods_h").each(function (i, n) {
             if ($(this).outerHeight(true) > maxH) {
@@ -109,6 +114,12 @@ xxyj.controller('xxyjCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
         $(".goods_text").each(function (i, n) {
             $(this).css("margin-top", (maxH + 6 - $(this).outerHeight(true)) * 0.5);
         });
+        console.log($(".goods_top_img").height())
+        //console.log($(".goods_img_w_h").height())
+        var temW = $(".goods_top_img").width();
+        $(".goods_img_w_h").css("width",$(".goods_top_img").height());
+        $(".goods_img_w_h").css("height",$(".goods_top_img").height());
+        $(".goods_img_w_h").css("margin-left",(temW-$(".goods_top_img").height())*0.5);
     };
     $scope.changeList = function (arg_data, arg_index) {
         if (!arg_data) {
@@ -116,6 +127,7 @@ xxyj.controller('xxyjCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
         }
         $scope.listPic = arg_data.WtID;
         $scope.listWtCur = arg_index;
+        localStorage.xxyjIndex = angular.toJson({listPic:$scope.listPic,listWtCur:$scope.listWtCur});
         $scope.getWt($scope.listPic - 1);
     };
     $scope.show_rule = function () {
@@ -317,7 +329,7 @@ xxyj.controller('xxyjCCtrl', ['$scope', '$timeout', function ($scope, $timeout) 
             Alert("用户数据有误");
         }, 10);
         $timeout(function () {
-            location.href = homeurl;
+            location.href = homeurl+'?'+urlParam;
         }, 1000);
         return
     }

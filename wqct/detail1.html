@@ -159,7 +159,12 @@
                 cart.ref();
                 cart2.ref();
 
-                $(".car_count").text(parseInt(osum.totalNumber) + parseInt(osum2.totalNumber));
+                var count = parseInt(osum.totalNumber) + parseInt(osum2.totalNumber);
+                if(count>0){
+                    $(".car_count").css("visibility","visible");
+                }
+                $(".car_count").text(count);
+//                $(".car_count").text(parseInt(osum.totalNumber) + parseInt(osum2.totalNumber));
             }
         }
 
@@ -252,7 +257,12 @@
             $(".item_pic").height(item_pic_h);
             cart.ref();
             cart2.ref();
-            $(".car_count").text(parseInt(osum.totalNumber) + parseInt(osum2.totalNumber));
+            var count = parseInt(osum.totalNumber) + parseInt(osum2.totalNumber);
+            if(count>0){
+                $(".car_count").css("visibility","visible");
+            }
+            $(".car_count").text(count);
+//            $(".car_count").text(parseInt(osum.totalNumber) + parseInt(osum2.totalNumber));
         }
     </script>
 </head>

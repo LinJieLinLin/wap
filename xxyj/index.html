@@ -55,18 +55,23 @@
         </table>
     </div>
     <!--<div class="line">-->
-        <!--<div class="dot1"></div>-->
-        <!--<div class="line0"></div>-->
-        <!--<div class="dot2"></div>-->
+    <!--<div class="dot1"></div>-->
+    <!--<div class="line0"></div>-->
+    <!--<div class="dot2"></div>-->
     <!--</div>-->
     <div class="show_pic">
         <div class="show_pic_img" data-ng-click="show_rule()">
             <img data-ng-src="../images/wash_{{listPic}}.png" ng-style="leftPic"/>
         </div>
         <div class="show_pic_r" ng-style="rightPic" id="show_pic_r">
-            <div class="goods_r" data-ng-if="listGoods.WashList.length>1" data-ng-click="goDetail(listGoods.WashList[0])">
-                <div class="goods_img">
-                    <img  data-ng-src="{{listGoods.WashList[0].WashPicture}}"  />
+            <div class="goods_r" data-ng-if="listGoods.WashList.length>1"
+                 data-ng-click="goDetail(listGoods.WashList[0])">
+                <div class="goods_top_img">
+                    <div class="goods_img_w_h">
+                        <div class="goods_img">
+                            <img class="" data-ng-src="{{listGoods.WashList[0].WashPicture}}"/>
+                        </div>
+                    </div>
                 </div>
                 <div class="goods_inf" data-ng-click="goDetail(listGoods.WashList[0])">
                     <div class="L item_text" style="margin-top:3px;" data-ng-bind="listGoods.WashList[0].WashName">
@@ -76,12 +81,17 @@
                     </div>
                 </div>
             </div>
-            <div class="goods_r" data-ng-if="listGoods.WashList.length>2" data-ng-click="goDetail(listGoods.WashList[1])">
-                <div class="goods_img">
-                    <img  data-ng-src="{{listGoods.WashList[1].WashPicture}}"/>
+            <div class="goods_r" data-ng-if="listGoods.WashList.length>2"
+                 data-ng-click="goDetail(listGoods.WashList[1])">
+                <div class="goods_top_img">
+                    <div class="goods_img_w_h">
+                        <div class="goods_img">
+                            <img class="" data-ng-src="{{listGoods.WashList[1].WashPicture}}"/>
+                        </div>
+                    </div>
                 </div>
                 <div class="goods_inf" data-ng-click="goDetail(listGoods.WashList[1])">
-                    <div class="L item_text" style="margin-top:3px;"  data-ng-bind="listGoods.WashList[1].WashName">
+                    <div class="L item_text" style="margin-top:3px;" data-ng-bind="listGoods.WashList[1].WashName">
                     </div>
                     <div class="R item_img">
                         <img src="../images/go.png">
@@ -91,17 +101,18 @@
         </div>
     </div>
     <div class="items">
-        <div class="item" ng-style="item"  data-ng-repeat="goods in listGoods.WashList" data-ng-class="{'item_margin_r': ($index+1-2)%3}"
+        <div class="item" ng-style="item" data-ng-repeat="goods in listGoods.WashList"
+             data-ng-class="{'item_margin_r': ($index+1-2)%3}"
              data-ng-if="$index>1" data-ng-click="goDetail(goods)">
             <div class="goods_img">
-                <img  data-ng-src="{{goods.WashPicture}}"/>
+                <img data-ng-src="{{goods.WashPicture}}"/>
             </div>
             <div class="goods_inf " style="height: auto" data-ng-click="goDetail(goods)">
-                <div class="L item_text goods_h" >
+                <div class="L item_text goods_h">
                     <div data-ng-bind="goods.WashName" class="goods_text"></div>
                 </div>
                 <!--<div class="R item_img">-->
-                    <!--<img src="../images/go.png">-->
+                <!--<img src="../images/go.png">-->
                 <!--</div>-->
             </div>
         </div>
@@ -111,15 +122,16 @@
     <div class="bottom_btn">
         <div class="order_link" data-ng-click="goTo('order.html')">
             <div class="img_order">
-                <img src="../images/order01.png" />
+                <img src="../images/order01.png"/>
             </div>
             <div class="btn_order">我的订单</div>
         </div>
         <div class="car_link" data-ng-click="goToCart()">
             <div class="btn_car">购物车</div>
             <div class="img_car">
-                <img class="img_car_img" src="../images/car01.png" />
-                <div class="car_count" data-ng-show="cartData.length" >{{cartData.length}}</div>
+                <img class="img_car_img" src="../images/car01.png"/>
+
+                <div class="car_count" data-ng-show="cartData.length">{{cartData.length}}</div>
             </div>
         </div>
     </div>

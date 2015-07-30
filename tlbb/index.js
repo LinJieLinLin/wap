@@ -7,7 +7,7 @@ tlbb.controller('tlbbCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
     $scope.rightPic_item_h = {};
     $scope.item = {};
     $scope.back = function () {
-        location.href = homeurl;
+        location.href = homeurl+'?'+urlParam;
     };
 
     $scope.getPlace = function () {

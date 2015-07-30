@@ -213,6 +213,12 @@ body {
 .item_margin_r {
     margin-right: 10px;
 }
+.goods_top_img{
+    position: relative;
+    height: 100%;
+    width: 100%;
+    background-color: #ffffff;
+}
 .goods_img{
     height: 100%;
     width: 100%;

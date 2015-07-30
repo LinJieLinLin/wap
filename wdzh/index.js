@@ -7,7 +7,7 @@ wdzh.controller('wdzhCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
     $scope.userInf = {};
     $scope.style = {};
     $scope.back = function () {
-        location.href = homeurl;
+        location.href = homeurl+'?'+urlParam;
     };
     $scope.changeOpen = function(arg_type){
         if(!arg_type){

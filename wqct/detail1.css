@@ -321,6 +321,7 @@
 }
 .car_count
 {
+	visibility:hidden;
 	position:absolute;
 	z-index:100;
 	font-size:5px;
