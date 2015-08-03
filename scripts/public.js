@@ -169,10 +169,15 @@ function getTimeStr() {
 function getTimestamp() {
     return new Date().getTime();
 }
+var userInf = {UserName:"123",
+    PhoneNo:"456"
+};
+utils.setParam("userinfo", JSON.stringify(userInf));
 //获得日期字符串：yyyy-MM-dd
 function getDateStr(arg_data) {
     var date = new Date();
     if (arg_data) {
+        arg_data = arg_data.replace(/-/g,"/");
         var date = new Date(arg_data);
     }
     var yyyy = date.getFullYear();
@@ -186,6 +191,7 @@ function getDateStr(arg_data) {
 function changeDateStr(arg_data, arg_day) {
     var date = new Date();
     if (arg_data && arg_day) {
+        arg_data = arg_data.replace(/-/g,"/");
         var date = new Date(arg_data);
         date.setDate(date.getDate() + arg_day);
     }
@@ -198,6 +204,7 @@ function changeDateStr(arg_data, arg_day) {
 }
 //
 function getDateStrByOne(arg_d) {
+    arg_d = arg_d.replace(/-/g,"/");
     var date = new Date(arg_d);
     var yyyy = date.getFullYear();
     var MM = date.getMonth() + 1;
@@ -236,6 +243,7 @@ function getDateHourMStr() {
 function getWeekStr(arg_data) {
     var date = new Date();
     if (arg_data) {
+        arg_data = arg_data.replace(/-/g,"/");
         date = new Date(arg_data);
     }
     var dayNames = new Array("星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六");
@@ -243,6 +251,9 @@ function getWeekStr(arg_data) {
 }
 //日期对比
 function dateCompare(date1, date2) {
+    date1 = date1.replace(/-/g,"/");
+    date2 = date2.replace(/-/g,"/");
+
     var d1 = new Date(date1);
     var d2 = new Date(date2);
     return (Date.parse(d1) - Date.parse(d2));
