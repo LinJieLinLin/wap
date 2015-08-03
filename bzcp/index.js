@@ -67,9 +67,17 @@ bzcp.controller('bzcpCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
                     $scope.menuLists = [];
                     $scope.menuList = {};
                     $scope.menuLists = arg_data;
+                    var temName = "早餐";
+                    if($scope.menuName == "大厅早餐精美套餐菜"){
+                        temName = "早餐";
+                    }else if($scope.menuName == "大厅午餐精美套餐菜") {
+                        temName = "午餐";
+                    }else if($scope.menuName == "大厅晚餐精美套餐菜") {
+                        temName = "晚餐";
+                    }
                     for (var i = 0; i < temL; i++) {
-                        if ($scope.menuLists[i].FmClassName == "早餐") {
-                            $scope.menuList = $scope.menuLists[0];
+                        if ($scope.menuLists[i].FmClassName == temName) {
+                            $scope.menuList = $scope.menuLists[i];
                             break;
                         }
                     }
